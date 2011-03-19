@@ -1,0 +1,42 @@
+/*
+ * CSS for the Omoma notifications box
+ * Copyright 2011 Sebastien Maccagnoni-Munch
+ *
+ * This file is part of Omoma.
+ *
+ * Omoma is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * Omoma is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+div#notifications {
+border: 1px solid #e66; background: #fdd;
+padding: 0; margin: 0 2em 1em 2em;
+cursor: default;
+}
+
+div#notifications a, div#notifications div {
+color: #b11;
+font-weight: bold;
+display: block;
+padding: 3px 2em;
+text-decoration: none;
+border-bottom: 1px solid #e66;
+}
+
+div#notifications a.lastnotification, div#notifications div.lastmessage {
+border: 0;
+}
+
+div#notifications a:hover, div#notifications div:hover {
+background: #eaa;
+text-decoration: none;
+}
