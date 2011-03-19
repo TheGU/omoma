@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.6: http://docutils.sourceforge.net/" />
+<title>How to install Omoma on Ubuntu</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 5951 2009-05-18 18:03:10Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left{
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: left }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="how-to-install-omoma-on-ubuntu">
+<h1 class="title">How to install Omoma on Ubuntu</h1>
+
+<p>This chapter is for people that don't know much about systems, databases, etc
+and that just want to try Omoma on their Ubunbtu system.</p>
+<p>There is no automatic installation for the moment, Omoma being in an early
+development stage.</p>
+<p>The database will be SQLite, the lighter databases that doesn't need a running
+daemon. The web server will be the development server, allowing to serve all
+files without running an independent web server.</p>
+<p>However, please note that running Omoma on your own computer and using it alone
+currently makes the IOU stuff useless.</p>
+<div class="section" id="prerequisite">
+<h1>Prerequisite</h1>
+<p>This how-to is intended for <em>Ubuntu 10.10</em>.
+It has not been tested on other versions.</p>
+<p>I assume you have already downloaded Omoma. You should have an <tt class="docutils literal">omoma</tt>
+directory, containing <tt class="docutils literal">locale</tt>, <tt class="docutils literal">media</tt>, <tt class="docutils literal">omoma_web</tt> and <tt class="docutils literal">template</tt>
+subdirectories, with <tt class="docutils literal">.py</tt>, <tt class="docutils literal">.html</tt>, <tt class="docutils literal">.png</tt>, <tt class="docutils literal">.css</tt> files.</p>
+<p>You need to access the Internet for some informations if you don't know them
+(timezone name, language code).</p>
+<p>This how-to is based in command-line and text editing.
+You will need the <em>Terminal</em> (located in the <em>Accessories</em> menu). Anywhere you
+read &quot;run the following command&quot;, this means you have to type the command in
+the terminal. Some commands (starting with <tt class="docutils literal">sudo</tt>) may ask for your password.</p>
+<p>To edit files, you can use <em>gedit</em> (also in the <em>Accessories</em> menu). You may
+also simply double-click on the files you want to edit in your file browser.</p>
+<div class="section" id="no-root-needed">
+<h2>No root needed</h2>
+<p>You may know about the <em>root</em> user, the local administrator. You don't need
+root access to run Django. You only need it to install packages (with the
+<tt class="docutils literal">sudo <span class="pre">apt-get</span> install</tt> command).</p>
+</div>
+</div>
+<div class="section" id="installing-omoma">
+<h1>Installing Omoma</h1>
+<p>First, copy or move the <tt class="docutils literal">omoma</tt> directory anywhere you want</p>
+<p>Directly in your home directory works perfectly. If you put the <tt class="docutils literal">omoma</tt>
+directory in your home directory, then its <em>path</em> is
+<tt class="docutils literal"><span class="pre">/home/&lt;your_username&gt;/omoma</span></tt> (replace <tt class="docutils literal">&lt;your_username&gt;</tt> by your username).</p>
+<p>If you put the <tt class="docutils literal">omoma</tt> directory on your desktop, then its <em>path</em> is
+<tt class="docutils literal"><span class="pre">/home/&lt;your_username&gt;/Desktop/omoma</span></tt> (for an english system).</p>
+<p>If you want to put the <tt class="docutils literal">omoma</tt> directory somewhere else, you can easily guess
+the <em>path</em>. You will need to know your <tt class="docutils literal">omoma</tt> path later.</p>
+<p>First, you need to install <em>Django</em> (the framework used by Omoma) and SQLite.
+Run the following command:</p>
+<pre class="literal-block">
+sudo apt-get install python-django python-pysqlite2
+</pre>
+</div>
+<div class="section" id="configuring-omoma">
+<h1>Configuring Omoma</h1>
+<p>Next, you should configure Django. Edit the <tt class="docutils literal">settings.py</tt> file
+(simply by clicking on it). This file contains many directives that tell Omoma
+how to work.</p>
+<p>You should only modify the ones explained here. Modifying other directived can
+make Omoma crash.</p>
+<p>The line starting with <tt class="docutils literal">DEBUG</tt> should be:</p>
+<pre class="literal-block">
+DEBUG = False
+</pre>
+<p>There is a section called <tt class="docutils literal">DATABASES</tt>, containing a <tt class="docutils literal">'default'</tt> subsection.
+In this subsection, you have to set the <tt class="docutils literal">ENGINE</tt> and <tt class="docutils literal">NAME</tt> variables:</p>
+<pre class="literal-block">
+'ENGINE': 'django.db.backends.sqlite3',
+'NAME': 'my_omomoa_database.sqlite3',
+</pre>
+<p>The <tt class="docutils literal">TIME_ZONE</tt> directive should refer to your timezone. See the table at
+<a class="reference external" href="http://en.wikipedia.org/wiki/List_of_tz_zones_by_name">http://en.wikipedia.org/wiki/List_of_tz_zones_by_name</a> (column &quot;TZ&quot;) for your
+timezone name. For example, at the South Pole, the timezone should be set as:</p>
+<pre class="literal-block">
+TIME_ZONE = 'Antarctica/South_Pole'
+</pre>
+<p>The <tt class="docutils literal">LANGUAGE_CODE</tt> directive should be set to your local language. See the
+table at <a class="reference external" href="http://www.i18nguy.com/unicode/language-identifiers.html">http://www.i18nguy.com/unicode/language-identifiers.html</a> (column
+&quot;Languages&quot;)to know your language code. For example, in Gibraltar, the language
+code would be:</p>
+<pre class="literal-block">
+LANGUAGE_CODE = 'en-GI'
+</pre>
+<p>However, please note that Omoma is not translated in many languages (english
+and french when writing this how-to). If your language is not supported by
+Omoma, it will fall back to english.</p>
+<p>The <tt class="docutils literal">SECRET_KEY</tt> should be any textual string. Just type anything.
+Really anything: letters, numbers, parenthesis, hiphens, etc. You just need to
+avoid the ' character (because it is the string delimiter). For example:</p>
+<pre class="literal-block">
+SECRET_KEY = 'rzegfz7RT564-&quot;rét35Y675)}=+rREHgezrT3Efr7eZE'
+</pre>
+<p>The <tt class="docutils literal">TEMPLATE_DIRS</tt> sections is a list of paths containing only one path, to
+set to the <tt class="docutils literal">templates</tt> subdirectory in your <tt class="docutils literal">omoma</tt> directory path. For
+example, if your <tt class="docutils literal">omoma</tt> directory is in your home directory:</p>
+<pre class="literal-block">
+TEMPLATE_DIRS = (
+    '/home/&lt;your_username&gt;/omoma/templates',
+)
+</pre>
+<p>... if your <tt class="docutils literal">omoma</tt> directory is on your desktop (on an english system):</p>
+<pre class="literal-block">
+TEMPLATE_DIRS = (
+    '/home/&lt;your_username&gt;/Desktop/omoma/templates',
+)
+</pre>
+<p>At the end of this file, the <tt class="docutils literal">LOGIN_URL</tt> and <tt class="docutils literal">LOGIN_REDIRECT_URL</tt> should be
+set to:</p>
+<pre class="literal-block">
+LOGIN_URL='/login/'
+LOGIN_REDIRECT_URL='/'
+</pre>
+<p>Save and close this file.</p>
+<p>Now, edit the <tt class="docutils literal">urls.py</tt> file.</p>
+<p>In this file, search for a line containing <tt class="docutils literal">django.views.static.serve</tt> (it
+should be juste after the line &quot;Common stuff...&quot;). Set the <tt class="docutils literal">document_root</tt>
+variable to the path to the <tt class="docutils literal">media</tt> subdirectory in your <tt class="docutils literal">omoma</tt> directory
+path. For example, if your <tt class="docutils literal">omoma</tt> directory is in your home directory:</p>
+<pre class="literal-block">
+(r'^static/(?P&lt;path&gt;.*)$', 'django.views.static.serve',
+               {'document_root': '/home/&lt;your_username&gt;/omoma/media'}),
+</pre>
+<p>Save and close this file.</p>
+<p>Now, you have to generate the data needed for Omoma : the tables that will be
+used to store your data in the database. To generate the tables, run the
+following commands:</p>
+<pre class="literal-block">
+cd /home/&lt;your_username&gt;/omoma
+python manage.py syncdb
+</pre>
+<p>This command should see that your are just initializing the database, and you
+don't have any superusers defined. It asks if you would like to create one,
+you should answer yes:</p>
+<pre class="literal-block">
+Would you like to create one now? (yes/no): yes
+</pre>
+<p>It then asks the username, you may just press &quot;Enter&quot; if you want to use your
+current username:</p>
+<pre class="literal-block">
+Username (Leave blank to use '&lt;your_username&gt;'):
+</pre>
+<p>It asks for your e-mail address, it can be used to send you e-mails when Omoma
+has problems. This is only useful when you run Omoma as a web service, which you
+won't; you can enter anything, the address doesn't need to exist:</p>
+<pre class="literal-block">
+E-mail address: anything&#64;example.com
+</pre>
+<p>It then asks for a password. This is the password to set for the user to be
+created. Enter any password you want (twice). As a security measure, when
+typing, the password will not be displayed.</p>
+<pre class="literal-block">
+Password:
+Password (again):
+</pre>
+<p>It should then say:</p>
+<pre class="literal-block">
+Superuser created successfully.
+Installing index for auth.Permission model
+Installing index for auth.Group_permissions model
+Installing index for auth.User_user_permissions model
+Installing index for auth.User_groups model
+Installing index for auth.Message model
+Installing index for admin.LogEntry model
+Installing index for omoma_web.Account_owner model
+Installing index for omoma_web.Account model
+Installing index for omoma_web.Transaction model
+Installing index for omoma_web.Category model
+Installing index for omoma_web.TransactionCategory model
+Installing index for omoma_web.IOU model
+Installing index for omoma_web.Budget model
+No fixtures found.
+</pre>
+<p>And voilà! Omoma is installed.</p>
+</div>
+<div class="section" id="running-omoma">
+<h1>Running Omoma</h1>
+<p>Once the database is initialized, you can run Omoma. To do so, run the following
+commands:</p>
+<pre class="literal-block">
+cd /home/&lt;your_username&gt;/omoma
+python manage.py runserver
+</pre>
+<p>This allows you to access Omoma, but nobody else on your network. If you want
+to share your Omoma database with someone else (to allow IOUs for example), you
+can run the following commands instead:</p>
+<pre class="literal-block">
+cd /home/&lt;your_username&gt;/omoma
+python manage.py runserver 0.0.0.0:8000
+</pre>
+<p>Other people can access Omoma only when it is running on your computer.</p>
+</div>
+<div class="section" id="accessing-omoma">
+<h1>Accessing Omoma</h1>
+<p>To access Omoma, you should go to the following address with your web browser:</p>
+<blockquote>
+<a class="reference external" href="http://127.0.0.1:8000">http://127.0.0.1:8000</a></blockquote>
+<p>You can now enter the username and password that were just created.</p>
+<blockquote>
+<tt class="docutils literal">127.0.0.1</tt> is your own computer address - the current computer is always
+<tt class="docutils literal">127.0.0.1</tt>, no matter where you are. <tt class="docutils literal">8000</tt> is a TCP port: to allow
+multiple connections, the TCP/IP protocol (used on the Internet and the vast
+majority of computer networks nowadays) defines &quot;ports&quot;, a single connection
+uses a single port; every computer has 65535 ports.</blockquote>
+<p>When you come from other computers, you should go to the computer's address, on
+port 8000 too:</p>
+<blockquote>
+<a class="reference external" href="http:/">http:/</a>/&lt;your_computer_address&gt;:8000</blockquote>
+<p>To get your computer address, use the network manager applet on your GNOME
+desktop: the little icon showing the network state; when right-clicking on this
+applet and choosing &quot;Connection information&quot;, you get a window displaying your
+connection(s) and detailing its address, in the &quot;IP Address&quot; field. This address
+can, for example, be 192.168.1.10; in this case, the address to access Omoma on
+another computer would be:</p>
+<blockquote>
+<p><a class="reference external" href="http://192.168.1.10:8000">http://192.168.1.10:8000</a></p>
+<p>Note that accessing from other computers can work only in your local network
+(unless you are directly connected to the Internet, which is risky).</p>
+</blockquote>
+<div class="section" id="creating-currencies">
+<h2>Creating currencies</h2>
+<p>For the moment, there is no Omoma-specific interface to create currencies, and
+there is no preset currency. To create a currency, go to the following URI:</p>
+<blockquote>
+<a class="reference external" href="http://127.0.0.1:8000/admin/omoma_web/currency">http://127.0.0.1:8000/admin/omoma_web/currency</a></blockquote>
+<p>You can add a currency with the &quot;Add currency&quot; link in the top right corner of
+the page. For the moment, Omoma only works with a single currency, so simply
+set its rate to 1.</p>
+</div>
+</div>
+<div class="section" id="stopping-omoma">
+<h1>Stopping Omoma</h1>
+<p>To stop Omoma, you just need the <tt class="docutils literal"><span class="pre">Ctrl-C</span></tt> keystroke in the terminal running
+Omoma.</p>
+<p>&quot;Ctrl-C&quot; means that you have to press one of the &quot;Ctrl&quot; key, keep it pressed,
+press the &quot;C&quot; key and then release both keys. This shortcut can alse be written
+<tt class="docutils literal">^C</tt>.</p>
+<p>To close the terminal, you can close its window or run the following command:</p>
+<pre class="literal-block">
+exit
+</pre>
+</div>
+<div class="section" id="i-ve-accessed-omoma-what-next">
+<h1>I've accessed Omoma... what next ?</h1>
+<p>You first need to create an account (or multiple accounts) in the
+&quot;Configuration&quot;/&quot;Accounts&quot; screen (link in the menu on the left).</p>
+</div>
+<div class="section" id="add-other-users">
+<h1>Add other users</h1>
+<p>If you want to create IOUs, you have to add other users. To do so, access the
+following address:</p>
+<pre class="literal-block">
+http://127.0.0.1:8000/admin/auth/user/
+</pre>
+<p>This is a Django administration page. You can add users with the &quot;Add user&quot; link
+in the top right corner of the page.</p>
+</div>
+<div class="section" id="ious">
+<h1>IOUs ?</h1>
+<p>An IOU makes it possible to mark that someone owes you money, or that you owe
+money to someone. To be able to create IOUs in Omoma, both people should use the
+same installation of Omoma (communication beween multiple Omoma instances may be
+added later).</p>
+<p>This limitation is linked to the fact that the other person has to accept your
+IOUs for them to be taken into account.</p>
+</div>
+<div class="section" id="the-database">
+<h1>The database</h1>
+<p>All your data is stored in the database configured in the <tt class="docutils literal">DATABASES</tt> section
+of the <tt class="docutils literal">settings.py</tt> configuration file. If you have specified
+<tt class="docutils literal">my_omoma_database.sqlite3</tt>, then the <tt class="docutils literal">my_omoma_database.sqlite3</tt> file
+contains all your data. You may backup this file to keep your money data safe.</p>
+</div>
+<div class="section" id="pyc-files">
+<h1>.pyc files</h1>
+<p>Files ending with .pyc will be created in the <tt class="docutils literal">omoma</tt> directory and the
+<tt class="docutils literal">omoma_web</tt> subdirectory. They are harmless. Deleting them is harmless. The
+Python interpreter simply creates them if they don't exist, to make Omoma run
+faster.</p>
+</div>
+</div>
+</body>
+</html>
