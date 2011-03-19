@@ -1,0 +1,34 @@
+/*
+ * CSS for the Omoma sidebar
+ * Copyright 2011 Sebastien Maccagnoni-Munch
+ *
+ * This file is part of Omoma.
+ *
+ * Omoma is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * Omoma is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+div#sidebar ul {
+list-style-type: none;
+padding: 0; margin: 0;
+}
+
+div#sidebar a {
+text-decoration: none;
+color: #222;
+display: block;
+padding: 1px 4px;
+}
+
+div#sidebar a:hover {
+background: #C7C8FF;
+}

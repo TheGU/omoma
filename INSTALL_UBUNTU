@@ -1,0 +1,314 @@
+##############################
+How to install Omoma on Ubuntu
+##############################
+
+This chapter is for people that don't know much about systems, databases, etc
+and that just want to try Omoma on their Ubunbtu system.
+
+There is no automatic installation for the moment, Omoma being in an early
+development stage.
+
+The database will be SQLite, the lighter databases that doesn't need a running
+daemon. The web server will be the development server, allowing to serve all
+files without running an independent web server.
+
+However, please note that running Omoma on your own computer and using it alone
+currently makes the IOU stuff useless.
+
+Prerequisite
+============
+
+This how-to is intended for *Ubuntu 10.10*.
+It has not been tested on other versions.
+
+I assume you have already downloaded Omoma. You should have an ``omoma``
+directory, containing ``locale``, ``media``, ``omoma_web`` and ``template``
+subdirectories, with ``.py``, ``.html``, ``.png``, ``.css`` files.
+
+You need to access the Internet for some informations if you don't know them
+(timezone name, language code).
+
+This how-to is based in command-line and text editing.
+You will need the *Terminal* (located in the *Accessories* menu). Anywhere you
+read "run the following command", this means you have to type the command in
+the terminal. Some commands (starting with ``sudo``) may ask for your password.
+
+To edit files, you can use *gedit* (also in the *Accessories* menu). You may
+also simply double-click on the files you want to edit in your file browser.
+
+No root needed
+--------------
+
+You may know about the *root* user, the local administrator. You don't need
+root access to run Django. You only need it to install packages (with the
+``sudo apt-get install`` command).
+
+Installing Omoma
+================
+
+First, copy or move the ``omoma`` directory anywhere you want
+
+Directly in your home directory works perfectly. If you put the ``omoma``
+directory in your home directory, then its *path* is
+``/home/<your_username>/omoma`` (replace ``<your_username>`` by your username).
+
+If you put the ``omoma`` directory on your desktop, then its *path* is
+``/home/<your_username>/Desktop/omoma`` (for an english system).
+
+If you want to put the ``omoma`` directory somewhere else, you can easily guess
+the *path*. You will need to know your ``omoma`` path later.
+
+First, you need to install *Django* (the framework used by Omoma) and SQLite.
+Run the following command::
+
+    sudo apt-get install python-django python-pysqlite2
+
+Configuring Omoma
+=================
+
+Next, you should configure Django. Edit the ``settings.py`` file
+(simply by clicking on it). This file contains many directives that tell Omoma
+how to work.
+
+You should only modify the ones explained here. Modifying other directived can
+make Omoma crash.
+
+The line starting with ``DEBUG`` should be::
+
+    DEBUG = False
+
+There is a section called ``DATABASES``, containing a ``'default'`` subsection.
+In this subsection, you have to set the ``ENGINE`` and ``NAME`` variables::
+
+    'ENGINE': 'django.db.backends.sqlite3',
+    'NAME': 'my_omomoa_database.sqlite3',
+
+The ``TIME_ZONE`` directive should refer to your timezone. See the table at
+http://en.wikipedia.org/wiki/List_of_tz_zones_by_name (column "TZ") for your
+timezone name. For example, at the South Pole, the timezone should be set as::
+
+    TIME_ZONE = 'Antarctica/South_Pole'
+
+The ``LANGUAGE_CODE`` directive should be set to your local language. See the
+table at http://www.i18nguy.com/unicode/language-identifiers.html (column
+"Languages")to know your language code. For example, in Gibraltar, the language
+code would be::
+
+    LANGUAGE_CODE = 'en-GI'
+
+However, please note that Omoma is not translated in many languages (english
+and french when writing this how-to). If your language is not supported by
+Omoma, it will fall back to english.
+
+The ``SECRET_KEY`` should be any textual string. Just type anything.
+Really anything: letters, numbers, parenthesis, hiphens, etc. You just need to
+avoid the ' character (because it is the string delimiter). For example::
+
+    SECRET_KEY = 'rzegfz7RT564-"rét35Y675)}=+rREHgezrT3Efr7eZE'
+
+The ``TEMPLATE_DIRS`` sections is a list of paths containing only one path, to
+set to the ``templates`` subdirectory in your ``omoma`` directory path. For
+example, if your ``omoma`` directory is in your home directory::
+
+    TEMPLATE_DIRS = (
+        '/home/<your_username>/omoma/templates',
+    )
+
+... if your ``omoma`` directory is on your desktop (on an english system)::
+
+    TEMPLATE_DIRS = (
+        '/home/<your_username>/Desktop/omoma/templates',
+    )
+
+At the end of this file, the ``LOGIN_URL`` and ``LOGIN_REDIRECT_URL`` should be
+set to::
+
+    LOGIN_URL='/login/'
+    LOGIN_REDIRECT_URL='/'
+
+Save and close this file.
+
+Now, edit the ``urls.py`` file.
+
+In this file, search for a line containing ``django.views.static.serve`` (it
+should be juste after the line "Common stuff..."). Set the ``document_root``
+variable to the path to the ``media`` subdirectory in your ``omoma`` directory
+path. For example, if your ``omoma`` directory is in your home directory::
+
+    (r'^static/(?P<path>.*)$', 'django.views.static.serve',
+                   {'document_root': '/home/<your_username>/omoma/media'}),
+
+Save and close this file.
+
+Now, you have to generate the data needed for Omoma : the tables that will be
+used to store your data in the database. To generate the tables, run the
+following commands::
+
+    cd /home/<your_username>/omoma
+    python manage.py syncdb
+
+This command should see that your are just initializing the database, and you
+don't have any superusers defined. It asks if you would like to create one,
+you should answer yes::
+
+    Would you like to create one now? (yes/no): yes
+
+It then asks the username, you may just press "Enter" if you want to use your
+current username::
+
+    Username (Leave blank to use '<your_username>'): 
+
+It asks for your e-mail address, it can be used to send you e-mails when Omoma
+has problems. This is only useful when you run Omoma as a web service, which you
+won't; you can enter anything, the address doesn't need to exist::
+
+    E-mail address: anything@example.com
+
+It then asks for a password. This is the password to set for the user to be
+created. Enter any password you want (twice). As a security measure, when
+typing, the password will not be displayed.
+
+::
+    Password: 
+    Password (again): 
+
+
+It should then say::
+
+    Superuser created successfully.
+    Installing index for auth.Permission model
+    Installing index for auth.Group_permissions model
+    Installing index for auth.User_user_permissions model
+    Installing index for auth.User_groups model
+    Installing index for auth.Message model
+    Installing index for admin.LogEntry model
+    Installing index for omoma_web.Account_owner model
+    Installing index for omoma_web.Account model
+    Installing index for omoma_web.Transaction model
+    Installing index for omoma_web.Category model
+    Installing index for omoma_web.TransactionCategory model
+    Installing index for omoma_web.IOU model
+    Installing index for omoma_web.Budget model
+    No fixtures found.
+
+And voilà! Omoma is installed.
+
+Running Omoma
+=============
+
+Once the database is initialized, you can run Omoma. To do so, run the following
+commands::
+
+    cd /home/<your_username>/omoma
+    python manage.py runserver
+
+This allows you to access Omoma, but nobody else on your network. If you want
+to share your Omoma database with someone else (to allow IOUs for example), you
+can run the following commands instead::
+
+    cd /home/<your_username>/omoma
+    python manage.py runserver 0.0.0.0:8000
+
+Other people can access Omoma only when it is running on your computer.
+
+Accessing Omoma
+===============
+
+To access Omoma, you should go to the following address with your web browser:
+
+    http://127.0.0.1:8000
+
+You can now enter the username and password that were just created.
+
+    ``127.0.0.1`` is your own computer address - the current computer is always
+    ``127.0.0.1``, no matter where you are. ``8000`` is a TCP port: to allow
+    multiple connections, the TCP/IP protocol (used on the Internet and the vast
+    majority of computer networks nowadays) defines "ports", a single connection
+    uses a single port; every computer has 65535 ports.
+
+When you come from other computers, you should go to the computer's address, on
+port 8000 too:
+
+    http://<your_computer_address>:8000
+
+To get your computer address, use the network manager applet on your GNOME
+desktop: the little icon showing the network state; when right-clicking on this
+applet and choosing "Connection information", you get a window displaying your
+connection(s) and detailing its address, in the "IP Address" field. This address
+can, for example, be 192.168.1.10; in this case, the address to access Omoma on
+another computer would be::
+
+    http://192.168.1.10:8000
+
+    Note that accessing from other computers can work only in your local network
+    (unless you are directly connected to the Internet, which is risky).
+
+Creating currencies
+-------------------
+
+For the moment, there is no Omoma-specific interface to create currencies, and
+there is no preset currency. To create a currency, go to the following URI:
+
+    http://127.0.0.1:8000/admin/omoma_web/currency
+
+You can add a currency with the "Add currency" link in the top right corner of
+the page. For the moment, Omoma only works with a single currency, so simply
+set its rate to 1.
+
+Stopping Omoma
+==============
+
+To stop Omoma, you just need the ``Ctrl-C`` keystroke in the terminal running
+Omoma.
+
+"Ctrl-C" means that you have to press one of the "Ctrl" key, keep it pressed,
+press the "C" key and then release both keys. This shortcut can alse be written
+``^C``.
+
+To close the terminal, you can close its window or run the following command::
+
+    exit
+
+I've accessed Omoma... what next ?
+==================================
+
+You first need to create an account (or multiple accounts) in the
+"Configuration"/"Accounts" screen (link in the menu on the left).
+
+Add other users
+===============
+
+If you want to create IOUs, you have to add other users. To do so, access the
+following address::
+
+    http://127.0.0.1:8000/admin/auth/user/
+
+This is a Django administration page. You can add users with the "Add user" link
+in the top right corner of the page.
+
+IOUs ?
+======
+
+An IOU makes it possible to mark that someone owes you money, or that you owe
+money to someone. To be able to create IOUs in Omoma, both people should use the
+same installation of Omoma (communication beween multiple Omoma instances may be
+added later).
+
+This limitation is linked to the fact that the other person has to accept your
+IOUs for them to be taken into account.
+
+The database
+============
+
+All your data is stored in the database configured in the ``DATABASES`` section
+of the ``settings.py`` configuration file. If you have specified
+``my_omoma_database.sqlite3``, then the ``my_omoma_database.sqlite3`` file
+contains all your data. You may backup this file to keep your money data safe.
+
+.pyc files
+==========
+
+Files ending with .pyc will be created in the ``omoma`` directory and the
+``omoma_web`` subdirectory. They are harmless. Deleting them is harmless. The
+Python interpreter simply creates them if they don't exist, to make Omoma run
+faster.
