@@ -169,6 +169,7 @@ created. Enter any password you want (twice). As a security measure, when
 typing, the password will not be displayed.
 
 ::
+
     Password: 
     Password (again): 
 
@@ -236,7 +237,7 @@ desktop: the little icon showing the network state; when right-clicking on this
 applet and choosing "Connection information", you get a window displaying your
 connection(s) and detailing its address, in the "IP Address" field. This address
 can, for example, be 192.168.1.10; in this case, the address to access Omoma on
-another computer would be::
+another computer would be:
 
     http://192.168.1.10:8000
 
