@@ -38,7 +38,7 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
 
         {% if deleted %}
             {% if transaction_list %}
-                a href="{% url remove_deleted_transactions %}"><img src="/static/icon_delete.png" class="icon" />{% trans "Remove all deleted transactions" %}</a>
+                <a href="{% url remove_deleted_transactions %}"><img src="/static/icon_delete.png" class="icon" />{% trans "Remove all deleted transactions" %}</a>
             {% else %}
                 <p>{% trans "There is no deleted transaction." %}</p>
             {% endif %}
