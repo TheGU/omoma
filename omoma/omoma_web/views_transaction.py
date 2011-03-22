@@ -39,7 +39,7 @@ def transactions(request, aid=None, deleted=False):
         queryset=Transaction.objects.filter(account__owner=request.user,
                                             deleted=True)
         title = _('Deleted transactions')
-    if aid:
+    elif aid:
         aas = Account.objects.filter(pk=aid, owner=request.user)
         if not aas:
             return Forbidden()
@@ -130,7 +130,7 @@ def transaction(request, tid=None, iid=None, aid=None):
 
 
 @login_required
-def delete_transaction(request, tid, aid=None, restore=True):
+def delete_transaction(request, tid, aid=None, restore=False):
     """
     Delete a transaction
     """
