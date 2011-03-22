@@ -50,6 +50,8 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
         {% endif %}
 
         {% if transaction_list %}
+
+            {% include "pagination.html" %}
             <table>
                 <tr class="header">
                     <th class="links"></th>
@@ -96,6 +98,7 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
                 {% endfor %}
 
             </table>
+            {% include "pagination.html" %}
 
         {% endif %}
 

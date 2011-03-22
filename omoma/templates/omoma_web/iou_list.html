@@ -31,6 +31,7 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
 
         {% if iou_list %}
 
+            {% include "pagination.html" %}
             <table>
                 <tr class="header">
                     <th class="links"></th>
@@ -81,6 +82,7 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
                 {% endfor %}
 
             </table>
+            {% include "pagination.html" %}
 
         {% else %}
             <p>{% trans "There is no IOU." %}</p>
