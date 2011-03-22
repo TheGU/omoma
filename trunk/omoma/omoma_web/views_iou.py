@@ -47,7 +47,7 @@ def ious(request, recipient=None):
                                       accepted='a')
         title = _("IOUs")
     return list_detail.object_list(request, template_object_name='iou',
-                                   queryset=queryset,
+                                   queryset=queryset, paginate_by=25,
                                    extra_context={'title':title,
                                                   'recipient':recipient})
 

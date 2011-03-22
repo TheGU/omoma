@@ -31,7 +31,7 @@ from omoma_web.models import TransactionForm
 
 
 @login_required
-def transactions(request, aid=None, deleted=False):
+def transactions(request, aid=None, page=1, deleted=False):
     """
     List transactions
     """
@@ -50,12 +50,12 @@ def transactions(request, aid=None, deleted=False):
         queryset = Transaction.objects.filter(account__owner=request.user,
                                               deleted=False)
         title = _("Transactions")
+
     return list_detail.object_list(request, template_object_name='transaction',
-                                   queryset=queryset,
+                                   queryset=queryset, paginate_by=50,
                                    extra_context={'title':title,
                                                   'aid':aid,
                                                   'deleted':deleted})
-
 
 @login_required
 def transaction(request, tid=None, iid=None, aid=None):

@@ -136,7 +136,7 @@ font-size: 80%;
  * Content
  */
 
- td.links a {
+td.links a {
 padding: 1px;
 }
 
@@ -153,4 +153,18 @@ color: #c00;
 }
 span.positiveamount {
 color: #0c0;
+}
+
+/*
+ * Pagination
+ */
+
+p.pagination {
+margin: 0;
+padding: 0;
+text-align: right;
+}
+span.pagenumber {
+font-weight: bold;
+margin: 0 0.5em;
 }
