@@ -23,6 +23,7 @@ These features are implemented in the latest version of Omoma, downloadable as a
 "Trunk" is the on-going development version of Omoma. It may be unstable. It has additional features :
 
  * importing of QIF files
+ * pagination (50 transactions max in a page)
 
 It can be downloaded from the SVN repository.
 
