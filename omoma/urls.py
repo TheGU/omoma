@@ -126,3 +126,12 @@ urlpatterns += patterns('omoma.omoma_web.views_category',
     # Delete category
     (r'^category/(?P<cid>\d+)/delete/$', 'delete_category', None, 'delete_category'),
 )
+
+urlpatterns += patterns('omoma.omoma_web.views_import',
+    # Choose import format
+    (r'^import/$', 'choose_format', None, 'import_transactions'),
+    (r'^account/(?P<aid>\d+)/import/$', 'choose_format', None, 'import_transactions'),
+    # Import transactions
+    (r'^import/(?P<format>\w+)/$', 'import_transactions', None, 'import_transactions'),
+    (r'^account/(?P<aid>\d+)/import/(?P<format>\w+)/$', 'import_transactions', None, 'import_transactions'),
+)
