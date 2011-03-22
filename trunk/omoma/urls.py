@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Omoma. If not, see <http://www.gnu.org/licenses/>.
 
+from django.conf import settings
 from django.conf.urls.defaults import *
 from django.contrib import admin
 from django.views.generic.create_update import delete_object
@@ -31,7 +32,7 @@ urlpatterns = patterns('django.contrib.auth.views',
 urlpatterns += patterns('',
     # Common stuff... files, admin...
     (r'^static/(?P<path>.*)$', 'django.views.static.serve',
-                   {'document_root': '/the path to/omoma/media'}),
+                                       {'document_root': settings.STATIC_ROOT}),
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
 )
