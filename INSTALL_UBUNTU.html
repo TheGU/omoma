@@ -347,7 +347,8 @@ directory in your home directory, then its <em>path</em> is
 <p>If you put the <tt class="docutils literal">omoma</tt> directory on your desktop, then its <em>path</em> is
 <tt class="docutils literal"><span class="pre">/home/&lt;your_username&gt;/Desktop/omoma</span></tt> (for an english system).</p>
 <p>If you want to put the <tt class="docutils literal">omoma</tt> directory somewhere else, you can easily guess
-the <em>path</em>. You will need to know your <tt class="docutils literal">omoma</tt> path later.</p>
+the <em>path</em>. You will need to know your <tt class="docutils literal">omoma</tt> path later. In the following
+examples, the <tt class="docutils literal">omoma</tt> directory is assumed to be in your home directory.</p>
 <p>First, you need to install <em>Django</em> (the framework used by Omoma) and SQLite.
 Run the following command:</p>
 <pre class="literal-block">
@@ -356,9 +357,16 @@ sudo apt-get install python-django python-pysqlite2
 </div>
 <div class="section" id="configuring-omoma">
 <h1>Configuring Omoma</h1>
-<p>Next, you should configure Django. Edit the <tt class="docutils literal">settings.py</tt> file
-(simply by clicking on it). This file contains many directives that tell Omoma
-how to work.</p>
+<p>Next, you should configure Django.</p>
+<p>Copy the <tt class="docutils literal">local_settings.py.default</tt> file as <tt class="docutils literal">local_settings.py</tt>. It can be
+easily done by running the following commands:</p>
+<pre class="literal-block">
+cd /home/&lt;your_username&gt;/omoma
+cp local_settings.py.default local_settings.py
+</pre>
+<p>Edit the <tt class="docutils literal">local_settings.py</tt> file (simply by clicking on it). This file
+contains many directives that tell Omoma how to work, you have to modify them
+to fit your system.</p>
 <p>You should only modify the ones explained here. Modifying other directived can
 make Omoma crash.</p>
 <p>The line starting with <tt class="docutils literal">DEBUG</tt> should be:</p>
@@ -379,7 +387,7 @@ TIME_ZONE = 'Antarctica/South_Pole'
 </pre>
 <p>The <tt class="docutils literal">LANGUAGE_CODE</tt> directive should be set to your local language. See the
 table at <a class="reference external" href="http://www.i18nguy.com/unicode/language-identifiers.html">http://www.i18nguy.com/unicode/language-identifiers.html</a> (column
-&quot;Languages&quot;)to know your language code. For example, in Gibraltar, the language
+&quot;Languages&quot;) to know your language code. For example, in Gibraltar, the language
 code would be:</p>
 <pre class="literal-block">
 LANGUAGE_CODE = 'en-GI'
@@ -391,37 +399,19 @@ Omoma, it will fall back to english.</p>
 Really anything: letters, numbers, parenthesis, hiphens, etc. You just need to
 avoid the ' character (because it is the string delimiter). For example:</p>
 <pre class="literal-block">
-SECRET_KEY = 'rzegfz7RT564-&quot;rét35Y675)}=+rREHgezrT3Efr7eZE'
+SECRET_KEY = 'rzegfz7RT564-&quot;rt35Y675)}=+rREHgezrT3Efr7eZE'
 </pre>
 <p>The <tt class="docutils literal">TEMPLATE_DIRS</tt> sections is a list of paths containing only one path, to
-set to the <tt class="docutils literal">templates</tt> subdirectory in your <tt class="docutils literal">omoma</tt> directory path. For
-example, if your <tt class="docutils literal">omoma</tt> directory is in your home directory:</p>
+set to the <tt class="docutils literal">templates</tt> subdirectory in your <tt class="docutils literal">omoma</tt> directory path:</p>
 <pre class="literal-block">
 TEMPLATE_DIRS = (
     '/home/&lt;your_username&gt;/omoma/templates',
 )
 </pre>
-<p>... if your <tt class="docutils literal">omoma</tt> directory is on your desktop (on an english system):</p>
+<p>The <tt class="docutils literal">STATIC_ROOT</tt> is where static files (icons, for instance) are stored. Set
+it to the path to the <tt class="docutils literal">media</tt> subdirectory in your <tt class="docutils literal">omoma</tt> directory path:</p>
 <pre class="literal-block">
-TEMPLATE_DIRS = (
-    '/home/&lt;your_username&gt;/Desktop/omoma/templates',
-)
-</pre>
-<p>At the end of this file, the <tt class="docutils literal">LOGIN_URL</tt> and <tt class="docutils literal">LOGIN_REDIRECT_URL</tt> should be
-set to:</p>
-<pre class="literal-block">
-LOGIN_URL='/login/'
-LOGIN_REDIRECT_URL='/'
-</pre>
-<p>Save and close this file.</p>
-<p>Now, edit the <tt class="docutils literal">urls.py</tt> file.</p>
-<p>In this file, search for a line containing <tt class="docutils literal">django.views.static.serve</tt> (it
-should be juste after the line &quot;Common stuff...&quot;). Set the <tt class="docutils literal">document_root</tt>
-variable to the path to the <tt class="docutils literal">media</tt> subdirectory in your <tt class="docutils literal">omoma</tt> directory
-path. For example, if your <tt class="docutils literal">omoma</tt> directory is in your home directory:</p>
-<pre class="literal-block">
-(r'^static/(?P&lt;path&gt;.*)$', 'django.views.static.serve',
-               {'document_root': '/home/&lt;your_username&gt;/omoma/media'}),
+STATIC_ROOT = '/home/&lt;your_username&gt;/omoma/media'
 </pre>
 <p>Save and close this file.</p>
 <p>Now, you have to generate the data needed for Omoma : the tables that will be
@@ -569,7 +559,7 @@ IOUs for them to be taken into account.</p>
 <div class="section" id="the-database">
 <h1>The database</h1>
 <p>All your data is stored in the database configured in the <tt class="docutils literal">DATABASES</tt> section
-of the <tt class="docutils literal">settings.py</tt> configuration file. If you have specified
+of the <tt class="docutils literal">local_settings.py</tt> configuration file. If you have specified
 <tt class="docutils literal">my_omoma_database.sqlite3</tt>, then the <tt class="docutils literal">my_omoma_database.sqlite3</tt> file
 contains all your data. You may backup this file to keep your money data safe.</p>
 </div>

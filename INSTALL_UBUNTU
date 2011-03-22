@@ -56,7 +56,8 @@ If you put the ``omoma`` directory on your desktop, then its *path* is
 ``/home/<your_username>/Desktop/omoma`` (for an english system).
 
 If you want to put the ``omoma`` directory somewhere else, you can easily guess
-the *path*. You will need to know your ``omoma`` path later.
+the *path*. You will need to know your ``omoma`` path later. In the following
+examples, the ``omoma`` directory is assumed to be in your home directory.
 
 First, you need to install *Django* (the framework used by Omoma) and SQLite.
 Run the following command::
@@ -66,9 +67,17 @@ Run the following command::
 Configuring Omoma
 =================
 
-Next, you should configure Django. Edit the ``settings.py`` file
-(simply by clicking on it). This file contains many directives that tell Omoma
-how to work.
+Next, you should configure Django.
+
+Copy the ``local_settings.py.default`` file as ``local_settings.py``. It can be
+easily done by running the following commands::
+
+    cd /home/<your_username>/omoma
+    cp local_settings.py.default local_settings.py
+
+Edit the ``local_settings.py`` file (simply by clicking on it). This file
+contains many directives that tell Omoma how to work, you have to modify them
+to fit your system.
 
 You should only modify the ones explained here. Modifying other directived can
 make Omoma crash.
@@ -91,7 +100,7 @@ timezone name. For example, at the South Pole, the timezone should be set as::
 
 The ``LANGUAGE_CODE`` directive should be set to your local language. See the
 table at http://www.i18nguy.com/unicode/language-identifiers.html (column
-"Languages")to know your language code. For example, in Gibraltar, the language
+"Languages") to know your language code. For example, in Gibraltar, the language
 code would be::
 
     LANGUAGE_CODE = 'en-GI'
@@ -104,39 +113,19 @@ The ``SECRET_KEY`` should be any textual string. Just type anything.
 Really anything: letters, numbers, parenthesis, hiphens, etc. You just need to
 avoid the ' character (because it is the string delimiter). For example::
 
-    SECRET_KEY = 'rzegfz7RT564-"rét35Y675)}=+rREHgezrT3Efr7eZE'
+    SECRET_KEY = 'rzegfz7RT564-"rt35Y675)}=+rREHgezrT3Efr7eZE'
 
 The ``TEMPLATE_DIRS`` sections is a list of paths containing only one path, to
-set to the ``templates`` subdirectory in your ``omoma`` directory path. For
-example, if your ``omoma`` directory is in your home directory::
+set to the ``templates`` subdirectory in your ``omoma`` directory path::
 
     TEMPLATE_DIRS = (
         '/home/<your_username>/omoma/templates',
     )
 
-... if your ``omoma`` directory is on your desktop (on an english system)::
+The ``STATIC_ROOT`` is where static files (icons, for instance) are stored. Set
+it to the path to the ``media`` subdirectory in your ``omoma`` directory path::
 
-    TEMPLATE_DIRS = (
-        '/home/<your_username>/Desktop/omoma/templates',
-    )
-
-At the end of this file, the ``LOGIN_URL`` and ``LOGIN_REDIRECT_URL`` should be
-set to::
-
-    LOGIN_URL='/login/'
-    LOGIN_REDIRECT_URL='/'
-
-Save and close this file.
-
-Now, edit the ``urls.py`` file.
-
-In this file, search for a line containing ``django.views.static.serve`` (it
-should be juste after the line "Common stuff..."). Set the ``document_root``
-variable to the path to the ``media`` subdirectory in your ``omoma`` directory
-path. For example, if your ``omoma`` directory is in your home directory::
-
-    (r'^static/(?P<path>.*)$', 'django.views.static.serve',
-                   {'document_root': '/home/<your_username>/omoma/media'}),
+    STATIC_ROOT = '/home/<your_username>/omoma/media'
 
 Save and close this file.
 
@@ -302,7 +291,7 @@ The database
 ============
 
 All your data is stored in the database configured in the ``DATABASES`` section
-of the ``settings.py`` configuration file. If you have specified
+of the ``local_settings.py`` configuration file. If you have specified
 ``my_omoma_database.sqlite3``, then the ``my_omoma_database.sqlite3`` file
 contains all your data. You may backup this file to keep your money data safe.
 
