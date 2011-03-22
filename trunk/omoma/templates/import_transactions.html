@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% comment %}
+Import file template for Omoma
+Copyright 2011 Sebastien Maccagnoni-Munch
+
+This file is part of Omoma.
+
+Omoma is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, version 3.
+
+Omoma is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+{% endcomment %}
+
+{% load i18n %}
+{% load omoma %}
+
+{% block title %}{% trans "Import transactions" %}{% endblock %}
+
+{% block content %}
+
+    {% contentbox _('Import transactions') %}
+
+        {% if error %}
+            <p>{{ error }}</p>
+        {% endif %}
+
+        <form enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+            <table>
+                {{ form }}
+            </table>
+            <input type="submit" value="{% trans "Import" %}" />
+            <a href="{% if aid %}{% url import_transactions aid=aid %}{% else %}{% url import_transactions %}{% endif %}">{% trans "Cancel" %}</a>
+        </form>
+
+    {% endbox %}
+
+{% endblock content %}
