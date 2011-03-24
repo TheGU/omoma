@@ -27,10 +27,6 @@ margin: 5px 0;
 width: 100%;
 }
 
-form table {
-width: auto;
-}
-
 /*
  * Rows
  */
@@ -45,13 +41,6 @@ cursor: default;
 }
 tr:hover {
 background: #fff;
-}
-
-form table tr {
-border: 0;
-}
-form table tr:hover {
-background: none;
 }
 
 tr.header {
