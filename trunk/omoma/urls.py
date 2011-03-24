@@ -130,9 +130,9 @@ urlpatterns += patterns('omoma.omoma_web.views_category',
 
 urlpatterns += patterns('omoma.omoma_web.views_import',
     # Choose import format
-    (r'^import/$', 'choose_format', None, 'import_transactions'),
-    (r'^account/(?P<aid>\d+)/import/$', 'choose_format', None, 'import_transactions'),
-    # Import transactions
-    (r'^import/(?P<format>\w+)/$', 'import_transactions', None, 'import_transactions'),
-    (r'^account/(?P<aid>\d+)/import/(?P<format>\w+)/$', 'import_transactions', None, 'import_transactions'),
+    (r'^import/$', 'import_transactions', None, 'import_transactions'),
+    (r'^account/(?P<aid>\d+)/import/$', 'import_transactions', None, 'import_transactions'),
+    # Cancel import
+    (r'^import/cancel/$', 'cancel_import_transactions', None, 'cancel_import_transactions'),
+    (r'^account/(?P<aid>\d+)/import/cancel/$', 'cancel_import_transactions', None, 'cancel_import_transactions'),
 )

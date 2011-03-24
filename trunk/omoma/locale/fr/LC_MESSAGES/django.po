@@ -18,7 +18,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-21 00:06+0100\n"
+"POT-Creation-Date: 2011-03-24 23:53+0100\n"
 "Last-Translator: Sebastien Maccagnoni-Munch <sebastien@tiramiseb.fr>\n"
 "Language: french\n"
 "MIME-Version: 1.0\n"
@@ -291,33 +291,23 @@ msgstr "Nouvelle catégorie"
 msgid "Category \"%s\" successfully deleted"
 msgstr "Catégorie \"%s\" effacée"
 
-#: omoma_web/views_import.py:134
+#: omoma_web/views_import.py:32
+msgid "File to import"
+msgstr "Fichier à importer"
+
+#: omoma_web/views_import.py:44
+#, python-format
+msgid "%s: the file is too large (max 1 MB)."
+msgstr "%s : le fichier est trop gros (1 Mo maximum)."
+
+#: omoma_web/views_import.py:51
+#, python-format
+msgid "%s: this file format is not known."
+msgstr "%s : ce format de fichier est inconnu."
+
+#: omoma_web/views_import.py:75
 msgid "Successfully imported transactions."
 msgstr "Transaction importées."
-
-#: omoma_web/views_import.py:136
-#, python-format
-msgid "%d transactions imported."
-msgstr "%d transactions importées."
-
-#: omoma_web/views_import.py:139
-#, python-format
-msgid "%d transactions already existed."
-msgstr "%d transactions existent déjà."
-
-#: omoma_web/views_import.py:142
-#, python-format
-msgid "Failed to add %d transactions."
-msgstr "Echec de l'ajout de %d transactions."
-
-#: omoma_web/views_import.py:153
-#, python-format
-msgid "%s: this file is not a valid account file for Omoma."
-msgstr "%s : ce fichier n'est pas un fichier de compte valide pour Omoma."
-
-#: omoma_web/views_import.py:156
-msgid "Something wrong happened."
-msgstr "Quelque chose s'est mal passé."
 
 #: omoma_web/views_iou.py:43
 #, python-format
@@ -442,40 +432,46 @@ msgstr "Nouvelle catégorie pour \"%s\""
 msgid "Category \"%(category)s\" successfully deleted from \"%(transaction)s\""
 msgstr "Catégorie \"%(category)s\" effacée de \"%(transaction)s\""
 
-#: omoma_web/importexport/qifparser.py:25
-msgid "DD/MM/YYYY"
-msgstr "JJ/MM/AAAA"
-
-#: omoma_web/importexport/qifparser.py:26
-msgid "MM/DD/YYYY"
-msgstr "MM/JJ/AAAA"
-
-#: omoma_web/importexport/qifparser.py:27
+#: omoma_web/importexport/qifparser.py:38
 msgid "DD/MM/YY"
 msgstr "JJ/MM/AA"
 
-#: omoma_web/importexport/qifparser.py:28
+#: omoma_web/importexport/qifparser.py:39
 msgid "MM/DD/YY"
 msgstr "MM/JJ/AA"
 
-#: omoma_web/importexport/qifparser.py:30
+#: omoma_web/importexport/qifparser.py:40
+msgid "DD/MM/YYYY"
+msgstr "JJ/MM/AAAA"
+
+#: omoma_web/importexport/qifparser.py:41
+msgid "MM/DD/YYYY"
+msgstr "MM/JJ/AAAA"
+
+#: omoma_web/importexport/qifparser.py:44
 msgid "Date format"
 msgstr "Format de la date"
 
-#: omoma_web/importexport/qifparser.py:37
-#, python-format
-msgid "%s: this file is not a valid QIF file."
-msgstr "%s : ce fichier n'est pas un fichier QIF valide."
-
-#: omoma_web/importexport/tools.py:25
-msgid "File to import"
-msgstr "Fichier à importer"
-
-#: omoma_web/importexport/tools.py:33
-#: templates/omoma_web/transaction_list.html:61
+#: omoma_web/importexport/qifparser.py:53
+#: templates/omoma_web/transaction_list.html:63
 #: templates/widgets/balance.html:32
 msgid "Account"
 msgstr "Compte"
+
+#: omoma_web/importexport/qifparser.py:106
+#, python-format
+msgid "%d transactions imported."
+msgstr "%d transactions importées."
+
+#: omoma_web/importexport/qifparser.py:109
+#, python-format
+msgid "%d transactions already existed."
+msgstr "%d transactions existent déjà."
+
+#: omoma_web/importexport/qifparser.py:112
+#, python-format
+msgid "Failed to add %d transactions."
+msgstr "Echec de l'ajout de %d transactions."
 
 #: omoma_web/templatetags/omoma.py:199
 msgid "lent me"
@@ -511,8 +507,8 @@ msgstr "Vous allez attacher le règlement suivant à une transaction :"
 
 #: templates/attach_iou.html:31 templates/attach_iou.html.py:49
 #: templates/pending_ious.html:34 templates/pending_ious.html.py:70
-#: templates/omoma_web/iou_list.html:37 templates/omoma_web/iou_list.html:101
-#: templates/omoma_web/transaction_list.html:56
+#: templates/omoma_web/iou_list.html:38 templates/omoma_web/iou_list.html:103
+#: templates/omoma_web/transaction_list.html:58
 msgid "Description"
 msgstr "Description"
 
@@ -522,27 +518,27 @@ msgid "From"
 msgstr "De"
 
 #: templates/attach_iou.html:33 templates/pending_ious.html:36
-#: templates/pending_ious.html.py:72 templates/omoma_web/iou_list.html:41
-#: templates/omoma_web/iou_list.html:103
+#: templates/pending_ious.html.py:72 templates/omoma_web/iou_list.html:42
+#: templates/omoma_web/iou_list.html:105
 #: templates/omoma_web/transaction.html:59
 #: templates/omoma_web/transaction.html:143
-#: templates/omoma_web/transaction_list.html:57
+#: templates/omoma_web/transaction_list.html:59
 #: templates/widgets/creditors_and_debtors.html:33
 msgid "Amount"
 msgstr "Montant"
 
 #: templates/attach_iou.html:34 templates/attach_iou.html.py:51
 #: templates/pending_ious.html:37 templates/pending_ious.html.py:73
-#: templates/omoma_web/iou.html:50 templates/omoma_web/iou_list.html:42
-#: templates/omoma_web/iou_list.html:104
+#: templates/omoma_web/iou.html:50 templates/omoma_web/iou_list.html:43
+#: templates/omoma_web/iou_list.html:106
 #: templates/omoma_web/transaction.html:111
-#: templates/omoma_web/transaction_list.html:59
+#: templates/omoma_web/transaction_list.html:61
 msgid "Date"
 msgstr "Date"
 
 #: templates/attach_iou.html:35 templates/pending_ious.html:38
-#: templates/pending_ious.html.py:74 templates/omoma_web/iou_list.html:43
-#: templates/omoma_web/iou_list.html:105
+#: templates/pending_ious.html.py:74 templates/omoma_web/iou_list.html:44
+#: templates/omoma_web/iou_list.html:107
 #: templates/omoma_web/transaction.html:60
 msgid "Type of IOU"
 msgstr "Type de règlement"
@@ -559,7 +555,7 @@ msgstr "Les transactions suivantes peuvent correspondre à ce règlement :"
 #: templates/omoma_web/category_list.html:24
 #: templates/omoma_web/category_list.html:27
 #: templates/omoma_web/transaction.html:134
-#: templates/omoma_web/transaction_list.html:58
+#: templates/omoma_web/transaction_list.html:60
 msgid "Categories"
 msgstr "Catégories"
 
@@ -571,7 +567,8 @@ msgstr "Créer et retour"
 msgid "Create and modify"
 msgstr "Créer et modifier"
 
-#: templates/attach_iou.html:78 templates/import_transactions.html:40
+#: templates/attach_iou.html:78 templates/choose_import_format.html:37
+#: templates/import_transactions.html:37 templates/import_transactions.html:39
 #: templates/omoma_web/account.html:34
 #: templates/omoma_web/account_confirm_delete.html:49
 #: templates/omoma_web/category.html:34
@@ -593,7 +590,7 @@ msgstr "Importer des transactions"
 msgid "Please choose the format to import:"
 msgstr "Choisissez le format à importer :"
 
-#: templates/import_transactions.html:39
+#: templates/import_transactions.html:35
 msgid "Import"
 msgstr "Importer"
 
@@ -606,7 +603,7 @@ msgid "Login"
 msgstr "Connexion"
 
 #: templates/pending_ious.html:24 templates/pending_ious.html.py:29
-#: templates/omoma_web/iou.html:43 templates/omoma_web/iou_list.html:94
+#: templates/omoma_web/iou.html:43 templates/omoma_web/iou_list.html:96
 #: templates/omoma_web/transaction.html:102
 msgid "Pending IOUs"
 msgstr "Règlements en attente"
@@ -615,8 +612,8 @@ msgstr "Règlements en attente"
 msgid "Rejected IOUs"
 msgstr "Règlements rejetés"
 
-#: templates/pending_ious.html:71 templates/omoma_web/iou_list.html:39
-#: templates/omoma_web/iou_list.html:102
+#: templates/pending_ious.html:71 templates/omoma_web/iou_list.html:40
+#: templates/omoma_web/iou_list.html:104
 #: templates/omoma_web/transaction.html:58
 msgid "Recipient"
 msgstr "Destinataire"
@@ -737,11 +734,11 @@ msgstr "Les règlements suivants peuvent correspondre à cette transaction :"
 msgid "Type"
 msgstr "Type"
 
-#: templates/omoma_web/iou_list.html:86
+#: templates/omoma_web/iou_list.html:88
 msgid "There is no IOU."
 msgstr "Il n'y a pas de règlement."
 
-#: templates/omoma_web/iou_list.html:96
+#: templates/omoma_web/iou_list.html:98
 msgid "You are waiting for the following IOUs to be accepted:"
 msgstr "Vous attendez que les règlements suivants soient acceptés :"
 

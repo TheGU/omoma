@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Omoma. If not, see <http://www.gnu.org/licenses/>.
 
+from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
@@ -24,47 +25,99 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 
 from omoma_web.forbidden import Forbidden
-from omoma_web.importexport import supported_formats
+from omoma_web.importexport import guessparser
+
+
+class ImportForm(forms.Form):
+    imported_file = forms.FileField(label=_('File to import'))
+
+    def __init__(self, request, *args, **kwargs):
+        super (ImportForm,self).__init__(*args, **kwargs)
+
+    def clean(self):
+        """
+        Clean the form.
+        """
+        cleaned_data = self.cleaned_data
+        impfile = cleaned_data.get('imported_file')
+        if impfile.size > 1048576:
+            msg = _('%s: the file is too large (max 1 MB).') % impfile.name
+            self._errors['imported_file'] = self.error_class([msg])
+            del cleaned_data['imported_file']
+        else:
+            self.filecontent = impfile.read()
+            self.fileparser = guessparser(self.filecontent)
+            if not self.fileparser:
+                msg = _('%s: this file format is not known.') % impfile.name
+                self._errors['imported_file'] = self.error_class([msg])
+                del cleaned_data['imported_file']
+        return cleaned_data
 
 
 @login_required
-def choose_format(request, aid=None):
+def import_transactions(request, aid=None):
     """
-    File format choice view
+    Import transactions
     """
-    return render_to_response('choose_import_format.html', {
-        'formats':supported_formats,
-        'aid': aid,
-    }, RequestContext(request))
+    if request.session.has_key('importparser'):
+        details = True
 
+        # A file has already been selected and uploaded, a parser is defined
+        if request.method == 'POST':
+            form = request.session['importparser'].detailsform(request,
+                                                               request.POST,
+                                                               aid=aid)
+            if form.is_valid():
+                message = request.session['importparser'].parse(form)
+                if not message:
+                    return Forbidden()
 
-def import_transactions(request, format=None, aid=None):
-    """
-    Transactions import view
-    """
-    error = None
-    if request.method == 'POST':
-        form = supported_formats[format]['form'](request, request.POST,
-                                                 request.FILES, aid=aid)
-        if form.is_valid():
-            parse_response = form.parse()
-            if parse_response:
                 msg = ' '.join([_("Successfully imported transactions."),
-                                parse_response])
+                                message])
                 messages.info(request, msg)
+                del request.session['importparser']
                 if aid:
                     return HttpResponseRedirect(reverse('transactions',
-                                                           kwargs={'aid':aid}))
+                                                        kwargs={'aid':aid}))
                 else:
                     return HttpResponseRedirect(reverse('transactions'))
-            else:
-                return Forbidden()
 
+        else:
+            form = request.session['importparser'].detailsform(request,
+                                                               aid=aid)
 
     else:
-        form = supported_formats[format]['form'](request, aid=aid)
+        details = False
+
+        # No file uploaded yet
+        if request.method == 'POST':
+            form = ImportForm(request, request.POST, request.FILES)
+            if form.is_valid():
+                request.session['importparser'] = form.fileparser
+                if aid:
+                    return HttpResponseRedirect(reverse('import_transactions',
+                                                        kwargs={'aid':aid}))
+                else:
+                    return HttpResponseRedirect(reverse('import_transactions'))
+
+        else:
+            form = ImportForm(request)
 
     return render_to_response('import_transactions.html', {
-        'aid': aid,
         'form': form,
+        'aid': aid,
+        'details': details,
     }, RequestContext(request))
+
+
+@login_required
+def cancel_import_transactions(request, aid=None):
+    """
+    Cancel transactions importation
+    """
+    del request.session['importparser']
+    if aid:
+        return HttpResponseRedirect(reverse('import_transactions',
+                                            kwargs={'aid':aid}))
+    else:
+        return HttpResponseRedirect(reverse('import_transactions'))
