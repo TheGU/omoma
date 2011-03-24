@@ -1,4 +1,4 @@
-# QIF import/export parsers for Omoma
+# QIF import parser for Omoma
 # Copyright 2011 Sebastien Maccagnoni-Munch
 #
 # This file is part of Omoma.
@@ -20,50 +20,57 @@ import datetime
 from django import forms
 from django.utils.translation import ugettext as _
 
+from omoma_web.importexport import import_transaction
+from omoma_web.models import Account
 from omoma_web.models import Transaction
 
-from tools import ImportForm, import_transaction
+
+def check(filedata):
+    return filedata[:6] == '!Type:'
 
 
-class QifForm (ImportForm):
+class QifDetailsForm(forms.Form):
     """
-    QIF import form
+    QIF details form
     """
+    account = forms.ChoiceField()
     QIF_DATE_FORMATS = (
         ('%d/%m/%y', _('DD/MM/YY')),
         ('%m/%d/%y', _('MM/DD/YY')),
         ('%d/%m/%Y', _('DD/MM/YYYY')),
         ('%m/%d/%Y', _('MM/DD/YYYY')),
     )
-    date_format = forms.ChoiceField(QIF_DATE_FORMATS, label=_('Date format'))
+    date_format = forms.ChoiceField(QIF_DATE_FORMATS,
+                                    label=_('Date format'))
 
-    def clean(self):
-        cleaned_data = ImportForm.clean(self)
+    def __init__(self, request, *args, **kwargs):
+        aid = kwargs.pop('aid', None)
+        super (QifDetailsForm,self).__init__(*args, **kwargs)
+        self.request = request
+        self.fields['account'] = forms.ModelChoiceField(
+                                    Account.objects.filter(owner=request.user),
+                                                        initial=aid,
+                                                        label=_('Account'))
 
-        if cleaned_data.get('imported_file'):
-            self.filedata = cleaned_data.get('imported_file').read()
 
-            if  self.filedata[:6] != '!Type:':
+class Parser:
 
-                msg = _('%s: this file is not a valid QIF file.') % \
-                                         cleaned_data.get('imported_file').name
+    detailsform = QifDetailsForm
 
-                self._errors['imported_file'] = self.error_class([msg])
-                del cleaned_data['imported_file']
+    def __init__(self, filedata):
+        self.filedata = filedata
 
-        return cleaned_data
-
-    def parse(self):
+    def parse(self, form):
         """
         Parse a QIF file.
 
         Tested and validated with a QIF file from the Credit Mutuel french bank
         """
-        account = self.cleaned_data.get('account')
-        dateformat = self.cleaned_data.get('date_format')
+        account = form.cleaned_data.get('account')
+        dateformat = form.cleaned_data.get('date_format')
 
         # Validate the account is owned by the user
-        if not self.request.user in account.owner.all():
+        if not form.request.user in account.owner.all():
             return False
 
         transactions_added = 0
