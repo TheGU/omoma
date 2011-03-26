@@ -26,7 +26,8 @@ def guessparser(filedata):
     for parsername in pkgutil.iter_modules(sys.modules[__name__].__path__):
         parser = __import__(parsername[1], globals())
         if 'check' in dir(parser) and parser.check(filedata):
-            return parser.Parser(filedata)
+            return {'parser':parser.Parser(filedata),
+                    'form':parser.DetailsForm}
     return None
 
 
@@ -36,7 +37,7 @@ def listparsers():
     for parsername in pkgutil.iter_modules(sys.modules[__name__].__path__):
         parser = __import__(parsername[1], globals())
         if 'name' in dir(parser):
-            parsers.append(parser.name)
+            parsers.append(parser.name())
     return parsers
 
 
