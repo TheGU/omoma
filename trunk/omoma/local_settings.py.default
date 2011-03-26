@@ -49,3 +49,5 @@ TEMPLATE_DIRS = (
 )
 
 STATIC_ROOT = '/the path to/omoma/media'
+
+OFX2QIF = '/usr/bin/ofx2qif'

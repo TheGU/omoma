@@ -59,10 +59,10 @@ If you want to put the ``omoma`` directory somewhere else, you can easily guess
 the *path*. You will need to know your ``omoma`` path later. In the following
 examples, the ``omoma`` directory is assumed to be in your home directory.
 
-First, you need to install *Django* (the framework used by Omoma) and SQLite.
-Run the following command::
+First, you need to install *Django* (the framework used by Omoma), SQLite and
+the OFX tools. Run the following command::
 
-    sudo apt-get install python-django python-pysqlite2
+    sudo apt-get install python-django python-pysqlite2 ofx
 
 Configuring Omoma
 =================
@@ -126,6 +126,11 @@ The ``STATIC_ROOT`` is where static files (icons, for instance) are stored. Set
 it to the path to the ``media`` subdirectory in your ``omoma`` directory path::
 
     STATIC_ROOT = '/home/<your_username>/omoma/media'
+
+The ``OFX2QIF`` variable refers to the ``ofx2qif`` program. The default,
+``/usr/bin/ofx2qif``, should be fine::
+
+    OFX2QIF = '/usr/bin/ofx2qif'
 
 Save and close this file.
 

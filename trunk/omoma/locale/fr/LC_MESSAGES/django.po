@@ -18,7 +18,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-25 22:00+0100\n"
+"POT-Creation-Date: 2011-03-26 23:05+0100\n"
 "Last-Translator: Sebastien Maccagnoni-Munch <sebastien@tiramiseb.fr>\n"
 "Language: french\n"
 "MIME-Version: 1.0\n"
@@ -253,7 +253,7 @@ msgstr "Compte \"%s\" modifié"
 msgid "Account \"%s\" successfully created"
 msgstr "Compte \"%s\" créé"
 
-#: omoma_web/views_account.py:75
+#: omoma_web/views_account.py:75 omoma_web/importexport/ofxparser.py:61
 #, python-format
 msgid "Account \"%s\""
 msgstr "Compte \"%s\""
@@ -432,6 +432,26 @@ msgstr "Nouvelle catégorie pour \"%s\""
 msgid "Category \"%(category)s\" successfully deleted from \"%(transaction)s\""
 msgstr "Catégorie \"%(category)s\" effacée de \"%(transaction)s\""
 
+#: omoma_web/importexport/ofxparser.py:114
+#, python-format
+msgid "%d imported"
+msgstr "%d importées"
+
+#: omoma_web/importexport/ofxparser.py:117
+#, python-format
+msgid "%d already existed"
+msgstr "%d existent déjà"
+
+#: omoma_web/importexport/ofxparser.py:120
+#, python-format
+msgid "%d failed"
+msgstr "%d échouées"
+
+#: omoma_web/importexport/ofxparser.py:122
+#, python-format
+msgid "In account \"%(account)s\": %(details)s."
+msgstr "Dans le compte \"%(account)s\" : %(details)s."
+
 #: omoma_web/importexport/qifparser.py:41
 msgid "DD/MM/YY"
 msgstr "JJ/MM/AA"
@@ -458,17 +478,17 @@ msgstr "Format de la date"
 msgid "Account"
 msgstr "Compte"
 
-#: omoma_web/importexport/qifparser.py:109
+#: omoma_web/importexport/qifparser.py:107
 #, python-format
 msgid "%d transactions imported."
 msgstr "%d transactions importées."
 
-#: omoma_web/importexport/qifparser.py:112
+#: omoma_web/importexport/qifparser.py:110
 #, python-format
 msgid "%d transactions already existed."
 msgstr "%d transactions existent déjà."
 
-#: omoma_web/importexport/qifparser.py:115
+#: omoma_web/importexport/qifparser.py:113
 #, python-format
 msgid "Failed to add %d transactions."
 msgstr "Echec de l'ajout de %d transactions."
@@ -576,7 +596,7 @@ msgid "Create and modify"
 msgstr "Créer et modifier"
 
 #: templates/attach_iou.html:78 templates/choose_import_format.html:37
-#: templates/import_transactions.html:43 templates/import_transactions.html:45
+#: templates/import_transactions.html:45 templates/import_transactions.html:47
 #: templates/omoma_web/account.html:34
 #: templates/omoma_web/account_confirm_delete.html:49
 #: templates/omoma_web/category.html:34
@@ -598,11 +618,11 @@ msgstr "Importer des transactions"
 msgid "Please choose the format to import:"
 msgstr "Choisissez le format à importer :"
 
-#: templates/import_transactions.html:35
+#: templates/import_transactions.html:36
 msgid "Supported formats:"
 msgstr "Formats supportés :"
 
-#: templates/import_transactions.html:41
+#: templates/import_transactions.html:43
 msgid "Import"
 msgstr "Importer"
 

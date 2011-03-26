@@ -349,10 +349,10 @@ directory in your home directory, then its <em>path</em> is
 <p>If you want to put the <tt class="docutils literal">omoma</tt> directory somewhere else, you can easily guess
 the <em>path</em>. You will need to know your <tt class="docutils literal">omoma</tt> path later. In the following
 examples, the <tt class="docutils literal">omoma</tt> directory is assumed to be in your home directory.</p>
-<p>First, you need to install <em>Django</em> (the framework used by Omoma) and SQLite.
-Run the following command:</p>
+<p>First, you need to install <em>Django</em> (the framework used by Omoma), SQLite and
+the OFX tools. Run the following command:</p>
 <pre class="literal-block">
-sudo apt-get install python-django python-pysqlite2
+sudo apt-get install python-django python-pysqlite2 ofx
 </pre>
 </div>
 <div class="section" id="configuring-omoma">
@@ -412,6 +412,11 @@ TEMPLATE_DIRS = (
 it to the path to the <tt class="docutils literal">media</tt> subdirectory in your <tt class="docutils literal">omoma</tt> directory path:</p>
 <pre class="literal-block">
 STATIC_ROOT = '/home/&lt;your_username&gt;/omoma/media'
+</pre>
+<p>The <tt class="docutils literal">OFX2QIF</tt> variable refers to the <tt class="docutils literal">ofx2qif</tt> program. The default,
+<tt class="docutils literal">/usr/bin/ofx2qif</tt>, should be fine:</p>
+<pre class="literal-block">
+OFX2QIF = '/usr/bin/ofx2qif'
 </pre>
 <p>Save and close this file.</p>
 <p>Now, you have to generate the data needed for Omoma : the tables that will be
