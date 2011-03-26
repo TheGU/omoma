@@ -65,12 +65,12 @@ def import_transactions(request, aid=None):
 
         # A file has already been selected and uploaded, a parser is defined
         if request.method == 'POST':
-            form = request.session['importparser'].detailsform(request,
-                                                               request.POST,
-                                                               aid=aid)
+            form = request.session['importparser']['form'](request,
+                                                           request.POST,
+                                                           aid=aid)
             if form.is_valid():
-                message = request.session['importparser'].parse(form)
-                if not message:
+                message = request.session['importparser']['parser'].parse(form)
+                if message is None or message is False:
                     return Forbidden()
 
                 msg = ' '.join([_("Successfully imported transactions."),
@@ -84,8 +84,7 @@ def import_transactions(request, aid=None):
                     return HttpResponseRedirect(reverse('transactions'))
 
         else:
-            form = request.session['importparser'].detailsform(request,
-                                                               aid=aid)
+            form = request.session['importparser']['form'](request, aid=aid)
 
     else:
         details = False

@@ -21,18 +21,18 @@ from django import forms
 from django.utils.translation import ugettext as _
 
 from omoma_web.importexport import import_transaction
-from omoma_web.models import Account
-from omoma_web.models import Transaction
+from omoma_web.models import Account, Transaction
 
 
-name = 'QIF (Quicken Interchange Format)'
+def name():
+    return 'QIF (Quicken Interchange Format)'
 
 
 def check(filedata):
     return filedata[:6] == '!Type:'
 
 
-class QifDetailsForm(forms.Form):
+class DetailsForm(forms.Form):
     """
     QIF details form
     """
@@ -48,7 +48,7 @@ class QifDetailsForm(forms.Form):
 
     def __init__(self, request, *args, **kwargs):
         aid = kwargs.pop('aid', None)
-        super (QifDetailsForm,self).__init__(*args, **kwargs)
+        super (DetailsForm,self).__init__(*args, **kwargs)
         self.request = request
         self.fields['account'] = forms.ModelChoiceField(
                                     Account.objects.filter(owner=request.user),
@@ -57,8 +57,6 @@ class QifDetailsForm(forms.Form):
 
 
 class Parser:
-
-    detailsform = QifDetailsForm
 
     def __init__(self, filedata):
         self.filedata = filedata
