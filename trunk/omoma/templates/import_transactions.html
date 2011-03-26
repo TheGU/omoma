@@ -32,6 +32,14 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
             <table>
                 {{ form }}
             </table>
+            {% if supported_formats %}
+                <p>{% trans "Supported formats:" %}</p>
+                <ul>
+                    {% for format in supported_formats %}
+                        <li>{{ format }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
             <input type="submit" value="{% trans "Import" %}" />
             {% if details %}
                 <a href="{% if aid %}{% url cancel_import_transactions aid=aid %}{% else %}{% url cancel_import_transactions %}{% endif %}">{% trans "Cancel" %}</a>

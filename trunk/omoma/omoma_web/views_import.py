@@ -25,7 +25,7 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 
 from omoma_web.forbidden import Forbidden
-from omoma_web.importexport import guessparser
+from omoma_web.importexport import guessparser, listparsers
 
 
 class ImportForm(forms.Form):
@@ -61,6 +61,7 @@ def import_transactions(request, aid=None):
     """
     if request.session.has_key('importparser'):
         details = True
+        supported_formats = None
 
         # A file has already been selected and uploaded, a parser is defined
         if request.method == 'POST':
@@ -88,6 +89,7 @@ def import_transactions(request, aid=None):
 
     else:
         details = False
+        supported_formats = listparsers()
 
         # No file uploaded yet
         if request.method == 'POST':
@@ -107,6 +109,7 @@ def import_transactions(request, aid=None):
         'form': form,
         'aid': aid,
         'details': details,
+        'supported_formats':supported_formats,
     }, RequestContext(request))
 
 
