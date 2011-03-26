@@ -18,7 +18,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-24 23:53+0100\n"
+"POT-Creation-Date: 2011-03-25 22:00+0100\n"
 "Last-Translator: Sebastien Maccagnoni-Munch <sebastien@tiramiseb.fr>\n"
 "Language: french\n"
 "MIME-Version: 1.0\n"
@@ -305,7 +305,7 @@ msgstr "%s : le fichier est trop gros (1 Mo maximum)."
 msgid "%s: this file format is not known."
 msgstr "%s : ce format de fichier est inconnu."
 
-#: omoma_web/views_import.py:75
+#: omoma_web/views_import.py:76
 msgid "Successfully imported transactions."
 msgstr "Transaction importées."
 
@@ -432,43 +432,43 @@ msgstr "Nouvelle catégorie pour \"%s\""
 msgid "Category \"%(category)s\" successfully deleted from \"%(transaction)s\""
 msgstr "Catégorie \"%(category)s\" effacée de \"%(transaction)s\""
 
-#: omoma_web/importexport/qifparser.py:38
+#: omoma_web/importexport/qifparser.py:41
 msgid "DD/MM/YY"
 msgstr "JJ/MM/AA"
 
-#: omoma_web/importexport/qifparser.py:39
+#: omoma_web/importexport/qifparser.py:42
 msgid "MM/DD/YY"
 msgstr "MM/JJ/AA"
 
-#: omoma_web/importexport/qifparser.py:40
+#: omoma_web/importexport/qifparser.py:43
 msgid "DD/MM/YYYY"
 msgstr "JJ/MM/AAAA"
 
-#: omoma_web/importexport/qifparser.py:41
+#: omoma_web/importexport/qifparser.py:44
 msgid "MM/DD/YYYY"
 msgstr "MM/JJ/AAAA"
 
-#: omoma_web/importexport/qifparser.py:44
+#: omoma_web/importexport/qifparser.py:47
 msgid "Date format"
 msgstr "Format de la date"
 
-#: omoma_web/importexport/qifparser.py:53
+#: omoma_web/importexport/qifparser.py:56
 #: templates/omoma_web/transaction_list.html:63
 #: templates/widgets/balance.html:32
 msgid "Account"
 msgstr "Compte"
 
-#: omoma_web/importexport/qifparser.py:106
+#: omoma_web/importexport/qifparser.py:109
 #, python-format
 msgid "%d transactions imported."
 msgstr "%d transactions importées."
 
-#: omoma_web/importexport/qifparser.py:109
+#: omoma_web/importexport/qifparser.py:112
 #, python-format
 msgid "%d transactions already existed."
 msgstr "%d transactions existent déjà."
 
-#: omoma_web/importexport/qifparser.py:112
+#: omoma_web/importexport/qifparser.py:115
 #, python-format
 msgid "Failed to add %d transactions."
 msgstr "Echec de l'ajout de %d transactions."
@@ -496,6 +496,14 @@ msgstr "déconnexion"
 #: templates/403.html:26
 msgid "You are not allowed to see this page!"
 msgstr "Vous n'êtes pas autorisé à voir cette page !"
+
+#: templates/404.html:26
+msgid "Page not found!"
+msgstr "Page introuvable !"
+
+#: templates/500.html:26
+msgid "Internal server error! This page could not be displayed."
+msgstr "Erreur interne ! Cette page ne peut pas être affichée."
 
 #: templates/attach_iou.html:24
 msgid "Attach IOU to a transaction"
@@ -568,7 +576,7 @@ msgid "Create and modify"
 msgstr "Créer et modifier"
 
 #: templates/attach_iou.html:78 templates/choose_import_format.html:37
-#: templates/import_transactions.html:37 templates/import_transactions.html:39
+#: templates/import_transactions.html:43 templates/import_transactions.html:45
 #: templates/omoma_web/account.html:34
 #: templates/omoma_web/account_confirm_delete.html:49
 #: templates/omoma_web/category.html:34
@@ -591,6 +599,10 @@ msgid "Please choose the format to import:"
 msgstr "Choisissez le format à importer :"
 
 #: templates/import_transactions.html:35
+msgid "Supported formats:"
+msgstr "Formats supportés :"
+
+#: templates/import_transactions.html:41
 msgid "Import"
 msgstr "Importer"
 
