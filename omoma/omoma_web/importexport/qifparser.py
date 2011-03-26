@@ -25,6 +25,9 @@ from omoma_web.models import Account
 from omoma_web.models import Transaction
 
 
+name = 'QIF (Quicken Interchange Format)'
+
+
 def check(filedata):
     return filedata[:6] == '!Type:'
 
