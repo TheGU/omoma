@@ -132,6 +132,7 @@ padding: 1px;
 span.originaldescription {
 color: #999;
 font-size: 70%;
+display: block;
 }
 
 span.positiveamount, span.negativeamount {

@@ -87,7 +87,7 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
                                 </a>
                             {% endif %}
                         </td>
-                        <td class="description">{{ t.description }}{% if t.has_iou %}&nbsp;<img src="/static/icon_iou.png" class="icon" />{% endif %}{% if t.original_description %}&nbsp;<span class="originaldescription">(&nbsp;{{ t.original_description }}&nbsp;)</span>{% endif %}</td>
+                        <td class="description">{{ t.description }}{% if t.has_iou %}&nbsp;<img src="/static/icon_iou.png" class="icon" />{% endif %}{% if t.original_description and t.original_description != t.description %}&nbsp;<span class="originaldescription">(&nbsp;{{ t.original_description }}&nbsp;)</span>{% endif %}</td>
                         <td class="amount">{{ t.amount|signedmoney:t.account }}</td>
                         <td class="categories">{% for tc in t.transactioncategory_set.all %}{{ tc.category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
                         <td class="date">{{ t.date|date:"SHORT_DATE_FORMAT" }}</td>
