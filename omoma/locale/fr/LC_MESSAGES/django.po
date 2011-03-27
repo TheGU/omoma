@@ -18,7 +18,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-26 23:05+0100\n"
+"POT-Creation-Date: 2011-03-27 13:04+0200\n"
 "Last-Translator: Sebastien Maccagnoni-Munch <sebastien@tiramiseb.fr>\n"
 "Language: french\n"
 "MIME-Version: 1.0\n"
@@ -468,27 +468,31 @@ msgstr "JJ/MM/AAAA"
 msgid "MM/DD/YYYY"
 msgstr "MM/JJ/AAAA"
 
-#: omoma_web/importexport/qifparser.py:47
+#: omoma_web/importexport/qifparser.py:45
+msgid "YYYY-MM-DD"
+msgstr "AAAA-MM-JJ"
+
+#: omoma_web/importexport/qifparser.py:48
 msgid "Date format"
 msgstr "Format de la date"
 
-#: omoma_web/importexport/qifparser.py:56
+#: omoma_web/importexport/qifparser.py:57
 #: templates/omoma_web/transaction_list.html:63
 #: templates/widgets/balance.html:32
 msgid "Account"
 msgstr "Compte"
 
-#: omoma_web/importexport/qifparser.py:107
+#: omoma_web/importexport/qifparser.py:108
 #, python-format
 msgid "%d transactions imported."
 msgstr "%d transactions importées."
 
-#: omoma_web/importexport/qifparser.py:110
+#: omoma_web/importexport/qifparser.py:111
 #, python-format
 msgid "%d transactions already existed."
 msgstr "%d transactions existent déjà."
 
-#: omoma_web/importexport/qifparser.py:113
+#: omoma_web/importexport/qifparser.py:114
 #, python-format
 msgid "Failed to add %d transactions."
 msgstr "Echec de l'ajout de %d transactions."

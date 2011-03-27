@@ -42,6 +42,7 @@ class DetailsForm(forms.Form):
         ('%m/%d/%y', _('MM/DD/YY')),
         ('%d/%m/%Y', _('DD/MM/YYYY')),
         ('%m/%d/%Y', _('MM/DD/YYYY')),
+        ('%Y-%m-%d', _('YYYY-MM-DD')),
     )
     date_format = forms.ChoiceField(QIF_DATE_FORMATS,
                                     label=_('Date format'))
