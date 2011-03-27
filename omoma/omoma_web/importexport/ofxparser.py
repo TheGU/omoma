@@ -32,6 +32,8 @@ from omoma_web.models import Account, Transaction
 def name():
     if os.access(settings.OFX2QIF, os.X_OK):
         return 'OFX (Open Financial Exchange)'
+    else:
+        return None
 
 
 def check(filedata):
