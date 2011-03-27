@@ -24,6 +24,7 @@ import tempfile
 
 from django import forms
 from django.conf import settings
+from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext as _
 
 from omoma_web.importexport import import_transaction
@@ -57,7 +58,7 @@ class DetailsForm(forms.Form):
         super (DetailsForm,self).__init__(*args, **kwargs)
         self.request = request
         for account in request.session['importparser']['parser'].accounts():
-            self.fields['account%s' % account] = forms.ModelChoiceField(
+            self.fields['account%s' % slugify(account)] = forms.ModelChoiceField(
                                     Account.objects.filter(owner=request.user),
                                                    initial=aid, required=False,
                                              label=_('Account "%s"') % account)
@@ -91,17 +92,19 @@ class Parser:
 
     def parse(self, form):
         """
-        Parse an QIF file.
+        Parse an OFX file.
+
+        Tested with a file from the Credit Mutuel french bank
         """
         accounts = {}
         for f in form.fields.keys():
             if f.startswith('account'):
                 act = form.cleaned_data.get(f)
                 if act:
-                    accounts[f[7:]] = act
                     # Validate the accounts are owned by the user
                     if not form.request.user in act.owner.all():
                         return False
+                    accounts[f[7:]] = act
 
         msg = []
 
@@ -132,8 +135,8 @@ class Parser:
                     transactions_failed = 0
                 if inaccount and line[0] == 'N':
                     accountname = line[1:]
-                    if accounts.has_key(accountname):
-                        account = accounts[accountname]
+                    if accounts.has_key(slugify(accountname)):
+                        account = accounts[slugify(accountname)]
                 if line.startswith('!Type:') and account:
                     t = Transaction(account=account)
                 elif line == '^':

@@ -144,12 +144,8 @@ class Transaction(models.Model):
         """
         True if there is any IOU referring to this transaction
         """
-        ious = IOU.objects.filter(Q(transaction=self) |
-                                 Q(recipient_transaction=self))
-        if ious:
-            return True
-        else:
-            return False
+        return not not IOU.objects.filter(Q(transaction=self) |
+                                                 Q(recipient_transaction=self))
 
     def __unicode__(self):
         return self.description
