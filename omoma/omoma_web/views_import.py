@@ -70,7 +70,7 @@ def import_transactions(request, aid=None):
                                                            aid=aid)
             if form.is_valid():
                 message = request.session['importparser']['parser'].parse(form)
-                if message is None or message is False:
+                if message is False:
                     return Forbidden()
 
                 msg = ' '.join([_("Successfully imported transactions."),
