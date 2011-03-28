@@ -27,6 +27,9 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
 
     {% contentbox _('Import transactions') %}
 
+        {% if instructions %}
+            {{ instructions }}
+        {% endif %}
         <form enctype="multipart/form-data" method="POST">
             {% csrf_token %}
             <table>

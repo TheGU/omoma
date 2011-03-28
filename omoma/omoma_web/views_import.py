@@ -61,6 +61,7 @@ def import_transactions(request, aid=None):
     """
     if request.session.has_key('importparser'):
         details = True
+        instructions = request.session['importparser']['instructions']
         supported_formats = None
 
         # A file has already been selected and uploaded, a parser is defined
@@ -88,6 +89,7 @@ def import_transactions(request, aid=None):
 
     else:
         details = False
+        instructions = False
         supported_formats = listparsers()
 
         # No file uploaded yet
@@ -108,6 +110,7 @@ def import_transactions(request, aid=None):
         'form': form,
         'aid': aid,
         'details': details,
+        'instructions': instructions,
         'supported_formats':supported_formats,
     }, RequestContext(request))
 
