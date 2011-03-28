@@ -217,7 +217,7 @@ class TransactionCategory(models.Model):
 
         (income or outcome are based on the transaction's amount)
         """
-        if self.amount: self.amount = abs(self.amount)
+        self.amount = abs(self.amount)
 
     def __unicode__(self):
         return _('%(category)s for "%(transaction)s"') % {
@@ -285,7 +285,7 @@ class IOU(models.Model):
 
         (income or outcome are based on the transaction's amount)
         """
-        if self.amount: self.amount = abs(self.amount)
+        self.amount = abs(self.amount)
 
     def recipienttype(self):
         """

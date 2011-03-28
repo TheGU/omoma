@@ -77,11 +77,11 @@ urlpatterns += patterns('omoma.omoma_web.views_transactioncategory',
     (r'^(?P<tid>\d+)/new/$', 'transactioncategory', None, 'new_transactioncategory'),
     (r'^account/(?P<aid>\d+)/(?P<tid>\d+)/new/$', 'transactioncategory', None, 'new_transactioncategory'),
     # Single transactioncategory view
-    (r'^(?P<tid>\d+)/(?P<cid>\d)/$', 'transactioncategory', None, 'transactioncategory'),
-    (r'^account/(?P<aid>\d+)/(?P<tid>\d+)/(?P<cid>\d)/$', 'transactioncategory', None, 'transactioncategory'),
+    (r'^(?P<tid>\d+)/(?P<cid>\d+)/$', 'transactioncategory', None, 'transactioncategory'),
+    (r'^account/(?P<aid>\d+)/(?P<tid>\d+)/(?P<cid>\d+)/$', 'transactioncategory', None, 'transactioncategory'),
     # Delete transactioncategory
-    (r'^(?P<tid>\d+)/(?P<cid>\d)/delete/$', 'delete_transactioncategory', None, 'delete_transactioncategory'),
-    (r'^account/(?P<aid>\d+)/(?P<tid>\d+)/(?P<cid>\d)/delete/$', 'delete_transactioncategory', None, 'delete_transactioncategory'),
+    (r'^(?P<tid>\d+)/(?P<cid>\d+)/delete/$', 'delete_transactioncategory', None, 'delete_transactioncategory'),
+    (r'^account/(?P<aid>\d+)/(?P<tid>\d+)/(?P<cid>\d+)/delete/$', 'delete_transactioncategory', None, 'delete_transactioncategory'),
 )
 
 urlpatterns += patterns('omoma.omoma_web.views_iou',
