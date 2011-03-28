@@ -18,7 +18,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-27 13:04+0200\n"
+"POT-Creation-Date: 2011-03-28 23:22+0200\n"
 "Last-Translator: Sebastien Maccagnoni-Munch <sebastien@tiramiseb.fr>\n"
 "Language: french\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 
-#: omoma_web/models.py:35 omoma_web/models.py:59 omoma_web/models.py:172
+#: omoma_web/models.py:35 omoma_web/models.py:59 omoma_web/models.py:168
 msgid "name"
 msgstr "nom"
 
@@ -46,7 +46,7 @@ msgstr "monnaie"
 msgid "currencies"
 msgstr "monnaies"
 
-#: omoma_web/models.py:58 omoma_web/models.py:169 omoma_web/models.py:266
+#: omoma_web/models.py:58 omoma_web/models.py:165 omoma_web/models.py:262
 msgid "owner"
 msgstr "propriétaire"
 
@@ -70,7 +70,7 @@ msgstr "date"
 msgid "description"
 msgstr "description"
 
-#: omoma_web/models.py:120 omoma_web/models.py:206 omoma_web/models.py:272
+#: omoma_web/models.py:120 omoma_web/models.py:202 omoma_web/models.py:268
 msgid "amount"
 msgstr "montant"
 
@@ -90,156 +90,156 @@ msgstr "validé"
 msgid "deleted"
 msgstr "effacé"
 
-#: omoma_web/models.py:159 omoma_web/models.py:203 omoma_web/models.py:268
+#: omoma_web/models.py:155 omoma_web/models.py:199 omoma_web/models.py:264
 msgid "transaction"
 msgstr "transaction"
 
-#: omoma_web/models.py:160 templates/omoma_web/account_confirm_delete.html:43
+#: omoma_web/models.py:156 templates/omoma_web/account_confirm_delete.html:43
 msgid "transactions"
 msgstr "transactions"
 
-#: omoma_web/models.py:171
+#: omoma_web/models.py:167
 msgid "parent"
 msgstr "parent"
 
-#: omoma_web/models.py:188 omoma_web/models.py:204 omoma_web/models.py:361
+#: omoma_web/models.py:184 omoma_web/models.py:200 omoma_web/models.py:357
 msgid "category"
 msgstr "catégorie"
 
-#: omoma_web/models.py:189
+#: omoma_web/models.py:185
 msgid "categories"
 msgstr "catégories"
 
-#: omoma_web/models.py:227
+#: omoma_web/models.py:223
 #, python-format
 msgid "%(category)s for \"%(transaction)s\""
 msgstr "%(category)s pour \"%(transaction)s\""
 
-#: omoma_web/models.py:232
+#: omoma_web/models.py:228
 msgid "transaction category"
 msgstr "catégorie de transaction"
 
-#: omoma_web/models.py:233
+#: omoma_web/models.py:229
 msgid "transaction categories"
 msgstr "catégories de transaction"
 
-#: omoma_web/models.py:261 omoma_web/models.py:279
+#: omoma_web/models.py:257 omoma_web/models.py:275
 msgid "accepted"
 msgstr "accepté"
 
-#: omoma_web/models.py:262
+#: omoma_web/models.py:258
 msgid "rejected"
 msgstr "refusé"
 
-#: omoma_web/models.py:263
+#: omoma_web/models.py:259
 msgid "pending"
 msgstr "en attente"
 
-#: omoma_web/models.py:270
+#: omoma_web/models.py:266
 msgid "recipient"
 msgstr "destinataire"
 
-#: omoma_web/models.py:274
+#: omoma_web/models.py:270
 msgid "money transaction"
 msgstr "transaction monétaire"
 
-#: omoma_web/models.py:277
+#: omoma_web/models.py:273
 msgid "recipient transaction"
 msgstr "transaction de destination"
 
-#: omoma_web/models.py:282
+#: omoma_web/models.py:278
 #, python-format
 msgid "IOU for \"%(transaction)s\" to \"%(recipient)s\""
 msgstr "Règlement pour \"%(transaction)s\" à \"%(recipient)s\""
 
-#: omoma_web/models.py:300
+#: omoma_web/models.py:296
 msgid "He/she received from me"
 msgstr "Il/elle a reçu de ma part"
 
-#: omoma_web/models.py:302
+#: omoma_web/models.py:298
 msgid "He/she gave to me"
 msgstr "Il/elle m'a donné"
 
-#: omoma_web/models.py:305
+#: omoma_web/models.py:301
 msgid "He/she received for me"
 msgstr "Il/elle a reçu pour moi"
 
-#: omoma_web/models.py:307
+#: omoma_web/models.py:303
 msgid "He/she paid for me"
 msgstr "Il/elle a payé pour moi"
 
-#: omoma_web/models.py:315
+#: omoma_web/models.py:311
 msgid "I received from him/her"
 msgstr "J'ai reçu de sa part"
 
-#: omoma_web/models.py:317
+#: omoma_web/models.py:313
 msgid "I gave to him/her"
 msgstr "Je lui ai donné"
 
-#: omoma_web/models.py:320
+#: omoma_web/models.py:316
 msgid "I received for him/her"
 msgstr "J'ai reçu pour lui/elle"
 
-#: omoma_web/models.py:322
+#: omoma_web/models.py:318
 msgid "I paid for him/her"
 msgstr "J'ai payé pour lui/elle"
 
-#: omoma_web/models.py:325
+#: omoma_web/models.py:321
 msgid "IOU"
 msgstr "Règlement"
 
-#: omoma_web/models.py:326 omoma_web/views_iou.py:48 templates/sidebar.html:25
+#: omoma_web/models.py:322 omoma_web/views_iou.py:49 templates/sidebar.html:25
 #: templates/omoma_web/iou_list.html:24
 #: templates/omoma_web/transaction.html:48
 msgid "IOUs"
 msgstr "Règlements"
 
-#: omoma_web/models.py:354
+#: omoma_web/models.py:350
 msgid "year (12 months)"
 msgstr "année (12 mois)"
 
-#: omoma_web/models.py:355
+#: omoma_web/models.py:351
 msgid "semester (6 months)"
 msgstr "semestre (6 mois)"
 
-#: omoma_web/models.py:356
+#: omoma_web/models.py:352
 msgid "quarter (3 months)"
 msgstr "trimestre (3 mois)"
 
-#: omoma_web/models.py:357
+#: omoma_web/models.py:353
 msgid "month (28 to 31 days)"
 msgstr "mois (28 à 31 jours)"
 
-#: omoma_web/models.py:358
+#: omoma_web/models.py:354
 msgid "week (7 days)"
 msgstr "semaine (7 jours)"
 
-#: omoma_web/models.py:359
+#: omoma_web/models.py:355
 msgid "envelope"
 msgstr "enveloppe"
 
-#: omoma_web/models.py:363
+#: omoma_web/models.py:359
 msgid "period start"
 msgstr "début de la période"
 
-#: omoma_web/models.py:367
+#: omoma_web/models.py:363
 msgid "period length"
 msgstr "durée de la période"
 
-#: omoma_web/models.py:369
+#: omoma_web/models.py:365
 msgid "limit"
 msgstr "limite"
 
-#: omoma_web/models.py:372
+#: omoma_web/models.py:368
 #, python-format
 msgid "Budget for %s"
 msgstr "Budget pour %s"
 
-#: omoma_web/models.py:375
+#: omoma_web/models.py:371
 msgid "budget"
 msgstr "budget"
 
-#: omoma_web/models.py:376
+#: omoma_web/models.py:372
 msgid "budgets"
 msgstr "budgets"
 
@@ -253,7 +253,8 @@ msgstr "Compte \"%s\" modifié"
 msgid "Account \"%s\" successfully created"
 msgstr "Compte \"%s\" créé"
 
-#: omoma_web/views_account.py:75 omoma_web/importexport/ofxparser.py:61
+#: omoma_web/views_account.py:75 omoma_web/importexport/buxfercsvparser.py:65
+#: omoma_web/importexport/ofxparser.py:64
 #, python-format
 msgid "Account \"%s\""
 msgstr "Compte \"%s\""
@@ -305,56 +306,56 @@ msgstr "%s : le fichier est trop gros (1 Mo maximum)."
 msgid "%s: this file format is not known."
 msgstr "%s : ce format de fichier est inconnu."
 
-#: omoma_web/views_import.py:76
+#: omoma_web/views_import.py:77
 msgid "Successfully imported transactions."
 msgstr "Transaction importées."
 
-#: omoma_web/views_iou.py:43
+#: omoma_web/views_iou.py:44
 #, python-format
 msgid "IOUs for %s"
 msgstr "Règlements pour %s"
 
-#: omoma_web/views_iou.py:65
+#: omoma_web/views_iou.py:66
 #, python-format
 msgid "IOU for \"%s\""
 msgstr "Règlement pour \"%s\""
 
-#: omoma_web/views_iou.py:74
+#: omoma_web/views_iou.py:75
 #, python-format
 msgid "New IOU for \"%s\""
 msgstr "Nouveau règlement pour \"%s\""
 
-#: omoma_web/views_iou.py:95
+#: omoma_web/views_iou.py:96
 #, python-format
 msgid "%s successfully modified"
 msgstr "%s modifié"
 
-#: omoma_web/views_iou.py:98
+#: omoma_web/views_iou.py:99
 #, python-format
 msgid "%s successfully created"
 msgstr "%s créé"
 
-#: omoma_web/views_iou.py:130
+#: omoma_web/views_iou.py:131
 #, python-format
 msgid "%s successfully deleted"
 msgstr "%s effacé"
 
-#: omoma_web/views_iou.py:154
+#: omoma_web/views_iou.py:155
 #, python-format
 msgid "%s successfully accepted"
 msgstr "%s accepté"
 
-#: omoma_web/views_iou.py:175
+#: omoma_web/views_iou.py:176
 #, python-format
 msgid "%(iou)s successfully attached to \"%(transaction)s\""
 msgstr "%(iou)s attaché à \"%(transaction)s\""
 
-#: omoma_web/views_iou.py:204
+#: omoma_web/views_iou.py:205
 #, python-format
 msgid "%(iou)s successfully detached from \"%(transaction)s\""
 msgstr "%(iou)s détaché de \"%(transaction)s\""
 
-#: omoma_web/views_iou.py:254
+#: omoma_web/views_iou.py:255
 #, python-format
 msgid "%s successfully rejected"
 msgstr "%s rejeté"
@@ -432,67 +433,89 @@ msgstr "Nouvelle catégorie pour \"%s\""
 msgid "Category \"%(category)s\" successfully deleted from \"%(transaction)s\""
 msgstr "Catégorie \"%(category)s\" effacée de \"%(transaction)s\""
 
-#: omoma_web/importexport/ofxparser.py:114
+#: omoma_web/importexport/buxfercsvparser.py:46
+msgid "Create categories when unspecified"
+msgstr ""
+
+#: omoma_web/importexport/buxfercsvparser.py:48
+msgid "Create a special account for unbound IOUs (recommended)"
+msgstr ""
+
+#: omoma_web/importexport/buxfercsvparser.py:63
+msgid "Transactions without account"
+msgstr "Transactions sans compte"
+
+#: omoma_web/importexport/buxfercsvparser.py:87
+#, python-format
+msgid "Tag \"%s\""
+msgstr "Tag \"%s\""
+
+#: omoma_web/importexport/buxfercsvparser.py:148
+#, python-format
+msgid "Unbound IOUs, Buxfer import on %(date)s"
+msgstr "Règlements détachés, import Buxfer le %(date)s"
+
+#: omoma_web/importexport/ofxparser.py:121
 #, python-format
 msgid "%d imported"
 msgstr "%d importées"
 
-#: omoma_web/importexport/ofxparser.py:117
+#: omoma_web/importexport/ofxparser.py:124
 #, python-format
 msgid "%d already existed"
 msgstr "%d existent déjà"
 
-#: omoma_web/importexport/ofxparser.py:120
+#: omoma_web/importexport/ofxparser.py:127
 #, python-format
 msgid "%d failed"
 msgstr "%d échouées"
 
-#: omoma_web/importexport/ofxparser.py:122
+#: omoma_web/importexport/ofxparser.py:129
 #, python-format
 msgid "In account \"%(account)s\": %(details)s."
 msgstr "Dans le compte \"%(account)s\" : %(details)s."
 
-#: omoma_web/importexport/qifparser.py:41
+#: omoma_web/importexport/qifparser.py:40
 msgid "DD/MM/YY"
 msgstr "JJ/MM/AA"
 
-#: omoma_web/importexport/qifparser.py:42
+#: omoma_web/importexport/qifparser.py:41
 msgid "MM/DD/YY"
 msgstr "MM/JJ/AA"
 
-#: omoma_web/importexport/qifparser.py:43
+#: omoma_web/importexport/qifparser.py:42
 msgid "DD/MM/YYYY"
 msgstr "JJ/MM/AAAA"
 
-#: omoma_web/importexport/qifparser.py:44
+#: omoma_web/importexport/qifparser.py:43
 msgid "MM/DD/YYYY"
 msgstr "MM/JJ/AAAA"
 
-#: omoma_web/importexport/qifparser.py:45
+#: omoma_web/importexport/qifparser.py:44
 msgid "YYYY-MM-DD"
 msgstr "AAAA-MM-JJ"
 
-#: omoma_web/importexport/qifparser.py:48
+#: omoma_web/importexport/qifparser.py:47
 msgid "Date format"
 msgstr "Format de la date"
 
-#: omoma_web/importexport/qifparser.py:57
+#: omoma_web/importexport/qifparser.py:56
 #: templates/omoma_web/transaction_list.html:63
 #: templates/widgets/balance.html:32
 msgid "Account"
 msgstr "Compte"
 
-#: omoma_web/importexport/qifparser.py:108
+#: omoma_web/importexport/qifparser.py:107
 #, python-format
 msgid "%d transactions imported."
 msgstr "%d transactions importées."
 
-#: omoma_web/importexport/qifparser.py:111
+#: omoma_web/importexport/qifparser.py:110
 #, python-format
 msgid "%d transactions already existed."
 msgstr "%d transactions existent déjà."
 
-#: omoma_web/importexport/qifparser.py:114
+#: omoma_web/importexport/qifparser.py:113
 #, python-format
 msgid "Failed to add %d transactions."
 msgstr "Echec de l'ajout de %d transactions."
@@ -505,15 +528,15 @@ msgstr "m'a prêté"
 msgid "owes me"
 msgstr "me doit"
 
-#: omoma_web/templatetags/omoma.py:351
+#: omoma_web/templatetags/omoma.py:352
 msgid "You have pending IOU(s)!"
 msgstr "Vous avez un/des règlement(s) en attente !"
 
-#: omoma_web/templatetags/omoma.py:356
+#: omoma_web/templatetags/omoma.py:357
 msgid "Someone rejected your IOU(s)!"
 msgstr "Quelqu'un a refusé votre/vos règlement(s) !"
 
-#: omoma_web/templatetags/omoma.py:448
+#: omoma_web/templatetags/omoma.py:449
 msgid "logout"
 msgstr "déconnexion"
 
@@ -600,7 +623,7 @@ msgid "Create and modify"
 msgstr "Créer et modifier"
 
 #: templates/attach_iou.html:78 templates/choose_import_format.html:37
-#: templates/import_transactions.html:45 templates/import_transactions.html:47
+#: templates/import_transactions.html:48 templates/import_transactions.html:50
 #: templates/omoma_web/account.html:34
 #: templates/omoma_web/account_confirm_delete.html:49
 #: templates/omoma_web/category.html:34
@@ -622,11 +645,11 @@ msgstr "Importer des transactions"
 msgid "Please choose the format to import:"
 msgstr "Choisissez le format à importer :"
 
-#: templates/import_transactions.html:36
+#: templates/import_transactions.html:39
 msgid "Supported formats:"
 msgstr "Formats supportés :"
 
-#: templates/import_transactions.html:43
+#: templates/import_transactions.html:46
 msgid "Import"
 msgstr "Importer"
 
