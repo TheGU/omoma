@@ -48,6 +48,11 @@ urlpatterns += patterns('omoma.omoma_web.views_account',
     (r'^account/(?P<aid>\d+)/delete/$', 'delete_account', None, 'delete_account'),
 )
 
+urlpatterns += patterns('omoma.omoma_web.views_cleaning',
+    # Cleaning home
+    (r'^cleaning/$', direct_to_template, {'template': 'cleaning.html'}, 'cleaning'),
+)
+
 urlpatterns += patterns('omoma.omoma_web.views_transaction',
     # Transactions list
     (r'^$', 'transactions', None, 'transactions'),
