@@ -24,6 +24,7 @@ These features are implemented in the latest version of Omoma, downloadable as a
 
  * importing QIF files
  * importing OFX files
+ * importing Buxfer CSV files
  * pagination (50 transactions max in a page)
 
 It can be downloaded from the SVN repository.
