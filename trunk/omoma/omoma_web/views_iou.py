@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Omoma. If not, see <http://www.gnu.org/licenses/>.
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse

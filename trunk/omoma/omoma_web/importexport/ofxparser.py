@@ -94,7 +94,9 @@ class Parser:
         """
         Parse an OFX file.
 
-        Tested with a file from the Credit Mutuel french bank
+        Tested with files from :
+         - Credit Mutuel (french bank)
+         - La Banque Postale (french bank)
         """
         accounts = {}
         for f in form.fields.keys():

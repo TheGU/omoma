@@ -23,7 +23,6 @@ from django.utils.translation import ugettext as _
 from omoma_web.importexport import import_transaction
 from omoma_web.models import Account, Transaction
 
-
 def name():
     return 'QIF (Quicken Interchange Format)'
 

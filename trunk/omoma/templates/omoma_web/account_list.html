@@ -48,8 +48,8 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
                     </td>
                     <td class="name">{{ a.name }}</td>
                     <td class="currency">{{ a.currency.fullname }}</td>
-                    <td class="startbalance">{{ a.start_balance|money:a }}</td>
-                    <td class="currentbalance">{{ a.current_balance|money:a }}</td>
+                    <td class="startbalance">{{ a.start_balance|signedmoney:a }}</td>
+                    <td class="currentbalance">{{ a.current_balance|signedmoney:a }}</td>
                     <td class="nbtransactions">{{ a.count_transactions }}</td>
                 </tr>
             {% endfor %}

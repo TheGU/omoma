@@ -140,56 +140,56 @@ def do_get_iou_peers_list(parser, token):
             user = context['request'].user
 
             i_gave_to_peers = IOU.objects.filter(owner=user, accepted='a',
-                                                 transaction__amount__lt=0,
-               ).values('recipient', 'recipient__username').annotate(Sum('amount'))
+                                                 transaction__amount__lt=0)
 
-            i_received_from_peers = IOU.objects.filter(owner=user, accepted='a',
-                                                       transaction__amount__gt=0,
-               ).values('recipient', 'recipient__username').annotate(Sum('amount'))
+            i_received_from_peers = IOU.objects.filter(owner=user,
+                                                       accepted='a',
+                                                     transaction__amount__gt=0)
 
             peers_gave_to_me = IOU.objects.filter(recipient=user, accepted='a',
-                                                 transaction__amount__lt=0,
-                       ).values('owner', 'owner__username').annotate(Sum('amount'))
+                                                 transaction__amount__lt=0)
 
             peers_received_from_me = IOU.objects.filter(recipient=user,
                                                         accepted='a',
-                                                        transaction__amount__gt=0,
-                       ).values('owner', 'owner__username').annotate(Sum('amount'))
+                                                     transaction__amount__gt=0)
 
             ioupeers = {}
 
-            for peer in i_gave_to_peers:
-                uid = peer['recipient']
-                name = peer['recipient__username']
-                amount = peer['amount__sum']
-                ioupeers[uid] = [name, 0-amount]
-
-            for peer in i_received_from_peers:
-                uid = peer['recipient']
-                name = peer['recipient__username']
-                amount = peer['amount__sum']
-                if ioupeers.has_key(uid):
-                    ioupeers[uid][1] = ioupeers[uid][1] + amount
-                else:
-                    ioupeers[uid] = [name, amount]
-
-            for peer in peers_gave_to_me:
-                uid = peer['owner']
-                name = peer['owner__username']
-                amount = peer['amount__sum']
-                if ioupeers.has_key(uid):
-                    ioupeers[uid][1] = ioupeers[uid][1] + amount
-                else:
-                    ioupeers[uid] = [name, amount]
-
-            for peer in peers_received_from_me:
-                uid = peer['owner']
-                name = peer['owner__username']
-                amount = peer['amount__sum']
+            for i in i_gave_to_peers:
+                uid = i.recipient
+                name = i.recipient.username
+                amount = i.amount
                 if ioupeers.has_key(uid):
                     ioupeers[uid][1] = ioupeers[uid][1] - amount
                 else:
-                    ioupeers[uid] = [name, 0-amount]
+                    ioupeers[uid] = [name, -amount]
+
+            for i in i_received_from_peers:
+                uid = i.recipient
+                name = i.recipient.username
+                amount = i.amount
+                if ioupeers.has_key(uid):
+                    ioupeers[uid][1] = ioupeers[uid][1] + amount
+                else:
+                    ioupeers[uid] = [name, amount]
+
+            for i in peers_gave_to_me:
+                uid = i.owner
+                name = i.owner.username
+                amount = i.amount
+                if ioupeers.has_key(uid):
+                    ioupeers[uid][1] = ioupeers[uid][1] + amount
+                else:
+                    ioupeers[uid] = [name, amount]
+
+            for i in peers_received_from_me:
+                uid = i.owner
+                name = i.owner.username
+                amount = i.amount
+                if ioupeers.has_key(uid):
+                    ioupeers[uid][1] = ioupeers[uid][1] - amount
+                else:
+                    ioupeers[uid] = [name, -amount]
 
             ioupeerslist = []
             for peer in ioupeers.items():
@@ -205,6 +205,7 @@ def do_get_iou_peers_list(parser, token):
                                          'type':_('owes me'),
                                          'amount':abs(peer[1][1])
                     })
+
 
             context['ioupeerslist'] = ioupeerslist
             return ''
