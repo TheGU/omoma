@@ -26,8 +26,13 @@ def guessparser(filedata):
     for parsername in pkgutil.iter_modules(sys.modules[__name__].__path__):
         parser = __import__(parsername[1], globals())
         if 'check' in dir(parser) and parser.check(filedata):
+            if 'instructions' in dir (parser):
+                instructions = parser.instructions()
+            else:
+                instructions = None
             return {'parser':parser.Parser(filedata),
-                    'form':parser.DetailsForm}
+                    'form':parser.DetailsForm,
+                    'instructions':instructions}
     return None
 
 
