@@ -46,38 +46,38 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
 
                 {% for i in iou_list %}
                     {% if i.recipient == request.user %}
-                    <tr>
-                        <td class="links">
-                            <a href="{% url reject_iou iid=i.id %}">
-                                <img src="/static/icon_reject.png" class="icon" />
-                            </a>
-                        </td>
-                        <td class="description">{% if i.money_transaction and i.recipient_transaction %}{{ i.recipient_transaction.description }}{% else %}{{ i.transaction.description }}{% endif %}</td>
-                        {% if not recipient %}
-                            <td class="recipient">{{ i.owner.username }}</td>
-                        {% endif %}
-                        <td class="amount">{{ i.amount|money:i.transaction.account }}</td>
-                        <td class="date">{% if i.money_transaction and i.recipient_transaction %}{{ i.recipient_transaction.date|date:"SHORT_DATE_FORMAT" }}{% else %}{{ i.transaction.date|date:"SHORT_DATE_FORMAT" }}{% endif %}</td>
-                        <td class="ioutype">{{ i.recipienttype }}</td>
-                    </tr>
+                        <tr>
+                            <td class="links">
+                                <a href="{% url reject_iou iid=i.id %}">
+                                    <img src="/static/icon_reject.png" class="icon" />
+                                </a>
+                            </td>
+                            <td class="description">{% if i.money_transaction and i.recipient_transaction %}{{ i.recipient_transaction.description }}{% else %}{{ i.transaction.description }}{% endif %}</td>
+                            {% if not recipient %}
+                                <td class="recipient">{{ i.owner.username }}</td>
+                            {% endif %}
+                            <td class="amount">{{ i.amount|money:i.transaction.account }}</td>
+                            <td class="date">{% if i.money_transaction and i.recipient_transaction %}{{ i.recipient_transaction.date|date:"SHORT_DATE_FORMAT" }}{% else %}{{ i.transaction.date|date:"SHORT_DATE_FORMAT" }}{% endif %}</td>
+                            <td class="ioutype">{{ i.recipienttype }}</td>
+                        </tr>
                     {% else %}
-                    <tr>
-                        <td class="links">
-                            <a href="{% url iou iid=i.id %}">
-                                <img src="/static/icon_edit.png" class="icon" />
-                            </a>
-                            <a href="{% url delete_iou iid=i.id %}">
-                                <img src="/static/icon_delete.png" class="icon" />
-                            </a>
-                        </td>
-                        <td class="description">{{ i.transaction.description }}</td>
-                        {% if not recipient %}
-                            <td class="recipient">{{ i.recipient.username }}</td>
-                        {% endif %}
-                        <td class="amount">{{ i.amount|money:i.transaction.account }}</td>
-                        <td class="date">{{ i.transaction.date|date:"SHORT_DATE_FORMAT" }}</td>
-                        <td class="ioutype">{{ i.ownertype }}</td>
-                    </tr>
+                        <tr>
+                            <td class="links">
+                                <a href="{% url iou iid=i.id %}">
+                                    <img src="/static/icon_edit.png" class="icon" />
+                                </a>
+                                <a href="{% url delete_iou iid=i.id %}">
+                                    <img src="/static/icon_delete.png" class="icon" />
+                                </a>
+                            </td>
+                            <td class="description">{{ i.transaction.description }}</td>
+                            {% if not recipient %}
+                                <td class="recipient">{{ i.recipient.username }}</td>
+                            {% endif %}
+                            <td class="amount">{{ i.amount|money:i.transaction.account }}</td>
+                            <td class="date">{{ i.transaction.date|date:"SHORT_DATE_FORMAT" }}</td>
+                            <td class="ioutype">{{ i.ownertype }}</td>
+                        </tr>
                     {% endif %}
                 {% endfor %}
 
