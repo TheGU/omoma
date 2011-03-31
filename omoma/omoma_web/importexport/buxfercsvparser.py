@@ -44,8 +44,6 @@ class DetailsForm(forms.Form):
     """
     createcategories = forms.BooleanField(required=False,
                                  label=_('Create categories when unspecified'))
-    createimportaccount = forms.BooleanField(initial=True, required=False,
-            label=_('Create a special account for unbound IOUs (recommended)'))
 
     def __init__(self, request, *args, **kwargs):
         aid = kwargs.pop('aid', None)
@@ -72,8 +70,7 @@ class DetailsForm(forms.Form):
                 initialaccount = aid
             self.fields['account%s' % slugify(account)] = forms.ModelChoiceField(
                                     Account.objects.filter(owner=request.user),
-                                        initial=initialaccount, required=False,
-                                                            label=accountlabel)
+                                    initial=initialaccount, label=accountlabel)
 
         for tag in request.session['importparser']['parser'].all_tags:
             ccs = Category.objects.filter(owner=request.user, name__iexact=tag)
@@ -140,19 +137,6 @@ class Parser:
         it is duplicated.
         """
 
-        # Create the special account for unbound IOUs
-        if form.cleaned_data.get('createimportaccount'):
-            importdate = datetime.datetime.now().strftime('%Y-%m-%d')
-
-            unboundaccount = Account.objects.create(start_balance=0,
-                          name=_('Unbound IOUs, Buxfer import on %(date)s') % \
-                                                           {'date':importdate},
-                                           currency=Currency.objects.get(pk=1))
-            unboundaccount.owner.add(form.request.user)
-            unboundaccount.save()
-        else:
-            unboundaccount = False
-
         createcategories = form.cleaned_data.get('createcategories')
 
         currencies = {}
@@ -193,8 +177,6 @@ class Parser:
             destaccount = accounts.get(slugify(line[self.index['account']].split('->')[0].strip()), None)
             if destaccount:
                 t.account = destaccount
-            elif unboundaccount:
-                t.account = unboundaccount
             else:
                 # If no account, no transaction !
                 continue
@@ -234,11 +216,8 @@ class Parser:
             elif (origtype == 'Paid for friend' and myaction == 'Owe') or \
                  (origtype == 'Split bill' and myaction == 'Owe'):
                 # Someone paid something for me
-                t.amount = origamount
-                for personid, person in enumerate(line[9:]):
-                    if person.startswith('Get'):
-                        value = decimal.Decimal(person[4:].replace('.', '').replace(',', '.'))
-                        make_ious.append(('iou', people[slugify(self.all_people[personid])], value, False))
+                continue
+                # That's not an IOU on my side...
 
             elif origtype == 'Settlement' and myaction == 'Get':
                 # I give money to someone
@@ -263,10 +242,7 @@ class Parser:
                     recipientaccount = accounts[slugify(line[self.index['account']].split('->')[1].strip())]
                 except KeyError:
                     # The recipient account does not exist
-                    if unboundaccount:
-                        recipientaccount = unboundaccount
-                    else:
-                        continue
+                    continue
                 make_ious.append(('transfer', recipientaccount))
 
             t.date = datetime.datetime.strptime(line[self.index['date']],
