@@ -28,6 +28,8 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
     {% if pendingiouslist %}
         {% contentbox _("Pending IOUs") %}
 
+            <a href="{% url accept_all_ious %}">{% trans "Accept all IOUs" %}</a>
+
             <table>
                 <tr class="header">
                     <th class="links"></th>
