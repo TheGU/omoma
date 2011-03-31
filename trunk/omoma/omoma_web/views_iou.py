@@ -103,6 +103,8 @@ def iou(request, iid=None, tid=None, aid=None, rejected=False):
                     target = reverse('transaction', kwargs={'aid':aid, 'tid':tid})
                 else:
                     target = reverse('transaction', kwargs={'tid':tid})
+            elif rejected:
+                target = reverse('pending_ious')
             else:
                 target = reverse('ious')
             return HttpResponseRedirect(target)
@@ -155,6 +157,21 @@ def accept_iou(request, iid):
         messages.info(request, _('%s successfully accepted') % iis[0])
     else:
         return Forbidden()
+    return HttpResponseRedirect(reverse('pending_ious'))
+
+
+@login_required
+def accept_all_ious(request):
+    """
+    Accept all pending IOUs.
+
+    (however, money transfers are not automatically attached)
+    """
+    iis = IOU.objects.filter(recipient=request.user, accepted='p',
+                             money_transaction=False)
+    n = len(iis)
+    iis.update(accepted='a')
+    messages.info(request, _('%d pending IOUs accepted' % n))
     return HttpResponseRedirect(reverse('pending_ious'))
 
 

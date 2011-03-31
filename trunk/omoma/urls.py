@@ -117,6 +117,7 @@ urlpatterns += patterns('omoma.omoma_web.views_iou',
     (r'^iou/(?P<iid>\d+)/(?P<tid>\d+)/(?P<aid>\d+)/detach/$', 'detach_iou_from_transaction', None, 'detach_iou_from_transaction'),
     # Accept IOU
     (r'^pending/(?P<iid>\d+)/accept/$', 'accept_iou', None, 'accept_iou'),
+    (r'^pending/accept/$', 'accept_all_ious', None, 'accept_all_ious'),
     # Reject IOU
     (r'^iou/(?P<iid>\d+)/reject/$', 'reject_iou', None, 'reject_iou'),
     (r'^pending/(?P<iid>\d+)/reject/$', 'reject_iou', {'pending':True}, 'reject_pending_iou'),

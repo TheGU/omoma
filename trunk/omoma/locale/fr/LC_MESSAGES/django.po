@@ -18,7 +18,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-28 23:22+0200\n"
+"POT-Creation-Date: 2011-03-31 23:54+0200\n"
 "Last-Translator: Sebastien Maccagnoni-Munch <sebastien@tiramiseb.fr>\n"
 "Language: french\n"
 "MIME-Version: 1.0\n"
@@ -253,7 +253,7 @@ msgstr "Compte \"%s\" modifié"
 msgid "Account \"%s\" successfully created"
 msgstr "Compte \"%s\" créé"
 
-#: omoma_web/views_account.py:75 omoma_web/importexport/buxfercsvparser.py:65
+#: omoma_web/views_account.py:75 omoma_web/importexport/buxfercsvparser.py:63
 #: omoma_web/importexport/ofxparser.py:64
 #, python-format
 msgid "Account \"%s\""
@@ -335,27 +335,32 @@ msgstr "%s modifié"
 msgid "%s successfully created"
 msgstr "%s créé"
 
-#: omoma_web/views_iou.py:131
+#: omoma_web/views_iou.py:133
 #, python-format
 msgid "%s successfully deleted"
 msgstr "%s effacé"
 
-#: omoma_web/views_iou.py:155
+#: omoma_web/views_iou.py:157
 #, python-format
 msgid "%s successfully accepted"
 msgstr "%s accepté"
 
-#: omoma_web/views_iou.py:176
+#: omoma_web/views_iou.py:174
+#, python-format
+msgid "%d pending IOUs accepted"
+msgstr "%d règlements en attente acceptés"
+
+#: omoma_web/views_iou.py:193
 #, python-format
 msgid "%(iou)s successfully attached to \"%(transaction)s\""
 msgstr "%(iou)s attaché à \"%(transaction)s\""
 
-#: omoma_web/views_iou.py:205
+#: omoma_web/views_iou.py:222
 #, python-format
 msgid "%(iou)s successfully detached from \"%(transaction)s\""
 msgstr "%(iou)s détaché de \"%(transaction)s\""
 
-#: omoma_web/views_iou.py:255
+#: omoma_web/views_iou.py:272
 #, python-format
 msgid "%s successfully rejected"
 msgstr "%s rejeté"
@@ -435,25 +440,16 @@ msgstr "Catégorie \"%(category)s\" effacée de \"%(transaction)s\""
 
 #: omoma_web/importexport/buxfercsvparser.py:46
 msgid "Create categories when unspecified"
-msgstr ""
+msgstr "Créer des catégories quand elles ne sont pas spécifiées."
 
-#: omoma_web/importexport/buxfercsvparser.py:48
-msgid "Create a special account for unbound IOUs (recommended)"
-msgstr ""
-
-#: omoma_web/importexport/buxfercsvparser.py:63
+#: omoma_web/importexport/buxfercsvparser.py:61
 msgid "Transactions without account"
 msgstr "Transactions sans compte"
 
-#: omoma_web/importexport/buxfercsvparser.py:87
+#: omoma_web/importexport/buxfercsvparser.py:84
 #, python-format
 msgid "Tag \"%s\""
 msgstr "Tag \"%s\""
-
-#: omoma_web/importexport/buxfercsvparser.py:148
-#, python-format
-msgid "Unbound IOUs, Buxfer import on %(date)s"
-msgstr "Règlements détachés, import Buxfer le %(date)s"
 
 #: omoma_web/importexport/ofxparser.py:121
 #, python-format
@@ -561,19 +557,19 @@ msgid "You are about to attach the following IOU to a transaction:"
 msgstr "Vous allez attacher le règlement suivant à une transaction :"
 
 #: templates/attach_iou.html:31 templates/attach_iou.html.py:49
-#: templates/pending_ious.html:34 templates/pending_ious.html.py:70
+#: templates/pending_ious.html:36 templates/pending_ious.html.py:72
 #: templates/omoma_web/iou_list.html:38 templates/omoma_web/iou_list.html:103
 #: templates/omoma_web/transaction_list.html:58
 msgid "Description"
 msgstr "Description"
 
-#: templates/attach_iou.html:32 templates/pending_ious.html:35
+#: templates/attach_iou.html:32 templates/pending_ious.html:37
 #: templates/omoma_web/iou.html:49 templates/omoma_web/transaction.html:110
 msgid "From"
 msgstr "De"
 
-#: templates/attach_iou.html:33 templates/pending_ious.html:36
-#: templates/pending_ious.html.py:72 templates/omoma_web/iou_list.html:42
+#: templates/attach_iou.html:33 templates/pending_ious.html:38
+#: templates/pending_ious.html.py:74 templates/omoma_web/iou_list.html:42
 #: templates/omoma_web/iou_list.html:105
 #: templates/omoma_web/transaction.html:59
 #: templates/omoma_web/transaction.html:143
@@ -583,7 +579,7 @@ msgid "Amount"
 msgstr "Montant"
 
 #: templates/attach_iou.html:34 templates/attach_iou.html.py:51
-#: templates/pending_ious.html:37 templates/pending_ious.html.py:73
+#: templates/pending_ious.html:39 templates/pending_ious.html.py:75
 #: templates/omoma_web/iou.html:50 templates/omoma_web/iou_list.html:43
 #: templates/omoma_web/iou_list.html:106
 #: templates/omoma_web/transaction.html:111
@@ -591,8 +587,8 @@ msgstr "Montant"
 msgid "Date"
 msgstr "Date"
 
-#: templates/attach_iou.html:35 templates/pending_ious.html:38
-#: templates/pending_ious.html.py:74 templates/omoma_web/iou_list.html:44
+#: templates/attach_iou.html:35 templates/pending_ious.html:40
+#: templates/pending_ious.html.py:76 templates/omoma_web/iou_list.html:44
 #: templates/omoma_web/iou_list.html:107
 #: templates/omoma_web/transaction.html:60
 msgid "Type of IOU"
@@ -645,6 +641,32 @@ msgstr "Importer des transactions"
 msgid "Please choose the format to import:"
 msgstr "Choisissez le format à importer :"
 
+#: templates/cleaning.html:24 templates/cleaning.html.py:27
+#: templates/sidebar.html:48
+msgid "Cleaning"
+msgstr "Nettoyage"
+
+#: templates/cleaning.html:29
+msgid "Find duplicate transactions"
+msgstr "Trouver les transactions en double"
+
+#: templates/cleaning.html:29 templates/cleaning.html.py:30
+#: templates/cleaning.html:31 templates/cleaning.html.py:32
+msgid "(future evolution)"
+msgstr "(évolution future)"
+
+#: templates/cleaning.html:30
+msgid "Find duplicate IOUs"
+msgstr "Trouver les règlements en double"
+
+#: templates/cleaning.html:31
+msgid "Merge categories"
+msgstr "Fusionner des catégories"
+
+#: templates/cleaning.html:32
+msgid "Wipe everything"
+msgstr "Tout supprimer"
+
 #: templates/import_transactions.html:39
 msgid "Supported formats:"
 msgstr "Formats supportés :"
@@ -667,21 +689,25 @@ msgstr "Connexion"
 msgid "Pending IOUs"
 msgstr "Règlements en attente"
 
-#: templates/pending_ious.html:65
+#: templates/pending_ious.html:31
+msgid "Accept all IOUs"
+msgstr "Accepter tous les règlements"
+
+#: templates/pending_ious.html:67
 msgid "Rejected IOUs"
 msgstr "Règlements rejetés"
 
-#: templates/pending_ious.html:71 templates/omoma_web/iou_list.html:40
+#: templates/pending_ious.html:73 templates/omoma_web/iou_list.html:40
 #: templates/omoma_web/iou_list.html:104
 #: templates/omoma_web/transaction.html:58
 msgid "Recipient"
 msgstr "Destinataire"
 
-#: templates/pending_ious.html:102
+#: templates/pending_ious.html:104
 msgid "No pending IOU"
 msgstr "Pas de règlement en attente"
 
-#: templates/pending_ious.html:103
+#: templates/pending_ious.html:105
 msgid "There is no pending IOU."
 msgstr "Il n'y a pas de règlement en attente."
 
