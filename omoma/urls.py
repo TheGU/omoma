@@ -1,4 +1,3 @@
-# Django URLs for Omoma
 # Copyright 2011 Sebastien Maccagnoni-Munch
 #
 # This file is part of Omoma.
@@ -14,15 +13,19 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+"""
+Django URLs for Omoma
+"""
+# pylint: disable=C0301
 
 from django.conf import settings
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import patterns, include
 from django.contrib import admin
-from django.views.generic.create_update import delete_object
 from django.views.generic.simple import direct_to_template
 
 admin.autodiscover()
 
+# pylint: disable=C0103
 urlpatterns = patterns('django.contrib.auth.views',
     # Login and logout...
     (r'^login/', 'login', {'template_name':'login.html'}, 'login'),

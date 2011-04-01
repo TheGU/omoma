@@ -1,4 +1,3 @@
-# Import/export parsers for Omoma
 # Copyright 2011 Sebastien Maccagnoni-Munch
 #
 # This file is part of Omoma.
@@ -14,14 +13,21 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+"""
+Import/export parsers for Omoma
+"""
+# pylint: disable=E1101
 
 import pkgutil
 import sys
 
-from omoma_web.models import Transaction
+from omoma.omoma_web.models import Transaction
 
 
 def guessparser(filedata):
+    """
+    Guess which parser would fit to the data
+    """
     # Iter on all modules in this directory
     for parsername in pkgutil.iter_modules(sys.modules[__name__].__path__):
         parser = __import__(parsername[1], globals())
@@ -37,6 +43,9 @@ def guessparser(filedata):
 
 
 def listparsers():
+    """
+    List all parsers
+    """
     parsers = []
     # List all parsers
     for parsername in pkgutil.iter_modules(sys.modules[__name__].__path__):

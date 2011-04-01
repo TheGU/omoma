@@ -1,4 +1,3 @@
-# Administration configuration for Omoma
 # Copyright 2011 Sebastien Maccagnoni-Munch
 #
 # This file is part of Omoma.
@@ -14,32 +13,52 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+"""
+Administration configuration for Omoma
+"""
+# pylint: disable=R0904
 
-from omoma.omoma_web.models import *
+from omoma.omoma_web.models import Account, Budget, Category, Currency, IOU
+from omoma.omoma_web.models import Transaction, TransactionCategory
 from django.contrib import admin
 
 
 class TransactionCategoryInline(admin.TabularInline):
+    """
+    Administration stuff...
+    """
     model = TransactionCategory
     extra = 3
 
 
 class IOUInline(admin.TabularInline):
+    """
+    Administration stuff...
+    """
     fk_name = 'transaction'
     model = IOU
     extra = 3
 
 
 class BudgetInline(admin.TabularInline):
+    """
+    Administration stuff...
+    """
     model = Budget
     extra = 3
 
 
 class CategoryAdmin(admin.ModelAdmin):
+    """
+    Administration stuff...
+    """
     inlines = [BudgetInline]
 
 
 class TransactionAdmin(admin.ModelAdmin):
+    """
+    Administration stuff...
+    """
     inlines = [TransactionCategoryInline, IOUInline]
 
 

@@ -1,4 +1,3 @@
-# QIF import parser for Omoma
 # Copyright 2011 Sebastien Maccagnoni-Munch
 #
 # This file is part of Omoma.
@@ -14,23 +13,33 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+"""
+QIF import parser for Omoma
+"""
 
 import datetime
 
 from django import forms
 from django.utils.translation import ugettext as _
 
-from omoma_web.importexport import import_transaction
-from omoma_web.models import Account, Transaction
+from omoma.omoma_web.importexport import import_transaction
+from omoma.omoma_web.models import Account, Transaction
 
 def name():
+    """
+    Return the parser's name
+    """
     return 'QIF (Quicken Interchange Format)'
 
 
 def check(filedata):
+    """
+    Check if the data fits to this parser
+    """
     return filedata[:6] == '!Type:'
 
 
+# pylint: disable=E1101,W0232,R0903
 class DetailsForm(forms.Form):
     """
     QIF details form
@@ -46,9 +55,10 @@ class DetailsForm(forms.Form):
     date_format = forms.ChoiceField(QIF_DATE_FORMATS,
                                     label=_('Date format'))
 
+    # pylint: disable=E1002
     def __init__(self, request, *args, **kwargs):
         aid = kwargs.pop('aid', None)
-        super (DetailsForm,self).__init__(*args, **kwargs)
+        super (DetailsForm, self).__init__(*args, **kwargs)
         self.request = request
         self.fields['account'] = forms.ModelChoiceField(
                                     Account.objects.filter(owner=request.user),
@@ -57,10 +67,14 @@ class DetailsForm(forms.Form):
 
 
 class Parser:
+    """
+    The parser
+    """
 
     def __init__(self, filedata):
         self.filedata = filedata
 
+    # pylint: disable=R0912
     def parse(self, form):
         """
         Parse a QIF file.
@@ -78,29 +92,29 @@ class Parser:
         transactions_already_exist = 0
         transactions_failed = 0
 
-        t = Transaction(account=account)
+        transaction = Transaction(account=account)
         for line in self.filedata.split('\n')[1:]:
             if line:
                 if line.strip() == '^':
-                    r = import_transaction(t)
-                    if r == True:
+                    result = import_transaction(transaction)
+                    if result == True:
                         transactions_added = transactions_added + 1
-                    elif r == False:
+                    elif result == False:
                         transactions_already_exist = \
                                                  transactions_already_exist + 1
-                    elif r == None:
+                    elif result == None:
                         transactions_failed = transactions_failed + 1
 
-                    t = Transaction(account=account)
+                    transaction = Transaction(account=account)
                 elif line[0] == 'D':
-                    t.date = datetime.datetime.strptime(line[1:].strip(),
-                                                        dateformat)
+                    transaction.date = datetime.datetime.strptime(\
+                                                  line[1:].strip(), dateformat)
                 elif line[0] == 'T':
-                    t.amount = line[1:].strip().replace(',', '')
+                    transaction.amount = line[1:].strip().replace(',', '')
                 elif line[0] == 'P':
-                    d = line[1:].strip()
-                    t.description = d
-                    t.original_description = d
+                    descr = line[1:].strip()
+                    transaction.description = descr
+                    transaction.original_description = descr
 
         msg = []
         if transactions_added:

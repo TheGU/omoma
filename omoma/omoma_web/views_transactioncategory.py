@@ -1,4 +1,3 @@
-# Transactioncategory views for Omoma
 # Copyright 2011 Sebastien Maccagnoni-Munch
 #
 # This file is part of Omoma.
@@ -14,7 +13,12 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+"""
+Transactioncategory views for Omoma
+"""
+# pylint: disable=E1101
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
@@ -22,11 +26,12 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 
-from omoma_web.forbidden import Forbidden
-from omoma_web.models import Transaction, TransactionCategory
-from omoma_web.models import TransactionCategoryForm
+from omoma.omoma_web.forbidden import Forbidden
+from omoma.omoma_web.models import Transaction, TransactionCategory
+from omoma.omoma_web.models import TransactionCategoryForm
 
 
+# pylint: disable=R0912
 @login_required
 def transactioncategory(request, tid, cid=None, aid=None):
     """
@@ -38,19 +43,20 @@ def transactioncategory(request, tid, cid=None, aid=None):
                                                  category__exact=cid,
                                       transaction__account__owner=request.user)
         if tcs:
-            tc = tcs[0]
+            transactioncategoryobj = tcs[0]
         else:
             return Forbidden()
 
     else:
         tts = Transaction.objects.filter(pk=tid, account__owner=request.user)
         if tts:
-            tc = TransactionCategory(transaction=tts[0])
+            transactioncategoryobj = TransactionCategory(transaction=tts[0])
         else:
             return Forbidden()
 
     if request.method == 'POST':
-        form = TransactionCategoryForm(request, request.POST, instance=tc)
+        form = TransactionCategoryForm(request, request.POST,
+                                       instance=transactioncategoryobj)
         if form.is_valid():
 
             # Validate the transaction and the category are owned by the user
@@ -59,7 +65,6 @@ def transactioncategory(request, tid, cid=None, aid=None):
                 return Forbidden()
 
             form.save()
-
 
             if cid:
                 messages.info(request,
@@ -79,12 +84,15 @@ def transactioncategory(request, tid, cid=None, aid=None):
                 target = reverse('transaction', kwargs={'tid':tid})
             return HttpResponseRedirect(target)
     else:
-        form = TransactionCategoryForm(request, instance=tc)
+        form = TransactionCategoryForm(request,
+                                       instance=transactioncategoryobj)
 
-    if tc:
-        title = _('Category for "%s"') % tc.transaction.description
+    if transactioncategoryobj:
+        title = _('Category for "%s"') % \
+                                 transactioncategoryobj.transaction.description
     else:
-        title = _('New category for "%s"') % tc.transaction.description
+        title = _('New category for "%s"') % \
+                                 transactioncategoryobj.transaction.description
 
     return render_to_response('omoma_web/transactioncategory.html', {
         'aid': aid,
@@ -103,12 +111,13 @@ def delete_transactioncategory(request, tid, cid, aid=None):
                                              category__exact=cid,
                                       transaction__account__owner=request.user)
     if tcs:
-        t = tcs[0].transaction
-        c = tcs[0].category
+        transactionobj = tcs[0].transaction
+        categoryobj = tcs[0].category
         tcs[0].delete()
         messages.info(request,
    _('Category "%(category)s" successfully deleted from "%(transaction)s"') % \
-                                                {'category':c,'transaction':t})
+                                                {'category':categoryobj,
+                                                 'transaction':transactionobj})
     else:
         return Forbidden()
 

@@ -1,4 +1,3 @@
-# IOU views for Omoma
 # Copyright 2011 Sebastien Maccagnoni-Munch
 #
 # This file is part of Omoma.
@@ -14,6 +13,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+"""
+IOU views for Omoma
+"""
+# pylint: disable=E1101
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -26,9 +29,9 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.views.generic import list_detail
 
-from omoma_web.forbidden import Forbidden
-from omoma_web.models import IOU, Transaction
-from omoma_web.models import IOUForm, TransactionForm
+from omoma.omoma_web.forbidden import Forbidden
+from omoma.omoma_web.models import IOU, Transaction
+from omoma.omoma_web.models import IOUForm, TransactionForm
 
 
 @login_required
@@ -53,6 +56,7 @@ def ious(request, recipient=None):
                                                   'recipient':recipient})
 
 
+# pylint: disable=R0912
 @login_required
 def iou(request, iid=None, tid=None, aid=None, rejected=False):
     """
@@ -79,11 +83,11 @@ def iou(request, iid=None, tid=None, aid=None, rejected=False):
         return Forbidden()
 
     if request.method == 'POST':
-        form = IOUForm(request, request.POST, instance=i)
+        form = IOUForm(request.POST, instance=i)
 
         if form.is_valid():
             # Verify the IOU links to a transaction the user owns
-            if not request.user in form.instance.transaction.account.owner.all():
+            if not request.user in form.instance.transaction.account.owner.all(): # pylint: disable=C0301
                 return Forbidden()
 
             # Each time an IOU is modified, the recipient should accept again
@@ -100,7 +104,7 @@ def iou(request, iid=None, tid=None, aid=None, rejected=False):
 
             if tid:
                 if aid:
-                    target = reverse('transaction', kwargs={'aid':aid, 'tid':tid})
+                    target = reverse('transaction', kwargs={'aid':aid, 'tid':tid}) # pylint: disable=C0301
                 else:
                     target = reverse('transaction', kwargs={'tid':tid})
             elif rejected:
@@ -109,7 +113,7 @@ def iou(request, iid=None, tid=None, aid=None, rejected=False):
                 target = reverse('ious')
             return HttpResponseRedirect(target)
     else:
-        form = IOUForm(request, instance=i)
+        form = IOUForm(instance=i)
 
     return render_to_response('omoma_web/iou.html', {
         'rejected': rejected,
@@ -169,9 +173,9 @@ def accept_all_ious(request):
     """
     iis = IOU.objects.filter(recipient=request.user, accepted='p',
                              money_transaction=False)
-    n = len(iis)
+    number = len(iis)
     iis.update(accepted='a')
-    messages.info(request, _('%d pending IOUs accepted' % n))
+    messages.info(request, _('%d pending IOUs accepted' % number))
     return HttpResponseRedirect(reverse('pending_ious'))
 
 
@@ -216,7 +220,7 @@ def detach_iou_from_transaction(request, tid, iid, aid=None):
     if iis and tts:
         i = iis[0]
         i.recipient_transaction = None
-        i.accepted='p'
+        i.accepted = 'p'
         i.save()
         messages.info(request,
                   _('%(iou)s successfully detached from "%(transaction)s"') % {
@@ -249,10 +253,10 @@ def attach_iou(request, iid):
             transamount = i.amount
         transdesc = '%(owner)s: %(transaction)s' % {'owner':i.owner,
                                        'transaction':i.transaction.description}
-        t = Transaction(date=i.transaction.date,
-                        amount=transamount,
-                        original_description=transdesc)
-        newtransform = TransactionForm(request, instance=t)
+        transactionobj = Transaction(date=i.transaction.date,
+                                     amount=transamount,
+                                     original_description=transdesc)
+        newtransform = TransactionForm(request, instance=transactionobj)
         return render_to_response('attach_iou.html', {'iou':i,
                                                'transactionform': newtransform,
                                                     }, RequestContext(request))
