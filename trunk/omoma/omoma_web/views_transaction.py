@@ -1,4 +1,3 @@
-# Transaction views from Omoma
 # Copyright 2011 Sebastien Maccagnoni-Munch
 #
 # This file is part of Omoma.
@@ -14,6 +13,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+"""
+Transaction views from Omoma
+"""
+# pylint: disable=E1101
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -25,19 +28,19 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.views.generic import list_detail
 
-from omoma_web.forbidden import Forbidden
-from omoma_web.models import Account, IOU, Transaction
-from omoma_web.models import TransactionForm
+from omoma.omoma_web.forbidden import Forbidden
+from omoma.omoma_web.models import Account, IOU, Transaction
+from omoma.omoma_web.models import TransactionForm
 
 
 @login_required
-def transactions(request, aid=None, page=1, deleted=False):
+def transactions(request, aid=None, deleted=False):
     """
     List transactions
     """
     if deleted:
-        queryset=Transaction.objects.filter(account__owner=request.user,
-                                            deleted=True)
+        queryset = Transaction.objects.filter(account__owner=request.user,
+                                              deleted=True)
         title = _('Deleted transactions')
     elif aid:
         aas = Account.objects.filter(pk=aid, owner=request.user)
@@ -57,6 +60,7 @@ def transactions(request, aid=None, page=1, deleted=False):
                                                   'aid':aid,
                                                   'deleted':deleted})
 
+# pylint: disable=R0912
 @login_required
 def transaction(request, tid=None, iid=None, aid=None):
     """
@@ -64,18 +68,19 @@ def transaction(request, tid=None, iid=None, aid=None):
     """
 
     if tid:
-        tts = Transaction.objects.filter(pk=tid, account__owner=request.user)
-        if tts:
-            t = tts[0]
+        transactionslist = Transaction.objects.filter(pk=tid,
+                                                   account__owner=request.user)
+        if transactionslist:
+            transactionobj = transactionslist[0]
         else:
             return Forbidden()
 
     else:
-        t = None
+        transactionobj = None
 
     if request.method == 'POST':
 
-        form = TransactionForm(request, request.POST, instance=t)
+        form = TransactionForm(request, request.POST, instance=transactionobj)
         if form.is_valid():
 
             # Validate the account is owned by the user
@@ -84,7 +89,7 @@ def transaction(request, tid=None, iid=None, aid=None):
 
             form.save()
 
-            if t:
+            if transactionobj:
                 messages.info(request,
                    _('Transaction "%s" successfully modified') % form.instance)
             else:
@@ -97,7 +102,7 @@ def transaction(request, tid=None, iid=None, aid=None):
                 i.accepted = 'a'
                 i.save()
 
-            if not t and "create_modify" in request.POST:
+            if not transactionobj and "create_modify" in request.POST:
                 if iid:
                     target = reverse('transaction', kwargs={'iid':iid,
                                                        'tid':form.instance.id})
@@ -117,14 +122,14 @@ def transaction(request, tid=None, iid=None, aid=None):
             return HttpResponseRedirect(target)
 
     else:
-        form = TransactionForm(request, instance=t)
+        form = TransactionForm(request, instance=transactionobj)
 
     return render_to_response('omoma_web/transaction.html', {
         'iid': iid,
         'aid': aid,
         'new': not tid,
-        'title': _('Transaction "%s"') %
-                                  t.description if t else _('New transaction'),
+        'title': _('Transaction "%s"') % transactionobj.description \
+                 if transactionobj else _('New transaction'),
         'form': form,
     }, RequestContext(request))
 
@@ -134,26 +139,30 @@ def delete_transaction(request, tid, aid=None, restore=False):
     """
     Delete a transaction
     """
-    tts = Transaction.objects.filter(pk=tid, account__owner=request.user)
-    if tts:
-        t = tts[0]
+    transactionslist = Transaction.objects.filter(pk=tid,
+                                                  account__owner=request.user)
+    if transactionslist:
+        transactionobj = transactionslist[0]
     else:
         return Forbidden()
 
-    iis = IOU.objects.filter(Q(transaction=t) | Q(recipient_transaction=t))
+    iis = IOU.objects.filter(Q(transaction=transactionobj) |
+                             Q(recipient_transaction=transactionobj))
     for i in iis:
         i.accepted = 'p'
         i.save()
 
-    t.deleted = not t.deleted
-    t.validates = False
-    t.save()
+    transactionobj.deleted = not transactionobj.deleted
+    transactionobj.validates = False
+    transactionobj.save()
 
     if restore:
-        messages.info(request, _('Transaction "%s" successfully restored') % t)
+        messages.info(request,
+                  _('Transaction "%s" successfully restored') % transactionobj)
         target = reverse('deleted_transactions')
     else:
-        messages.info(request, _('Transaction "%s" successfully deleted') % t)
+        messages.info(request,
+                   _('Transaction "%s" successfully deleted') % transactionobj)
         if aid:
             target = reverse('transactions', kwargs={'aid':aid})
         else:
@@ -166,14 +175,15 @@ def validate_transaction(request, tid, aid=None):
     """
     Validate a transaction
     """
-    tts = Transaction.objects.filter(pk=tid, account__owner=request.user)
-    if tts:
-        t = tts[0]
+    transactionslist = Transaction.objects.filter(pk=tid,
+                                                  account__owner=request.user)
+    if transactionslist:
+        transactionobj = transactionslist[0]
     else:
         return Forbidden()
 
-    t.validated = not t.validated
-    t.save()
+    transactionobj.validated = not transactionobj.validated
+    transactionobj.save()
     if aid:
         target = reverse('transactions', kwargs={'aid':aid})
     else:

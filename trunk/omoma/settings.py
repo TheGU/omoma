@@ -1,4 +1,3 @@
-# Django settings for Omoma
 # Copyright 2011 Sebastien Maccagnoni-Munch
 #
 # This file is part of Omoma.
@@ -14,10 +13,12 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+"""
+Django settings for Omoma
+"""
+# pylint: disable=W0614
 
-# Django settings for omoma project.
-
-from local_settings import *
+from local_settings import * # pylint: disable=W0401,W0403
 
 TEMPLATE_DEBUG = DEBUG
 
@@ -90,5 +91,5 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 
 
-LOGIN_URL='/login/'
-LOGIN_REDIRECT_URL='/'
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'

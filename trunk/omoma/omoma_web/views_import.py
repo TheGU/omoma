@@ -1,4 +1,3 @@
-# Import views for Omoma
 # Copyright 2011 Sebastien Maccagnoni-Munch
 #
 # This file is part of Omoma.
@@ -14,25 +13,31 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+"""
+Import views for Omoma
+"""
 
 from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 
-from omoma_web.forbidden import Forbidden
-from omoma_web.importexport import guessparser, listparsers
+from omoma.omoma_web.forbidden import Forbidden
+from omoma.omoma_web.importexport import guessparser, listparsers
 
 
+# pylint: disable=E1101,W0232,R0903
 class ImportForm(forms.Form):
+    """
+    Generic importation form
+    """
     imported_file = forms.FileField(label=_('File to import'))
-
-    def __init__(self, request, *args, **kwargs):
-        super (ImportForm,self).__init__(*args, **kwargs)
+    filecontent = None
+    fileparser = None
 
     def clean(self):
         """
@@ -54,6 +59,7 @@ class ImportForm(forms.Form):
         return cleaned_data
 
 
+# pylint: disable=R0912
 @login_required
 def import_transactions(request, aid=None):
     """
@@ -94,7 +100,7 @@ def import_transactions(request, aid=None):
 
         # No file uploaded yet
         if request.method == 'POST':
-            form = ImportForm(request, request.POST, request.FILES)
+            form = ImportForm(request.POST, request.FILES)
             if form.is_valid():
                 request.session['importparser'] = form.fileparser
                 if aid:
@@ -104,7 +110,7 @@ def import_transactions(request, aid=None):
                     return HttpResponseRedirect(reverse('import_transactions'))
 
         else:
-            form = ImportForm(request)
+            form = ImportForm()
 
     return render_to_response('import_transactions.html', {
         'form': form,

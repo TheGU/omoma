@@ -1,4 +1,3 @@
-# Category views for Omoma
 # Copyright 2011 Sebastien Maccagnoni-Munch
 #
 # This file is part of Omoma.
@@ -14,6 +13,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+"""
+Category views for Omoma
+"""
+# pylint: disable=E1101
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -23,7 +26,9 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.views.generic import list_detail
-from omoma_web.models import Category, CategoryForm
+
+from omoma.omoma_web.forbidden import Forbidden
+from omoma.omoma_web.models import Category, CategoryForm
 
 @login_required
 def categories(request):
@@ -39,18 +44,18 @@ def category(request, cid=None):
     Configuration (or creation) view of a category
     """
     if cid:
-        ccs = Category.objects.filter(pk=cid, owner=request.user)
-        if ccs:
-            c = ccs[0]
+        categorieslist = Category.objects.filter(pk=cid, owner=request.user)
+        if categorieslist:
+            categoryobj = categorieslist[0]
         else:
             return Forbidden()
 
     else:
-        c = Category(owner=request.user)
+        categoryobj = Category(owner=request.user)
 
     if request.method == 'POST':
 
-        form = CategoryForm(request, request.POST, instance=c)
+        form = CategoryForm(request, request.POST, instance=categoryobj)
         if form.is_valid():
 
             if form.instance.owner != request.user:
@@ -70,11 +75,12 @@ def category(request, cid=None):
             return HttpResponseRedirect(reverse('categories'))
 
     else:
-        form = CategoryForm(request, instance=c)
+        form = CategoryForm(request, instance=categoryobj)
 
     return render_to_response('omoma_web/category.html', {
         'new': not cid,
-        'title': _('Category "%s"') % c.name if cid else _('New category'),
+        'title': _('Category "%s"') % categoryobj.name if cid \
+                 else _('New category'),
         'form': form,
     }, RequestContext(request))
 

@@ -1,4 +1,3 @@
-# Forbidden page for Omoma
 # Copyright 2011 Sebastien Maccagnoni-Munch
 #
 # This file is part of Omoma.
@@ -14,9 +13,15 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+"""
+Forbidden page for Omoma
+"""
 
 from django.http import HttpResponseForbidden
 from django.template import loader
 
-def Forbidden():
+def Forbidden(): # pylint: disable=C0103
+    """
+    Return Error 403 Forbidden
+    """
     return HttpResponseForbidden(loader.render_to_string('403.html'))

@@ -1,4 +1,3 @@
-# Django models for Omoma
 # Copyright 2011 Sebastien Maccagnoni-Munch
 #
 # This file is part of Omoma.
@@ -14,6 +13,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+"""
+Django models for Omoma
+"""
+# pylint: disable=E1101
 
 from django import forms
 from django.contrib.auth.models import User
@@ -46,6 +49,7 @@ class Currency(models.Model):
         """
         return "%s (%s)" % (self.name, self.short_name)
 
+    # pylint: disable=C0111,W0232,R0903
     class Meta:
         verbose_name = _('currency')
         verbose_name_plural = _('currencies')
@@ -68,10 +72,10 @@ class Account(models.Model):
         """
         Last balance of the account
         """
-        ts = Transaction.objects.filter(account=self,
+        transactionsum = Transaction.objects.filter(account=self,
                                         deleted=False).aggregate(Sum('amount'))
-        if ts['amount__sum']:
-            return self.start_balance + ts['amount__sum']
+        if transactionsum['amount__sum']:
+            return self.start_balance + transactionsum['amount__sum']
         else:
             return self.start_balance
 
@@ -79,10 +83,11 @@ class Account(models.Model):
         """
         Last validated balance of this account
         """
-        ts = Transaction.objects.filter(account=self, deleted=False,
+        transactionsum = Transaction.objects.filter(account=self,
+                                                    deleted=False,
                                        validated=True).aggregate(Sum('amount'))
-        if ts['amount__sum']:
-            return self.start_balance + ts['amount__sum']
+        if transactionsum['amount__sum']:
+            return self.start_balance + transactionsum['amount__sum']
         else:
             return self.start_balance
 
@@ -92,6 +97,7 @@ class Account(models.Model):
         """
         return len(Transaction.objects.filter(account=self))
 
+    # pylint: disable=C0111,W0232,R0903
     class Meta:
         verbose_name = _('account')
         verbose_name_plural = _('accounts')
@@ -150,6 +156,7 @@ class Transaction(models.Model):
     def __unicode__(self):
         return self.description
 
+    # pylint: disable=C0111,W0232,R0903
     class Meta:
         ordering = ['-date']
         verbose_name = _('transaction')
@@ -180,6 +187,7 @@ class Category(models.Model):
         """
         return len(TransactionCategory.objects.filter(category=self))
 
+    # pylint: disable=C0111,W0232,R0903
     class Meta:
         verbose_name = _('category')
         verbose_name_plural = _('categories')
@@ -224,6 +232,7 @@ class TransactionCategory(models.Model):
                                                  'category':self.category.name,
                                     'transaction':self.transaction.description}
 
+    # pylint: disable=C0111,W0232,R0903
     class Meta:
         verbose_name = _('transaction category')
         verbose_name_plural = _('transaction categories')
@@ -316,6 +325,8 @@ class IOU(models.Model):
                 return _('I received for him/her')
             else:
                 return _('I paid for him/her')
+
+    # pylint: disable=C0111,W0232,R0903
     class Meta:
         ordering = ['-transaction__date']
         verbose_name = _('IOU')
@@ -365,66 +376,84 @@ class Budget(models.Model):
                                 verbose_name=_('limit'))
 
     def __unicode__(self):
-        return _('Budget for %s') % category
+        return _('Budget for %s') % self.category
 
+    # pylint: disable=C0111,W0232,R0903
     class Meta:
         verbose_name = _('budget')
         verbose_name_plural = _('budgets')
 
 
 class AccountForm(forms.ModelForm):
+    """
+    Form for Accounts
+    """
 
+    # pylint: disable=C0111,W0232,R0903
     class Meta:
         model = Account
         exclude = ('owner',)
 
 
 class TransactionForm(forms.ModelForm):
+    """
+    Form for Transactions
+    """
 
     def __init__(self, request, *args, **kwargs):
-        super (TransactionForm,self).__init__(*args, **kwargs)
+        super(TransactionForm, self).__init__(*args, **kwargs)
         # Only return transactions owned by the person who requests
         self.fields['account'] = forms.ModelChoiceField(Account.objects.filter(
                                                         owner=request.user.id),
                                                         empty_label=None)
 
+    # pylint: disable=C0111,W0232,R0903
     class Meta:
         model = Transaction
         exclude = ('validated', 'deleted',)
 
 
 class CategoryForm(forms.ModelForm):
+    """
+    Form for Categories
+    """
 
     def __init__(self, request, *args, **kwargs):
-        super (CategoryForm,self).__init__(*args, **kwargs)
+        super(CategoryForm, self).__init__(*args, **kwargs)
         # Parent categories should be owned by the person who requests
         self.fields['parent'] = forms.ModelChoiceField(
                                    Category.objects.filter(owner=request.user),
                                                        required=False)
 
+    # pylint: disable=C0111,W0232,R0903
     class Meta:
         model = Category
         exclude = ('owner',)
 
 class TransactionCategoryForm(forms.ModelForm):
+    """
+    Form for links between transactions and categories
+    """
 
     def __init__(self, request, *args, **kwargs):
-        super (TransactionCategoryForm,self).__init__(*args, **kwargs)
+        super(TransactionCategoryForm, self).__init__(*args, **kwargs)
         # Only return categories owned by the person who requests
         self.fields['category'] = forms.ModelChoiceField(
                                 Category.objects.filter(owner=request.user.id),
                                                          empty_label=None)
 
+    # pylint: disable=C0111,W0232,R0903
     class Meta:
         model = TransactionCategory
         exclude = ('transaction',)
 
 
 class IOUForm(forms.ModelForm):
+    """
+    Form for IOUs
+    """
 
-    def __init__(self, request, *args, **kwargs):
-        super (IOUForm,self).__init__(*args, **kwargs)
-
+    # pylint: disable=C0111,W0232,R0903
     class Meta:
         model = IOU
         exclude = ('owner', 'transaction',

@@ -1,4 +1,3 @@
-# Buxfer CSV import parser for Omoma
 # Copyright 2011 Sebastien Maccagnoni-Munch
 #
 # This file is part of Omoma.
@@ -14,6 +13,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+"""
+Buxfer CSV import parser for Omoma
+"""
 
 import cStringIO
 import csv
@@ -25,19 +27,25 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext as _
 
-from omoma_web.importexport import import_transaction
-from omoma_web.models import Account, Category, Currency, IOU, Transaction, \
-                             TransactionCategory
+from omoma.omoma_web.models import Account, Category, IOU
+from omoma.omoma_web.models import Transaction, TransactionCategory
 
 
 def name():
+    """
+    Return the parser's name
+    """
     return 'Buxfer CSV export (migration from Buxfer)'
 
 
 def check(filedata):
+    """
+    Check if the data fits to this parser
+    """
     return filedata[:24] == '"Transactions matching ['
 
 
+# pylint: disable=E1101,W0232,R0903
 class DetailsForm(forms.Form):
     """
     Buxfer CSV details form
@@ -45,12 +53,12 @@ class DetailsForm(forms.Form):
     createcategories = forms.BooleanField(required=False,
                                  label=_('Create categories when unspecified'))
 
+    # pylint: disable=E1002
     def __init__(self, request, *args, **kwargs):
         aid = kwargs.pop('aid', None)
-        super (DetailsForm,self).__init__(*args, **kwargs)
+        super(DetailsForm, self).__init__(*args, **kwargs)
         self.request = request
 
-        firstperson = True
         for person in request.session['importparser']['parser'].all_people:
             self.fields['person%s' % slugify(person)] = forms.ModelChoiceField(
                                                             User.objects.all(),
@@ -68,7 +76,8 @@ class DetailsForm(forms.Form):
                 initialaccount = aas[0]
             else:
                 initialaccount = aid
-            self.fields['account%s' % slugify(account)] = forms.ModelChoiceField(
+            self.fields['account%s' % slugify(account)] = \
+                                                        forms.ModelChoiceField(
                                     Account.objects.filter(owner=request.user),
                                     initial=initialaccount, label=accountlabel)
 
@@ -84,7 +93,11 @@ class DetailsForm(forms.Form):
                                      label=_('Tag "%s"' % tag.decode('utf-8')))
 
 
+# pylint: disable=R0914
 class Parser:
+    """
+    The parser
+    """
 
     transactions = []
     index = {}
@@ -111,15 +124,15 @@ class Parser:
         accounts = {}
         tags = {}
 
-        for t in csv.reader(filestream):
-            self.transactions.append(t)
+        for transactionline in csv.reader(filestream):
+            self.transactions.append(transactionline)
 
             # List all accounts
-            this_accounts = t[accindex]
-            for ac in this_accounts.split('->'):
-                accounts[ac.strip()] = True
+            this_accounts = transactionline[accindex]
+            for acccount in this_accounts.split('->'):
+                accounts[acccount.strip()] = True
             # List all categories
-            this_tags = t[tagindex]
+            this_tags = transactionline[tagindex]
             for tag in this_tags.split(','):
                 if tag.strip():
                     tags[tag.split(':')[0].strip()] = True
@@ -129,6 +142,7 @@ class Parser:
         self.all_tags = tags.keys()
         self.all_people = headers[9:]
 
+    # pylint: disable=R0912,R0915
     def parse(self, form):
         """
         Parse a Buxfer CSV file.
@@ -143,23 +157,23 @@ class Parser:
         people = {}
         accounts = {}
         tags = {}
-        for f in form.fields.keys():
-            if f.startswith('currency'):
-                currencies[f[8:]] = form.cleaned_data.get(f)
-            elif f.startswith('person'):
-                people[f[6:]] = form.cleaned_data.get(f)
-            elif f.startswith('account'):
-                acct = form.cleaned_data.get(f)
+        for field in form.fields.keys():
+            if field.startswith('currency'):
+                currencies[field[8:]] = form.cleaned_data.get(field)
+            elif field.startswith('person'):
+                people[field[6:]] = form.cleaned_data.get(field)
+            elif field.startswith('account'):
+                acct = form.cleaned_data.get(field)
                 if acct:
                     if not form.request.user in acct.owner.all():
                         return False
-                    accounts[f[7:]] = acct
-            elif f.startswith('tag'):
-                cat = form.cleaned_data.get(f)
+                    accounts[field[7:]] = acct
+            elif field.startswith('tag'):
+                cat = form.cleaned_data.get(field)
                 if cat:
                     if cat.owner != form.request.user:
                         return False
-                    tags[f[3:]] = form.cleaned_data.get(f)
+                    tags[field[3:]] = form.cleaned_data.get(field)
 
         for line in self.transactions:
 
@@ -172,17 +186,20 @@ class Parser:
             #  (tag name, amount)
             make_categories = []
 
-            t = Transaction()
+            transaction = Transaction()
 
-            destaccount = accounts.get(slugify(line[self.index['account']].split('->')[0].strip()), None)
+            accountname = line[self.index['account']].split('->')[0].strip()
+            destaccount = accounts.get(slugify(accountname), None)
             if destaccount:
-                t.account = destaccount
+                transaction.account = destaccount
             else:
                 # If no account, no transaction !
                 continue
 
             origtype = line[self.index['type']]
-            origamount = decimal.Decimal(line[self.index['amount']].lstrip('+ ').replace('.', '').replace(',', '.'))
+            amount = line[self.index['amount']].lstrip('+ ').replace('.', '').\
+                                                             replace(',', '.')
+            origamount = decimal.Decimal(amount)
             tagsline = line[self.index['tags']]
             if tagsline.strip():
                 origtags = line[self.index['tags']].split(',')
@@ -198,20 +215,22 @@ class Parser:
 
             if origtype == 'Expense':
                 # I'm spending money for myself
-                t.amount = -origamount
+                transaction.amount = -origamount
 
             elif origtype in ('Income', 'Refund'):
                 # I'm receiving money
-                t.amount = origamount
+                transaction.amount = origamount
 
             elif (origtype == 'Paid for friend' and myaction == 'Get') or \
                  (origtype == 'Split bill' and myaction == 'Get'):
                 # I'm paying something for someone else
-                t.amount = -origamount
+                transaction.amount = -origamount
                 for personid, person in enumerate(line[9:]):
                     if person.startswith('Owe'):
-                        value = decimal.Decimal(person[4:].replace('.', '').replace(',', '.'))
-                        make_ious.append(('iou', people[slugify(self.all_people[personid])], value, False))
+                        value = person[4:].replace('.', '').replace(',', '.')
+                        value = decimal.Decimal(value)
+                        personobj = people[slugify(self.all_people[personid])]
+                        make_ious.append(('iou', personobj, value, False))
 
             elif (origtype == 'Paid for friend' and myaction == 'Owe') or \
                  (origtype == 'Split bill' and myaction == 'Owe'):
@@ -221,40 +240,46 @@ class Parser:
 
             elif origtype == 'Settlement' and myaction == 'Get':
                 # I give money to someone
-                t.amount = -origamount
+                transaction.amount = -origamount
                 for personid, person in enumerate(line[9:]):
                     if person.startswith('Get'):
-                        value = decimal.Decimal(person[4:].replace('.', '').replace(',', '.'))
-                        make_ious.append(('iou', people[slugify(self.all_people[personid])], value, True))
+                        value = person[4:].replace('.', '').replace(',', '.')
+                        value = decimal.Decimal(value)
+                        personobj = people[slugify(self.all_people[personid])]
+                        make_ious.append(('iou', personobj, value, True))
 
             elif origtype == 'Settlement' and myaction == 'Owe':
                 # I receive money from someone
-                t.amount = origamount
+                transaction.amount = origamount
                 for personid, person in enumerate(line[9:]):
                     if person.startswith('Get'):
-                        value = decimal.Decimal(person[4:].replace('.', '').replace(',', '.'))
-                        make_ious.append(('iou', people[slugify(self.all_people[personid])], value, True))
+                        value = person[4:].replace('.', '').replace(',', '.')
+                        value = decimal.Decimal(value)
+                        personobj = people[slugify(self.all_people[personid])]
+                        make_ious.append(('iou', personobj, value, True))
 
             elif origtype == 'Transfer':
                 # Transfer between two of my accounts
-                t.amount = -origamount
+                transaction.amount = -origamount
                 try:
-                    recipientaccount = accounts[slugify(line[self.index['account']].split('->')[1].strip())]
+                    destinationaccount = line[self.index['account']].\
+                                                         split('->')[1].strip()
+                    recipientaccount = accounts[slugify(destinationaccount)]
                 except KeyError:
                     # The recipient account does not exist
                     continue
                 make_ious.append(('transfer', recipientaccount))
 
-            t.date = datetime.datetime.strptime(line[self.index['date']],
-                                                '%Y-%m-%d')
-            t.description = line[self.index['description']]
-            t.original_description = line[self.index['description']]
+            transaction.date = datetime.datetime.strptime(\
+                                          line[self.index['date']], '%Y-%m-%d')
+            transaction.description = line[self.index['description']]
+            transaction.original_description = line[self.index['description']]
             if line[self.index['status']] == 'Reconciled':
-                t.validated = True
+                transaction.validated = True
 
-            t.save()
+            transaction.save()
 
-            if t:
+            if transaction:
                 for thistag in make_categories:
                     cat = tags.get(thistag[0], None)
                     if not cat:
@@ -263,32 +288,38 @@ class Parser:
                                            name=thistag[0])
                             cat.save()
                             tags[thistag[0]] = cat
-                            tc = TransactionCategory(transaction=t,
-                                                     category=cat,
-                                                     amount=thistag[1])
-                            tc.save()
+                            tcat = TransactionCategory(transaction=transaction,
+                                                       category=cat,
+                                                       amount=thistag[1])
+                            tcat.save()
                     else:
-                        tc = TransactionCategory(transaction=t, category=cat,
-                                                 amount=thistag[1])
-                        tc.save()
+                        tcat = TransactionCategory(transaction=transaction,
+                                                   category=cat,
+                                                   amount=thistag[1])
+                        tcat.save()
 
-                for i in make_ious:
-                    if i[0] == 'iou':
-                        i = IOU(owner=form.request.user, transaction=t,
-                                recipient=i[1], amount=i[2],
-                                money_transaction=i[3])
-                        i.save()
-                    elif i[0] == 'transfer':
-                        rt = Transaction(account=i[1], date=t.date,
-                                         description=t.description,
-                                         amount=-t.amount,
-                                         validated=t.validated)
-                        rt.save()
+                for iou in make_ious:
+                    if iou[0] == 'iou':
+                        iou = IOU(owner=form.request.user,
+                                  transaction=transaction,
+                                  recipient=iou[1], amount=iou[2],
+                                  money_transaction=iou[3])
+                        iou.save()
+                    elif iou[0] == 'transfer':
+                        recipienttrans = Transaction(account=iou[1],
+                                                     date=transaction.date,
+                                           description=transaction.description,
+                                                    amount=-transaction.amount,
+                                               validated=transaction.validated)
+                        recipienttrans.save()
 
-                        i = IOU(owner=form.request.user, transaction=t,
-                                recipient=form.request.user,
-                                amount=abs(t.amount), money_transaction=True,
-                                recipient_transaction=rt, accepted='a')
-                        i.save()
+                        iou = IOU(owner=form.request.user,
+                                  transaction=transaction,
+                                  recipient=form.request.user,
+                                  amount=abs(transaction.amount),
+                                  money_transaction=True,
+                                  recipient_transaction=recipienttrans,
+                                  accepted='a')
+                        iou.save()
 
         return ''

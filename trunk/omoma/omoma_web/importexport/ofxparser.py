@@ -1,4 +1,3 @@
-# OFX import parser for Omoma
 # Copyright 2011 Sebastien Maccagnoni-Munch
 #
 # This file is part of Omoma.
@@ -14,7 +13,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Omoma. If not, see <http://www.gnu.org/licenses/>.
-
+"""
+OFX import parser for Omoma
+"""
 #  Uses the ofx2qif program (shipped with libofx)
 
 import datetime
@@ -27,10 +28,13 @@ from django.conf import settings
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext as _
 
-from omoma_web.importexport import import_transaction
-from omoma_web.models import Account, Transaction
+from omoma.omoma_web.importexport import import_transaction
+from omoma.omoma_web.models import Account, Transaction
 
 def name():
+    """
+    Return the parser's name
+    """
     if os.access(settings.OFX2QIF, os.X_OK):
         return 'OFX (Open Financial Exchange)'
     else:
@@ -38,6 +42,9 @@ def name():
 
 
 def check(filedata):
+    """
+    Check if the data fits to this parser
+    """
     tmpfile, tmpfilename = tempfile.mkstemp('.tmp', 'omoma-ofx-import-')
     os.write(tmpfile, filedata)
     os.close(tmpfile)
@@ -48,23 +55,29 @@ def check(filedata):
     return not not qif
 
 
+# pylint: disable=E1101,W0232,R0903
 class DetailsForm(forms.Form):
     """
     OFX details form
     """
 
+    # pylint: disable=E1002
     def __init__(self, request, *args, **kwargs):
         aid = kwargs.pop('aid', None)
-        super (DetailsForm,self).__init__(*args, **kwargs)
+        super (DetailsForm, self).__init__(*args, **kwargs)
         self.request = request
         for account in request.session['importparser']['parser'].accounts():
-            self.fields['account%s' % slugify(account)] = forms.ModelChoiceField(
+            self.fields['account%s' % slugify(account)] = \
+                                                        forms.ModelChoiceField(
                                     Account.objects.filter(owner=request.user),
                                                    initial=aid, required=False,
                                              label=_('Account "%s"') % account)
 
 
 class Parser:
+    """
+    The parser
+    """
 
     def __init__(self, filedata):
         tmpfile, tmpfilename = tempfile.mkstemp('.tmp', 'omoma-ofx-import-')
@@ -84,12 +97,13 @@ class Parser:
                 inaccount = True
                 accountname = None
             elif line == '^' and inaccount:
-                    accounts.append(accountname)
-                    inaccount = False
+                accounts.append(accountname)
+                inaccount = False
             elif line.startswith('N') and inaccount:
                 accountname = line[1:]
         return accounts
 
+    # pylint: disable=R0912,R0914,R0915
     def parse(self, form):
         """
         Parse an OFX file.
@@ -99,19 +113,22 @@ class Parser:
          - La Banque Postale (french bank)
         """
         accounts = {}
-        for f in form.fields.keys():
-            if f.startswith('account'):
-                act = form.cleaned_data.get(f)
+        for field in form.fields.keys():
+            if field.startswith('account'):
+                act = form.cleaned_data.get(field)
                 if act:
                     # Validate the accounts are owned by the user
                     if not form.request.user in act.owner.all():
                         return False
-                    accounts[f[7:]] = act
+                    accounts[field[7:]] = act
 
         msg = []
 
         inaccount = False
         account = None
+        transactions_added = 0
+        transactions_already_exist = 0
+        transactions_failed = 0
         for line in self.qif.split('\n'):
             if line:
                 if line == '!Account':
@@ -126,8 +143,8 @@ class Parser:
                         if transactions_failed:
                             details.append(_('%d failed' % \
                                                           transactions_failed))
-                        msg.append(_('In account "%(account)s": %(details)s.') % {
-                                                 'account':account.name,
+                        msg.append(_('In account "%(account)s": %(details)s.')\
+                                              % {'account':account.name,
                                                  'details':', '.join(details)})
                     inaccount = True
                     accountname = ''
@@ -140,29 +157,29 @@ class Parser:
                     if accounts.has_key(slugify(accountname)):
                         account = accounts[slugify(accountname)]
                 if line.startswith('!Type:') and account:
-                    t = Transaction(account=account)
+                    transaction = Transaction(account=account)
                 elif line == '^':
                     if inaccount:
                         inaccount = False
                     elif account:
-                        r = import_transaction(t)
-                        if r == True:
+                        result = import_transaction(transaction)
+                        if result == True:
                             transactions_added = transactions_added + 1
-                        elif r == False:
+                        elif result == False:
                             transactions_already_exist = \
                                                  transactions_already_exist + 1
-                        elif r == None:
+                        elif result == None:
                             transactions_failed = transactions_failed + 1
-                        t = Transaction(account=account)
+                        transaction = Transaction(account=account)
 
                 elif line[0] == 'D' and not inaccount:
-                    t.date = datetime.datetime.strptime(line[1:].strip(),
-                                                        '%d/%m/%Y')
+                    transaction.date = datetime.datetime.strptime(\
+                                                  line[1:].strip(), '%d/%m/%Y')
                 elif line[0] == 'T' and not inaccount:
-                    t.amount = line[1:]
+                    transaction.amount = line[1:]
                 elif line[0] == 'P' and not inaccount:
-                    d = line[1:].strip()
-                    t.description = d
-                    t.original_description = d
+                    description = line[1:].strip()
+                    transaction.description = description
+                    transaction.original_description = description
 
         return ''.join(msg)
