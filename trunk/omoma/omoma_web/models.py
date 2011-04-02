@@ -1,4 +1,4 @@
-# Copyright 2011 Sebastien Maccagnoni-Munch
+# Copyright 2011 Sebastien Maccagnoni-Munch, Alin Voinea
 #
 # This file is part of Omoma.
 #
@@ -21,6 +21,7 @@ Django models for Omoma
 from django import forms
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.query_utils import CollectedObjects
 from django.db.models import Q, Sum
 from django.utils.translation import ugettext as _
 
@@ -48,6 +49,17 @@ class Currency(models.Model):
         Full name of the currency (name and short_name)
         """
         return "%s (%s)" % (self.name, self.short_name)
+
+    @property
+    def used(self):
+        """
+        Is this currency used?
+        """
+        seen_objs = CollectedObjects()
+        self._collect_sub_objects(seen_objs)
+        if len(seen_objs.keys()) <= 1:
+            return False
+        return True
 
     # pylint: disable=C0111,W0232,R0903
     class Meta:
@@ -382,6 +394,14 @@ class Budget(models.Model):
     class Meta:
         verbose_name = _('budget')
         verbose_name_plural = _('budgets')
+
+
+class CurrencyForm(forms.ModelForm):
+    """ Form for Currency
+    """
+    # pylint: disable=C0111,W0232,R0903
+    class Meta:
+        model = Currency
 
 
 class AccountForm(forms.ModelForm):

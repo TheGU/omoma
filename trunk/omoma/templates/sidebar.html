@@ -1,6 +1,6 @@
 {% comment %}
 Sidebar template for Omoma
-Copyright 2011 Sebastien Maccagnoni-Munch
+Copyright 2011 Sebastien Maccagnoni-Munch, Alin Voinea
 
 This file is part of Omoma.
 
@@ -46,6 +46,17 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
             <a href="{% url accounts %}">{% trans "Accounts" %}</a>
             <a href="{% url categories %}">{% trans "Categories" %}</a>
             <a href="{% url cleaning %}">{% trans "Cleaning" %}</a>
+        </li>
+    </ul>
+{% endbox %}
+
+{% contentbox _("Admin") %}
+    <ul>
+        <li>
+            <a href="{% url currencies %}">{% trans "Currencies" %}</a>
+        </li>
+        <li>
+            <a href="{% url users %}">{% trans "Users" %}</a>
         </li>
     </ul>
 {% endbox %}

@@ -1,6 +1,6 @@
 /*
  * CSS for Omoma tables
- * Copyright 2011 Sebastien Maccagnoni-Munch
+ * Copyright 2011 Sebastien Maccagnoni-Munch, Alin Voinea
  *
  * This file is part of Omoma.
  *
@@ -77,6 +77,10 @@ text-align: left;
 
 th.currency, td.currency {
 width: 80px;
+}
+
+th.rate, td.rate {
+width: 100px;
 }
 
 th.amount, th.startbalance, th.currentbalance, th.validatedbalance,

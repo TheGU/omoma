@@ -1,4 +1,4 @@
-# Copyright 2011 Sebastien Maccagnoni-Munch
+# Copyright 2011 Sebastien Maccagnoni-Munch, Alin Voinea
 #
 # This file is part of Omoma.
 #
@@ -135,6 +135,28 @@ urlpatterns += patterns('omoma.omoma_web.views_category',
     (r'^category/(?P<cid>\d+)/$', 'category', None, 'category'),
     # Delete category
     (r'^category/(?P<cid>\d+)/delete/$', 'delete_category', None, 'delete_category'),
+)
+
+urlpatterns += patterns('omoma.omoma_web.views_currency',
+    # Currency list
+    (r'^currency/$', 'currencies', None, 'currencies'),
+    # New currency
+    (r'^currency/new/$', 'currency', None, 'new_currency'),
+    # Single currency view
+    (r'^currency/(?P<cid>\d+)/$', 'currency', None, 'currency'),
+    # Delete currency
+    (r'^currency/(?P<cid>\d+)/delete/$', 'delete_currency', None, 'delete_currency'),
+)
+
+urlpatterns += patterns('omoma.auth.views_user',
+    # User list
+    (r'^user/$', 'users', None, 'users'),
+    # New user
+    (r'^user/new/$', 'user', None, 'new_user'),
+    # Single user view
+    (r'^user/(?P<cid>\d+)/$', 'user', None, 'user'),
+    # Delete user
+    (r'^user/(?P<cid>\d+)/delete/$', 'delete_user', None, 'delete_user'),
 )
 
 urlpatterns += patterns('omoma.omoma_web.views_import',
