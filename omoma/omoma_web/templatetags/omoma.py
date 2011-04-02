@@ -25,7 +25,7 @@ from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
-from omoma.omoma_web.models import Account, IOU, Transaction
+from omoma_web.models import Account, IOU, Transaction
 
 # pylint: disable=C0103
 register = template.Library()
