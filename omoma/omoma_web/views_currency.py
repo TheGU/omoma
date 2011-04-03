@@ -32,7 +32,7 @@ def currencies(request):
     List currencies
     """
     return list_detail.object_list(request, template_object_name='currency',
-                                   queryset=Currency.objects.filter())
+                                   queryset=Currency.objects.all())
 
 @permission_required("omoma_web.add_currency")
 def currency(request, cid=None):
