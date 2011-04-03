@@ -24,7 +24,7 @@ DATABASES = {
         # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'ENGINE': 'django.db.backends.sqlite3',
         # Path to database file if using sqlite3.
-        'NAME': 'my_omoma_database.sqlite3',
+        'NAME': '<PATH_TO_OMOMA>/my_omoma_database.sqlite3',
         # Not used with sqlite3.
         'USER': '',
         # Not used with sqlite3.
@@ -45,9 +45,9 @@ LANGUAGE_CODE = 'fr-fr'
 SECRET_KEY = 'Create a secret key here'
 
 TEMPLATE_DIRS = (
-    '/the path to/omoma/templates',
+    '<PATH_TO_OMOMA>/templates',
 )
 
-STATIC_ROOT = '/the path to/omoma/media'
+STATIC_ROOT = '<PATH_TO_OMOMA>/media'
 
 OFX2QIF = '/usr/bin/ofx2qif'
