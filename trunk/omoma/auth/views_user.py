@@ -50,7 +50,7 @@ def user(request, cid=None):
 
     if request.method == 'POST':
 
-        form = UserForm(request, request.POST, instance=current_user)
+        form = UserForm(request.POST, instance=current_user)
         if form.is_valid():
             form.save()
             if cid:
@@ -62,7 +62,7 @@ def user(request, cid=None):
             return HttpResponseRedirect(reverse('users'))
 
     else:
-        form = UserForm(request, instance=current_user)
+        form = UserForm(instance=current_user)
 
     return render_to_response('auth/user.html', {
         'new': not cid,
