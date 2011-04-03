@@ -51,7 +51,7 @@ def currency(request, cid=None):
 
     if request.method == 'POST':
 
-        form = CurrencyForm(request, request.POST, instance=ccy)
+        form = CurrencyForm(request.POST, instance=ccy)
         if form.is_valid():
             form.save()
             if cid:
@@ -63,7 +63,7 @@ def currency(request, cid=None):
             return HttpResponseRedirect(reverse('currencies'))
 
     else:
-        form = CurrencyForm(request, instance=ccy)
+        form = CurrencyForm(instance=ccy)
 
     return render_to_response('omoma_web/currency.html', {
         'new': not cid,
