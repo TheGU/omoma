@@ -307,123 +307,30 @@ ul.auto-toc {
 <div class="document" id="how-to-install-omoma-on-ubuntu">
 <h1 class="title">How to install Omoma on Ubuntu</h1>
 
-<p>This chapter is for people that don't know much about systems, databases, etc
-and that just want to try Omoma on their Ubunbtu system.</p>
-<p>There is no automatic installation for the moment, Omoma being in an early
-development stage.</p>
-<p>The database will be SQLite, the lighter databases that doesn't need a running
-daemon. The web server will be the development server, allowing to serve all
-files without running an independent web server.</p>
-<p>However, please note that running Omoma on your own computer and using it alone
+<p>This short how-to explains how to simply install Omoma on Ubuntu systems.</p>
+<p>Please note that running Omoma on your own computer and using it alone
 currently makes the IOU stuff useless.</p>
 <div class="section" id="prerequisite">
 <h1>Prerequisite</h1>
 <p>This how-to is intended for <em>Ubuntu 10.10</em>.
-It has not been tested on other versions.</p>
-<p>I assume you have already downloaded Omoma. You should have an <tt class="docutils literal">omoma</tt>
-directory, containing <tt class="docutils literal">locale</tt>, <tt class="docutils literal">media</tt>, <tt class="docutils literal">omoma_web</tt> and <tt class="docutils literal">template</tt>
-subdirectories, with <tt class="docutils literal">.py</tt>, <tt class="docutils literal">.html</tt>, <tt class="docutils literal">.png</tt>, <tt class="docutils literal">.css</tt> files.</p>
-<p>You need to access the Internet for some informations if you don't know them
-(timezone name, language code).</p>
-<p>This how-to is based in command-line and text editing.
-You will need the <em>Terminal</em> (located in the <em>Accessories</em> menu). Anywhere you
-read &quot;run the following command&quot;, this means you have to type the command in
-the terminal. Some commands (starting with <tt class="docutils literal">sudo</tt>) may ask for your password.</p>
-<p>To edit files, you can use <em>gedit</em> (also in the <em>Accessories</em> menu). You may
-also simply double-click on the files you want to edit in your file browser.</p>
-<div class="section" id="no-root-needed">
-<h2>No root needed</h2>
-<p>You may know about the <em>root</em> user, the local administrator. You don't need
-root access to run Django. You only need it to install packages (with the
-<tt class="docutils literal">sudo <span class="pre">apt-get</span> install</tt> command).</p>
-</div>
-</div>
-<div class="section" id="installing-omoma">
-<h1>Installing Omoma</h1>
-<p>First, copy or move the <tt class="docutils literal">omoma</tt> directory anywhere you want</p>
-<p>Directly in your home directory works perfectly. If you put the <tt class="docutils literal">omoma</tt>
-directory in your home directory, then its <em>path</em> is
-<tt class="docutils literal"><span class="pre">/home/&lt;your_username&gt;/omoma</span></tt> (replace <tt class="docutils literal">&lt;your_username&gt;</tt> by your username).</p>
-<p>If you put the <tt class="docutils literal">omoma</tt> directory on your desktop, then its <em>path</em> is
-<tt class="docutils literal"><span class="pre">/home/&lt;your_username&gt;/Desktop/omoma</span></tt> (for an english system).</p>
-<p>If you want to put the <tt class="docutils literal">omoma</tt> directory somewhere else, you can easily guess
-the <em>path</em>. You will need to know your <tt class="docutils literal">omoma</tt> path later. In the following
-examples, the <tt class="docutils literal">omoma</tt> directory is assumed to be in your home directory.</p>
-<p>First, you need to install <em>Django</em> (the framework used by Omoma), SQLite and
+It has not been tested on other versions, but should probably work.</p>
+<p>Omoma uses <em>Django</em> (the framework used by Omoma), SQLite and
 the OFX tools. Run the following command:</p>
 <pre class="literal-block">
 sudo apt-get install python-django python-pysqlite2 ofx
 </pre>
 </div>
-<div class="section" id="configuring-omoma">
-<h1>Configuring Omoma</h1>
-<p>Next, you should configure Django.</p>
-<p>Copy the <tt class="docutils literal">local_settings.py.default</tt> file as <tt class="docutils literal">local_settings.py</tt>. It can be
-easily done by running the following commands:</p>
+<div class="section" id="installing-and-configuring-omoma">
+<h1>Installing and configuring Omoma</h1>
+<p>Once the Omoma archive is uncompressed (if you are reading this file, that
+means you have probably done that), run the following command:</p>
 <pre class="literal-block">
-cd /home/&lt;your_username&gt;/omoma
-cp local_settings.py.default local_settings.py
+./install.sh
 </pre>
-<p>Edit the <tt class="docutils literal">local_settings.py</tt> file (simply by clicking on it). This file
-contains many directives that tell Omoma how to work, you have to modify them
-to fit your system.</p>
-<p>You should only modify the ones explained here. Modifying other directived can
-make Omoma crash.</p>
-<p>The line starting with <tt class="docutils literal">DEBUG</tt> should be:</p>
+<p>This command will ask for different things in order to configure Omoma.</p>
+<p>Next, get to the directory and execute the following commant to generate the
+database needed for Omoma:</p>
 <pre class="literal-block">
-DEBUG = False
-</pre>
-<p>There is a section called <tt class="docutils literal">DATABASES</tt>, containing a <tt class="docutils literal">'default'</tt> subsection.
-In this subsection, you have to set the <tt class="docutils literal">ENGINE</tt> and <tt class="docutils literal">NAME</tt> variables:</p>
-<pre class="literal-block">
-'ENGINE': 'django.db.backends.sqlite3',
-'NAME': 'my_omomoa_database.sqlite3',
-</pre>
-<p>The <tt class="docutils literal">TIME_ZONE</tt> directive should refer to your timezone. See the table at
-<a class="reference external" href="http://en.wikipedia.org/wiki/List_of_tz_zones_by_name">http://en.wikipedia.org/wiki/List_of_tz_zones_by_name</a> (column &quot;TZ&quot;) for your
-timezone name. For example, at the South Pole, the timezone should be set as:</p>
-<pre class="literal-block">
-TIME_ZONE = 'Antarctica/South_Pole'
-</pre>
-<p>The <tt class="docutils literal">LANGUAGE_CODE</tt> directive should be set to your local language. See the
-table at <a class="reference external" href="http://www.i18nguy.com/unicode/language-identifiers.html">http://www.i18nguy.com/unicode/language-identifiers.html</a> (column
-&quot;Languages&quot;) to know your language code. For example, in Gibraltar, the language
-code would be:</p>
-<pre class="literal-block">
-LANGUAGE_CODE = 'en-GI'
-</pre>
-<p>However, please note that Omoma is not translated in many languages (english
-and french when writing this how-to). If your language is not supported by
-Omoma, it will fall back to english.</p>
-<p>The <tt class="docutils literal">SECRET_KEY</tt> should be any textual string. Just type anything.
-Really anything: letters, numbers, parenthesis, hiphens, etc. You just need to
-avoid the ' character (because it is the string delimiter). For example:</p>
-<pre class="literal-block">
-SECRET_KEY = 'rzegfz7RT564-&quot;rt35Y675)}=+rREHgezrT3Efr7eZE'
-</pre>
-<p>The <tt class="docutils literal">TEMPLATE_DIRS</tt> sections is a list of paths containing only one path, to
-set to the <tt class="docutils literal">templates</tt> subdirectory in your <tt class="docutils literal">omoma</tt> directory path:</p>
-<pre class="literal-block">
-TEMPLATE_DIRS = (
-    '/home/&lt;your_username&gt;/omoma/templates',
-)
-</pre>
-<p>The <tt class="docutils literal">STATIC_ROOT</tt> is where static files (icons, for instance) are stored. Set
-it to the path to the <tt class="docutils literal">media</tt> subdirectory in your <tt class="docutils literal">omoma</tt> directory path:</p>
-<pre class="literal-block">
-STATIC_ROOT = '/home/&lt;your_username&gt;/omoma/media'
-</pre>
-<p>The <tt class="docutils literal">OFX2QIF</tt> variable refers to the <tt class="docutils literal">ofx2qif</tt> program. The default,
-<tt class="docutils literal">/usr/bin/ofx2qif</tt>, should be fine:</p>
-<pre class="literal-block">
-OFX2QIF = '/usr/bin/ofx2qif'
-</pre>
-<p>Save and close this file.</p>
-<p>Now, you have to generate the data needed for Omoma : the tables that will be
-used to store your data in the database. To generate the tables, run the
-following commands:</p>
-<pre class="literal-block">
-cd /home/&lt;your_username&gt;/omoma
 python manage.py syncdb
 </pre>
 <p>This command should see that your are just initializing the database, and you
@@ -473,16 +380,14 @@ No fixtures found.
 <div class="section" id="running-omoma">
 <h1>Running Omoma</h1>
 <p>Once the database is initialized, you can run Omoma. To do so, run the following
-commands:</p>
+command in the directory where you've installed Omoma:</p>
 <pre class="literal-block">
-cd /home/&lt;your_username&gt;/omoma
 python manage.py runserver
 </pre>
 <p>This allows you to access Omoma, but nobody else on your network. If you want
 to share your Omoma database with someone else (to allow IOUs for example), you
 can run the following commands instead:</p>
 <pre class="literal-block">
-cd /home/&lt;your_username&gt;/omoma
 python manage.py runserver 0.0.0.0:8000
 </pre>
 <p>Other people can access Omoma only when it is running on your computer.</p>
@@ -510,20 +415,9 @@ connection(s) and detailing its address, in the &quot;IP Address&quot; field. Th
 can, for example, be 192.168.1.10; in this case, the address to access Omoma on
 another computer would be:</p>
 <blockquote>
-<p><a class="reference external" href="http://192.168.1.10:8000">http://192.168.1.10:8000</a></p>
+<a class="reference external" href="http://192.168.1.10:8000">http://192.168.1.10:8000</a></blockquote>
 <p>Note that accessing from other computers can work only in your local network
 (unless you are directly connected to the Internet, which is risky).</p>
-</blockquote>
-<div class="section" id="creating-currencies">
-<h2>Creating currencies</h2>
-<p>For the moment, there is no Omoma-specific interface to create currencies, and
-there is no preset currency. To create a currency, go to the following URI:</p>
-<blockquote>
-<a class="reference external" href="http://127.0.0.1:8000/admin/omoma_web/currency">http://127.0.0.1:8000/admin/omoma_web/currency</a></blockquote>
-<p>You can add a currency with the &quot;Add currency&quot; link in the top right corner of
-the page. For the moment, Omoma only works with a single currency, so simply
-set its rate to 1.</p>
-</div>
 </div>
 <div class="section" id="stopping-omoma">
 <h1>Stopping Omoma</h1>
@@ -539,18 +433,14 @@ exit
 </div>
 <div class="section" id="i-ve-accessed-omoma-what-next">
 <h1>I've accessed Omoma... what next ?</h1>
-<p>You first need to create an account (or multiple accounts) in the
-&quot;Configuration&quot;/&quot;Accounts&quot; screen (link in the menu on the left).</p>
+<p>You first need to create a currency, in the &quot;Admin&quot;/&quot;Currencies&quot; screen.
+Next, create an account (or multiple accounts), in the
+&quot;Configuration&quot;/&quot;Accounts&quot; screen.</p>
 </div>
 <div class="section" id="add-other-users">
 <h1>Add other users</h1>
-<p>If you want to create IOUs, you have to add other users. To do so, access the
-following address:</p>
-<pre class="literal-block">
-http://127.0.0.1:8000/admin/auth/user/
-</pre>
-<p>This is a Django administration page. You can add users with the &quot;Add user&quot; link
-in the top right corner of the page.</p>
+<p>If you want to create IOUs, you have to add other users. To do so, use the
+&quot;admin&quot;/&quot;Users&quot; menu.</p>
 </div>
 <div class="section" id="ious">
 <h1>IOUs ?</h1>
@@ -564,7 +454,7 @@ IOUs for them to be taken into account.</p>
 <div class="section" id="the-database">
 <h1>The database</h1>
 <p>All your data is stored in the database configured in the <tt class="docutils literal">DATABASES</tt> section
-of the <tt class="docutils literal">local_settings.py</tt> configuration file. If you have specified
+of the <tt class="docutils literal">local_settings.py</tt> configuration file. For the default
 <tt class="docutils literal">my_omoma_database.sqlite3</tt>, then the <tt class="docutils literal">my_omoma_database.sqlite3</tt> file
 contains all your data. You may backup this file to keep your money data safe.</p>
 </div>
