@@ -26,8 +26,7 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
 {% block content %}
     {% contentbox _("Currencies") %}
         {% if perms.omoma_web.add_currency %}
-        <a href="{% url new_currency %}"><img src="/static/icon_add.png"
-            class="icon" /> {% trans "Add currency" %}</a>
+        <a href="{% url new_currency %}"><img src="/static/icon_add.png" class="icon" /> {% trans "Add currency" %}</a>
         {% endif %}
         <table>
             <tr class="header">
