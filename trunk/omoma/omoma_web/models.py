@@ -21,7 +21,6 @@ Django models for Omoma
 from django import forms
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models.query_utils import CollectedObjects
 from django.db.models import Q, Sum
 from django.utils.translation import ugettext as _
 
@@ -55,11 +54,10 @@ class Currency(models.Model):
         """
         Is this currency used?
         """
-        seen_objs = CollectedObjects()
-        self._collect_sub_objects(seen_objs)
-        if len(seen_objs.keys()) <= 1:
-            return False
-        return True
+        accounts = Account.objects.filter(currency=self)
+        if len(accounts):
+            return True
+        return False
 
     # pylint: disable=C0111,W0232,R0903
     class Meta:
