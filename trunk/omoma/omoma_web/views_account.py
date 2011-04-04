@@ -70,7 +70,7 @@ def account(request, aid=None):
                         _('Account "%s" successfully created') % form.instance)
             return HttpResponseRedirect(reverse('accounts'))
     else:
-        form = AccountForm(instance=account)
+        form = AccountForm(instance=accountobj)
 
     return render_to_response('omoma_web/account.html', {
         'new': not aid,
