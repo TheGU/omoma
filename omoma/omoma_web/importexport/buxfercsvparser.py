@@ -221,8 +221,8 @@ class Parser:
                 # I'm receiving money
                 transaction.amount = origamount
 
-            elif (origtype == 'Paid for friend' and myaction == 'Get') or \
-                 (origtype == 'Split bill' and myaction == 'Get'):
+            elif origtype in ('Paid for friend', 'Split bill') and \
+                 myaction == 'Get':
                 # I'm paying something for someone else
                 transaction.amount = -origamount
                 for personid, person in enumerate(line[9:]):
@@ -232,13 +232,13 @@ class Parser:
                         personobj = people[slugify(self.all_people[personid])]
                         make_ious.append(('iou', personobj, value, False))
 
-            elif (origtype == 'Paid for friend' and myaction == 'Owe') or \
-                 (origtype == 'Split bill' and myaction == 'Owe'):
+            elif origtype in ('Paid for friend', 'Split bill') and \
+                 myaction == 'Owe':
                 # Someone paid something for me
                 continue
                 # That's not an IOU on my side...
 
-            elif origtype == 'Settlement' and myaction == 'Get':
+            elif origtype in ('Settlement', 'Loan') and myaction == 'Get':
                 # I give money to someone
                 transaction.amount = -origamount
                 for personid, person in enumerate(line[9:]):
@@ -248,7 +248,7 @@ class Parser:
                         personobj = people[slugify(self.all_people[personid])]
                         make_ious.append(('iou', personobj, value, True))
 
-            elif origtype == 'Settlement' and myaction == 'Owe':
+            elif origtype in ('Settlement', 'Loan') and myaction == 'Owe':
                 # I receive money from someone
                 transaction.amount = origamount
                 for personid, person in enumerate(line[9:]):
