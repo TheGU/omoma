@@ -28,6 +28,11 @@ form table tr:hover {
 background: none;
 }
 
+form ul {
+list-style-type: none;
+padding: 0;
+}
+
 ul.errorlist {
 border: 1px solid #e66;
 background: #fdd;

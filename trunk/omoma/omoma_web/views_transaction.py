@@ -30,7 +30,7 @@ from django.views.generic import list_detail
 
 from omoma.omoma_web.forbidden import Forbidden
 from omoma.omoma_web.models import Account, IOU, Transaction
-from omoma.omoma_web.models import TransactionForm
+from omoma.omoma_web.transaction import TransactionForm
 
 
 @login_required
@@ -60,13 +60,12 @@ def transactions(request, aid=None, deleted=False):
                                                   'aid':aid,
                                                   'deleted':deleted})
 
-# pylint: disable=R0912
+
 @login_required
 def transaction(request, tid=None, iid=None, aid=None):
     """
     Configuration (or creation) view of a transaction
     """
-
     if tid:
         transactionslist = Transaction.objects.filter(pk=tid,
                                                    account__owner=request.user)
@@ -79,12 +78,10 @@ def transaction(request, tid=None, iid=None, aid=None):
         transactionobj = None
 
     if request.method == 'POST':
-
         form = TransactionForm(request, request.POST, instance=transactionobj)
         if form.is_valid():
-
             # Validate the account is owned by the user
-            if not request.user in form.instance.account.owner.all():
+            if not request.user in form.cleaned_data['account'].owner.all():
                 return Forbidden()
 
             form.save()
@@ -102,23 +99,12 @@ def transaction(request, tid=None, iid=None, aid=None):
                 i.accepted = 'a'
                 i.save()
 
-            if not transactionobj and "create_modify" in request.POST:
-                if iid:
-                    target = reverse('transaction', kwargs={'iid':iid,
-                                                       'tid':form.instance.id})
-                elif aid:
-                    target = reverse('transaction', kwargs={'aid':aid,
-                                                       'tid':form.instance.id})
-                else:
-                    target = reverse('transaction',
-                                     kwargs={'tid':form.instance.id})
+            if iid:
+                target = reverse('iou', kwargs={'iid':iid})
+            elif aid:
+                target = reverse('transactions', kwargs={'aid':aid})
             else:
-                if iid:
-                    target = reverse('iou', kwargs={'iid':iid})
-                elif aid:
-                    target = reverse('transactions', kwargs={'aid':aid})
-                else:
-                    target = reverse('transactions')
+                target = reverse('transactions')
             return HttpResponseRedirect(target)
 
     else:

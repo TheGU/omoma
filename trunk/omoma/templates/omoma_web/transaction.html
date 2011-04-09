@@ -32,8 +32,7 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
                 {{ form }}
             </table>
             {% if new %}
-                <input type="submit" value="{% trans "Create and back" %}" />
-                <input type="submit" name="create_modify" value="{% trans "Create and modify" %}" />
+                <input type="submit" value="{% trans "Create" %}" />
                 <a href="{% if iid %}{% url iou iid=iid %}{% else %}{% if aid %}{% url transactions aid=aid %}{% else %}{% url transactions %}{% endif %}{% endif %}">{% trans "Cancel" %}</a>
             {% else %}
                 <input type="submit" value="{% trans "Modify" %}" />
@@ -45,13 +44,11 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
 
     {% if not new %}
 
-        {% contentbox _('IOUs') %}
-
-            <a href="{% if aid %}{% url new_iou aid=aid tid=form.instance.id %}{% else %}{% url new_iou tid=form.instance.id %}{% endif %}"><img src="/static/icon_add.png" class="icon" /> {% trans "Add an IOU" %}</a>
+        {% contentbox _('IOUs from other people') %}
 
             {% getiouslinkedtorecipienttransaction form.instance %}
 
-            {% if form.instance.iou_set.all or iouslinkedtorecipienttransaction %}
+            {% if iouslinkedtorecipienttransaction %}
                 <table>
                     <tr class="header">
                         <th class="links"></th>
@@ -60,23 +57,6 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
                         <th class="ioutype">{% trans "Type of IOU" %}</th>
                         <th class="accepted">{% trans "Accepted" %}</th>
                     </tr>
-
-                    {% for i in form.instance.iou_set.all %}
-                        <tr>
-                            <td class="links">
-                                <a href="{% if aid %}{% url iou aid=aid tid=form.instance.id iid=i.id %}{% else %}{% url iou tid=form.instance.id iid=i.id %}{% endif %}">
-                                    <img src="/static/icon_edit.png" class="icon" />
-                                </a>
-                                <a href="{% if aid %}{% url delete_iou aid=aid tid=form.instance.id iid=i.id %}{% else %}{% url delete_iou tid=form.instance.id iid=i.id %}{% endif %}">
-                                    <img src="/static/icon_delete.png" class="icon" />
-                                </a>
-                            </td>
-                            <td class="recipient">{{ i.recipient.username }}</td>
-                            <td class="amount">{{ i.amount|money:i.transaction.account }}</td>
-                            <td class="ioutype">{{ i.ownertype }}</td>
-                            <td class="accepted">{{ i.get_accepted_display|capfirst }}</td>
-                        </tr>
-                    {% endfor %}
 
                     {% for i in iouslinkedtorecipienttransaction %}
                         <tr>
@@ -102,8 +82,6 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
             {% contentbox _('Pending IOUs') %}
                 <p>{% trans "The following pending IOUs could match this transaction:" %}</p>
 
-
-
                 <table>
                     <tr class="header">
                         <th class="links"></th>
@@ -125,40 +103,9 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
                     {% endfor %}
                 </table>
 
-
-
-
             {% endbox %}
         {% endif %}
 
-        {% contentbox _('Categories') %}
-
-            <a href="{% if aid %}{% url new_transactioncategory tid=form.instance.id aid=aid %}{% else %}{% url new_transactioncategory tid=form.instance.id %}{% endif %}"><img src="/static/icon_add.png" class="icon" /> {% trans "Add a category" %}</a>
-
-            {% if form.instance.transactioncategory_set.all %}
-                <table>
-                    <tr class="header">
-                        <th class="links"></th>
-                        <th class="category">{% trans "Category" %}</th>
-                        <th class="amount">{% trans "Amount" %}</th>
-                    </tr>
-
-                    {% for c in form.instance.transactioncategory_set.all %}
-                        <tr class="transactioncategory">
-                            <td class="links">
-                                <a href="{% if aid %}{% url transactioncategory tid=form.instance.id aid=aid cid=c.category.id %}{% else %}{% url transactioncategory tid=form.instance.id cid=c.category.id %}{% endif %}">
-                                    <img src="/static/icon_edit.png" class="icon" />
-                                </a>
-                                <a href="{% if aid %}{% url delete_transactioncategory tid=form.instance.id aid=aid cid=c.category.id %}{% else %}{% url delete_transactioncategory tid=form.instance.id cid=c.category.id %}{% endif %}">
-                                    <img src="/static/icon_delete.png" class="icon" />
-                                </a>
-                            </td>
-                            <td class="category">{{ c.category.name }}</td>
-                            <td class="amount">{% if not c.amount %}({% endif %}{{ c.resulting_amount|money:c.transaction.account }}{% if not c.amount %}){% endif %}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            {% endif %}
-        {% endbox %}
     {% endif %}
+
 {% endblock content %}
