@@ -41,10 +41,10 @@ urlpatterns += patterns('',
 )
 
 urlpatterns += patterns('omoma.omoma_web.views_account',
-    # Accounts list
-    (r'^account/$', 'accounts', None, 'accounts'),
     # Single account view
     (r'^account/(?P<aid>\d+)/edit/$', 'account', None, 'account'),
+    # Accounts list
+    (r'^account/$', 'accounts', None, 'accounts'),
     # New account
     (r'^account/new/$', 'account', None, 'new_account'),
     # Delete account
@@ -57,13 +57,13 @@ urlpatterns += patterns('omoma.omoma_web.views_cleaning',
 )
 
 urlpatterns += patterns('omoma.omoma_web.views_transaction',
+    # Single transaction view
+    (r'^(?P<tid>\d+)/$', 'transaction', None, 'transaction'),
+    (r'^account/(?P<aid>\d+)/(?P<tid>\d+)/$', 'transaction', None, 'transaction'),
     # Transactions list
     (r'^$', 'transactions', None, 'transactions'),
     (r'^account/(?P<aid>\d+)/$', 'transactions', None, 'transactions'),
     (r'^deleted/$', 'transactions', {'deleted':True}, 'deleted_transactions'),
-    # Single transaction view
-    (r'^(?P<tid>\d+)/$', 'transaction', None, 'transaction'),
-    (r'^account/(?P<aid>\d+)/(?P<tid>\d+)/$', 'transaction', None, 'transaction'),
     # New transaction
     (r'^new/$', 'transaction', None, 'new_transaction'),
     (r'^account/(?P<aid>\d+)/new/$', 'transaction', None, 'new_transaction'),
@@ -93,15 +93,15 @@ urlpatterns += patterns('omoma.omoma_web.views_transactioncategory',
 )
 
 urlpatterns += patterns('omoma.omoma_web.views_iou',
-    # IOUs lists
-    (r'^iou/$', 'ious', None, 'ious'),
-    (r'^iou/(?P<recipient>\w+)/$', 'ious', None, 'ious'),
-    (r'^pending/$', direct_to_template, {'template': 'pending_ious.html'}, 'pending_ious'),
     # Single IOU view
     (r'^iou/(?P<iid>\d+)/$', 'iou', None, 'iou'),
     (r'^iou/(?P<iid>\d+)/(?P<tid>\d+)/$', 'iou', None, 'iou'),
     (r'^iou-(?P<iid>\d+)/(?P<tid>\d+)/(?P<aid>\d+)/$', 'iou', None, 'iou'),
     (r'^pending/(?P<iid>\d+)/$', 'iou', {'rejected':True}, 'rejected_iou'),
+    # IOUs lists
+    (r'^iou/$', 'ious', None, 'ious'),
+    (r'^iou/(?P<recipient>\w+)/$', 'ious', None, 'ious'),
+    (r'^pending/$', direct_to_template, {'template': 'pending_ious.html'}, 'pending_ious'),
     # New IOU
     (r'^iou/new/(?P<tid>\d+)/$', 'iou', None, 'new_iou'),
     (r'^iou/new/(?P<tid>\d+)/(?P<aid>\d+)/$', 'iou', None, 'new_iou'),
@@ -127,34 +127,34 @@ urlpatterns += patterns('omoma.omoma_web.views_iou',
 )
 
 urlpatterns += patterns('omoma.omoma_web.views_category',
-    # Categories list
-    (r'^category/$', 'categories', None, 'categories'),
     # New category
     (r'^category/new/$', 'category', None, 'new_category'),
     # Single category view
     (r'^category/(?P<cid>\d+)/$', 'category', None, 'category'),
+    # Categories list
+    (r'^category/$', 'categories', None, 'categories'),
     # Delete category
     (r'^category/(?P<cid>\d+)/delete/$', 'delete_category', None, 'delete_category'),
 )
 
 urlpatterns += patterns('omoma.omoma_web.views_currency',
-    # Currency list
-    (r'^currency/$', 'currencies', None, 'currencies'),
     # New currency
     (r'^currency/new/$', 'currency', None, 'new_currency'),
     # Single currency view
     (r'^currency/(?P<cid>\d+)/$', 'currency', None, 'currency'),
+    # Currency list
+    (r'^currency/$', 'currencies', None, 'currencies'),
     # Delete currency
     (r'^currency/(?P<cid>\d+)/delete/$', 'delete_currency', None, 'delete_currency'),
 )
 
 urlpatterns += patterns('omoma.auth.views_user',
-    # User list
-    (r'^user/$', 'users', None, 'users'),
     # New user
     (r'^user/new/$', 'user', None, 'new_user'),
     # Single user view
     (r'^user/(?P<cid>\d+)/$', 'user', None, 'user'),
+    # User list
+    (r'^user/$', 'users', None, 'users'),
     # Delete user
     (r'^user/(?P<cid>\d+)/delete/$', 'delete_user', None, 'delete_user'),
 )
