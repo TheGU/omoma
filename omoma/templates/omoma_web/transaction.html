@@ -44,11 +44,11 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
 
     {% if not new %}
 
-        {% contentbox _('IOUs from other people') %}
+        {% getiouslinkedtorecipienttransaction form.instance %}
 
-            {% getiouslinkedtorecipienttransaction form.instance %}
+        {% if iouslinkedtorecipienttransaction %}
+            {% contentbox _('IOUs from other people') %}
 
-            {% if iouslinkedtorecipienttransaction %}
                 <table>
                     <tr class="header">
                         <th class="links"></th>
@@ -72,9 +72,9 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
                         </tr>
                     {% endfor %}
                 </table>
-            {% endif %}
 
-        {% endbox %}
+            {% endbox %}
+        {% endif %}
 
         {% getiousmatchingrecipienttransaction form.instance %}
 
