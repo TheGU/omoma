@@ -24,6 +24,8 @@ from django.db import models
 from django.db.models import Q, Sum
 from django.utils.translation import ugettext as _
 
+########## Models
+
 
 class Currency(models.Model):
     """
@@ -392,6 +394,9 @@ class Budget(models.Model):
     class Meta:
         verbose_name = _('budget')
         verbose_name_plural = _('budgets')
+
+
+########## Forms
 
 
 class CurrencyForm(forms.ModelForm):

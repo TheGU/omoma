@@ -103,7 +103,6 @@ class Parser:
                 accountname = line[1:]
         return accounts
 
-    # pylint: disable=R0912,R0914,R0915
     def parse(self, form):
         """
         Parse an OFX file.

@@ -74,7 +74,6 @@ class Parser:
     def __init__(self, filedata):
         self.filedata = filedata
 
-    # pylint: disable=R0912
     def parse(self, form):
         """
         Parse a QIF file.

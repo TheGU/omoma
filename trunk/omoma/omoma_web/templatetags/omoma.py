@@ -140,7 +140,7 @@ def do_get_accounts_list(parser, token):
 
     return AccountsListNode()
 
-# pylint: disable=W0613,R0912
+# pylint: disable=W0613
 def do_get_iou_peers_list(parser, token):
     """
     Set the "ioupeerslist" var to the list of debtors and creditors
@@ -160,7 +160,6 @@ def do_get_iou_peers_list(parser, token):
         """
         Create a list of IOU peers
         """
-        # pylint: disable=R0912
         def render(self, context):
             user = context['request'].user
 
