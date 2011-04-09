@@ -31,7 +31,6 @@ from omoma.omoma_web.models import Transaction, TransactionCategory
 from omoma.omoma_web.models import TransactionCategoryForm
 
 
-# pylint: disable=R0912
 @login_required
 def transactioncategory(request, tid, cid=None, aid=None):
     """

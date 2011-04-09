@@ -93,7 +93,6 @@ class DetailsForm(forms.Form):
                                      label=_('Tag "%s"' % tag.decode('utf-8')))
 
 
-# pylint: disable=R0914
 class Parser:
     """
     The parser
@@ -142,7 +141,6 @@ class Parser:
         self.all_tags = tags.keys()
         self.all_people = headers[9:]
 
-    # pylint: disable=R0912,R0915
     def parse(self, form):
         """
         Parse a Buxfer CSV file.

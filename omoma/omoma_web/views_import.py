@@ -59,7 +59,6 @@ class ImportForm(forms.Form):
         return cleaned_data
 
 
-# pylint: disable=R0912
 @login_required
 def import_transactions(request, aid=None):
     """
