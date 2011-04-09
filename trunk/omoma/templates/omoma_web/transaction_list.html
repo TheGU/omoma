@@ -72,12 +72,14 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
                                     <img src="/static/icon_recover.png" class="icon" />
                                 </a>
                             {% else %}
-                                <a href="{% if aid %}{% url transaction tid=t.id aid=aid %}{% else %}{% url transaction tid=t.id %}{% endif %}">
-                                    <img src="/static/icon_edit.png" class="icon" />
-                                </a>
-                                <a href="{% if aid %}{% url delete_transaction tid=t.id aid=aid %}{% else %}{% url delete_transaction tid=t.id %}{% endif %}">
-                                    <img src="/static/icon_delete.png" class="icon" />
-                                </a>
+                                {% if not t.validated %}
+                                    <a href="{% if aid %}{% url transaction tid=t.id aid=aid %}{% else %}{% url transaction tid=t.id %}{% endif %}">
+                                        <img src="/static/icon_edit.png" class="icon" />
+                                    </a>
+                                    <a href="{% if aid %}{% url delete_transaction tid=t.id aid=aid %}{% else %}{% url delete_transaction tid=t.id %}{% endif %}">
+                                        <img src="/static/icon_delete.png" class="icon" />
+                                    </a>
+                                {% endif %}
                                 <a href="{% if aid %}{% url validate_transaction tid=t.id aid=aid %}{% else %}{% url validate_transaction tid=t.id %}{% endif %}">
                                     {% if t.validated %}
                                         <img src="/static/icon_validated.png" class="icon" />
