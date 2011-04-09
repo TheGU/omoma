@@ -46,8 +46,10 @@ def ious(request, recipient=None):
                                       accepted='a')
         title = _("IOUs for %s") % recipient
     else:
-        queryset = IOU.objects.filter(Q(owner=request.user) |
-                                      Q(recipient=request.user),
+        queryset = IOU.objects.filter(Q(owner=request.user) & \
+                                      ~Q(recipient=request.user) |
+                                      Q(recipient=request.user) & \
+                                      ~Q(owner=request.user),
                                       accepted='a')
         title = _("IOUs")
     return list_detail.object_list(request, template_object_name='iou',
