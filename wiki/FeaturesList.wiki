@@ -1,4 +1,5 @@
 #summary List of present and future features
+#labels Featured
 
 = Omoma features =
 
@@ -16,16 +17,20 @@ These features are implemented in the latest version of Omoma, downloadable as a
   * assign multiple categories to transactions
  * interaction with other users
   * IOUs (tell that someone owes money from you or that you owe money)
+ * importing of files
+  * QIF bank account files
+  * OFX bank account files
+  * Buxfer CSV exports
+ * pagination (50 transactions max in a page)
+ * automatic categories assignment
+ * automatic transactions renaming on imports
 
 
 == Trunk ==
 
 "Trunk" is the on-going development version of Omoma. It may be unstable. It has additional features :
 
- * importing QIF files
- * importing OFX files
- * importing Buxfer CSV files
- * pagination (50 transactions max in a page)
+ * none : v0.2 has just been released
 
 It can be downloaded from the SVN repository.
 
