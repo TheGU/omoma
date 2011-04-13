@@ -21,7 +21,8 @@ Import/export parsers for Omoma
 import pkgutil
 import sys
 
-from omoma.omoma_web.models import Transaction
+from omoma.omoma_web.models import Transaction, TransactionRenaming
+from omoma.omoma_web.models import AutomaticCategory, TransactionCategory
 
 
 def guessparser(filedata):
@@ -57,38 +58,56 @@ def listparsers():
     return parsers
 
 
-def import_transaction(transaction):
+def import_transaction(request, transaction, duplicate=False):
     """
     Compare a transaction with existing transactions when importing,
     to import only transactions that were not imported in the past.
     Import transaction
 
-    It compares :
+    request: the current request
+
+    transaction: the transaction to import
+
+    duplicate:
+     * True: create a transaction even if a similar transaction exists
+     * False: do not create a transaction if a similar transaction exists
+
+    It compares:
 
      * account
      * amount
      * date
      * original description
 
-    Return :
+    It returns:
 
      * True: transaction is added
      * False: transaction already exists
      * None: error in transaction creation
     """
-    account = transaction.account
-    amount = transaction.amount
-    date = transaction.date
-    original_description = transaction.original_description
 
-    tts = Transaction.objects.filter(date=date, amount=amount, account=account,
-                                     original_description=original_description,
-                                     deleted=False)
-    if tts:
-        return False
+    if not duplicate:
+        account = transaction.account
+        amount = transaction.amount
+        date = transaction.date
+        original_description = transaction.original_description
+
+        tts = Transaction.objects.filter(date=date, amount=amount, account=account,
+                                         original_description=original_description,
+                                         deleted=False)
+        if tts:
+            return False
+
+    description_to_match = transaction.original_description.lower()
+    renamings = TransactionRenaming.objects.filter(owner=request.user)
+    for renaming in renamings:
+        if renaming.original_description in description_to_match:
+            transaction.description = renaming.target_description
+            break
     else:
-        try:
-            transaction.save()
-            return True
-        except:
-            return None
+        transaction.description = transaction.original_description
+
+    try:
+        transaction.save()
+    except:
+        return None
