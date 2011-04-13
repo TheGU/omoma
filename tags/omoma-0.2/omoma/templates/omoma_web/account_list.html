@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% comment %}
+Accounts list template for Omoma
+Copyright 2011 Sebastien Maccagnoni-Munch
+
+This file is part of Omoma.
+
+Omoma is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, version 3.
+
+Omoma is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+{% endcomment %}
+
+{% load i18n %}
+{% load omoma %}
+
+{% block title %}{% trans "Accounts" %}{% endblock %}
+
+{% block content %}
+    {% contentbox _("Accounts") %}
+        <a href="{% url new_account %}"><img src="/static/icon_add.png" class="icon" /> {% trans "Add account" %}</a>
+        <table>
+            <tr class="header">
+                <th class="links"></th>
+                <th class="name">{% trans "Name" %}</th>
+                <th class="currency">{% trans "Currency" %}</th>
+                <th class="startbalance">{% trans "Start balance" %}</th>
+                <th class="currentbalance">{% trans "Current balance" %}</th>
+                <th class="nbtransactions">{% trans "Transactions" %}</th>
+            </tr>
+
+            {% for a in account_list %}
+                <tr>
+                    <td class="links">
+                        <a href="{% url account aid=a.id %}">
+                            <img src="/static/icon_edit.png" class="icon" />
+                        </a>
+                        <a href="{% url delete_account aid=a.id %}">
+                            <img src="/static/icon_delete.png" class="icon" />
+                        </a>
+                    </td>
+                    <td class="name">{{ a.name }}</td>
+                    <td class="currency">{{ a.currency.fullname }}</td>
+                    <td class="startbalance">{{ a.start_balance|signedmoney:a }}</td>
+                    <td class="currentbalance">{{ a.current_balance|signedmoney:a }}</td>
+                    <td class="nbtransactions">{{ a.count_transactions }}</td>
+                </tr>
+            {% endfor %}
+
+        </table>
+    {% endbox %}
+{% endblock content %}

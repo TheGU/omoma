@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% comment %}
+currency deletion confirmation template for Omoma
+Copyright 2011 Alin Voinea
+
+This file is part of Omoma.
+
+Omoma is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, version 3.
+
+Omoma is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+{% endcomment %}
+
+{% load i18n %}
+{% load omoma %}
+
+{% block title %}{% trans "Delete currency" %}{% endblock %}
+
+{% block content %}
+    {% contentbox _("Delete currency") %}
+        <p>{% trans "You are about to delete the following currency:" %}</p>
+        <dl>
+            <dt>{% trans "Name" %}</dt>
+            <dd>{{ currency.name }}</dd>
+            <dt>{% trans "Short name" %}</dt>
+            <dd>{{ currency.short_name }}</dd>
+            <dt>{% trans "Change rate" %}</dt>
+            <dd>{{ currency.rate }}</dd>
+        </dl>
+        <p>{% trans "This action cannot be undone." %}</p>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="submit" value="{% trans "Yes, remove" %}" />
+            <a href="{% url currencies %}">{% trans "Cancel" %}</a>
+        </form>
+    {% endbox %}
+{% endblock content %}

@@ -1,0 +1,183 @@
+##############################
+How to install Omoma on Ubuntu
+##############################
+
+This short how-to explains how to simply install Omoma on Ubuntu systems.
+
+Please note that running Omoma on your own computer and using it alone
+currently makes the IOU stuff useless.
+
+Prerequisite
+============
+
+This how-to is intended for *Ubuntu 10.10*.
+It has not been tested on other versions, but should probably work.
+
+Omoma uses *Django* (the framework used by Omoma), SQLite and
+the OFX tools. Run the following command::
+
+    sudo apt-get install python-django python-pysqlite2 ofx
+
+Installing and configuring Omoma
+================================
+
+Once the Omoma archive is uncompressed (if you are reading this file, that
+means you have probably done that), run the following command::
+
+    ./install.sh
+
+This command will ask for different things in order to configure Omoma.
+
+Next, get to the directory and execute the following commant to generate the
+database needed for Omoma::
+
+    python manage.py syncdb
+
+This command should see that your are just initializing the database, and you
+don't have any superusers defined. It asks if you would like to create one,
+you should answer yes::
+
+    Would you like to create one now? (yes/no): yes
+
+It then asks the username, you may just press "Enter" if you want to use your
+current username::
+
+    Username (Leave blank to use '<your_username>'): 
+
+It asks for your e-mail address, it can be used to send you e-mails when Omoma
+has problems. This is only useful when you run Omoma as a web service, which you
+won't; you can enter anything, the address doesn't need to exist::
+
+    E-mail address: anything@example.com
+
+It then asks for a password. This is the password to set for the user to be
+created. Enter any password you want (twice). As a security measure, when
+typing, the password will not be displayed.
+
+::
+
+    Password: 
+    Password (again): 
+
+
+It should then say::
+
+    Superuser created successfully.
+    Installing index for auth.Permission model
+    Installing index for auth.Group_permissions model
+    Installing index for auth.User_user_permissions model
+    Installing index for auth.User_groups model
+    Installing index for auth.Message model
+    Installing index for admin.LogEntry model
+    Installing index for omoma_web.Account_owner model
+    Installing index for omoma_web.Account model
+    Installing index for omoma_web.Transaction model
+    Installing index for omoma_web.Category model
+    Installing index for omoma_web.TransactionCategory model
+    Installing index for omoma_web.IOU model
+    Installing index for omoma_web.Budget model
+    No fixtures found.
+
+And voilà! Omoma is installed.
+
+Running Omoma
+=============
+
+Once the database is initialized, you can run Omoma. To do so, run the following
+command in the directory where you've installed Omoma::
+
+    python manage.py runserver
+
+This allows you to access Omoma, but nobody else on your network. If you want
+to share your Omoma database with someone else (to allow IOUs for example), you
+can run the following commands instead::
+
+    python manage.py runserver 0.0.0.0:8000
+
+Other people can access Omoma only when it is running on your computer.
+
+Accessing Omoma
+===============
+
+To access Omoma, you should go to the following address with your web browser:
+
+    http://127.0.0.1:8000
+
+You can now enter the username and password that were just created.
+
+    ``127.0.0.1`` is your own computer address - the current computer is always
+    ``127.0.0.1``, no matter where you are. ``8000`` is a TCP port: to allow
+    multiple connections, the TCP/IP protocol (used on the Internet and the vast
+    majority of computer networks nowadays) defines "ports", a single connection
+    uses a single port; every computer has 65535 ports.
+
+When you come from other computers, you should go to the computer's address, on
+port 8000 too:
+
+    http://<your_computer_address>:8000
+
+To get your computer address, use the network manager applet on your GNOME
+desktop: the little icon showing the network state; when right-clicking on this
+applet and choosing "Connection information", you get a window displaying your
+connection(s) and detailing its address, in the "IP Address" field. This address
+can, for example, be 192.168.1.10; in this case, the address to access Omoma on
+another computer would be:
+
+    http://192.168.1.10:8000
+
+Note that accessing from other computers can work only in your local network
+(unless you are directly connected to the Internet, which is risky).
+
+Stopping Omoma
+==============
+
+To stop Omoma, you just need the ``Ctrl-C`` keystroke in the terminal running
+Omoma.
+
+"Ctrl-C" means that you have to press one of the "Ctrl" key, keep it pressed,
+press the "C" key and then release both keys. This shortcut can alse be written
+``^C``.
+
+To close the terminal, you can close its window or run the following command::
+
+    exit
+
+I've accessed Omoma... what next ?
+==================================
+
+You first need to create a currency, in the "Admin"/"Currencies" screen.
+Next, create an account (or multiple accounts), in the
+"Configuration"/"Accounts" screen.
+
+Add other users
+===============
+
+If you want to create IOUs, you have to add other users. To do so, use the
+"admin"/"Users" menu.
+
+IOUs ?
+======
+
+An IOU makes it possible to mark that someone owes you money, or that you owe
+money to someone. To be able to create IOUs in Omoma, both people should use the
+same installation of Omoma (communication beween multiple Omoma instances may be
+added later).
+
+This limitation is linked to the fact that the other person has to accept your
+IOUs for them to be taken into account.
+
+The database
+============
+
+All your data is stored in the database configured in the ``DATABASES`` section
+of the ``local_settings.py`` configuration file. For the default
+``my_omoma_database.sqlite3``, then the ``my_omoma_database.sqlite3`` file
+contains all your data. You may backup this file to keep your money data safe.
+
+.pyc files
+==========
+
+Files ending with .pyc will be created in the ``omoma`` directory and the
+``omoma_web`` subdirectory. They are harmless. Deleting them is harmless. The
+Python interpreter simply creates them if they don't exist, to make Omoma run
+faster.

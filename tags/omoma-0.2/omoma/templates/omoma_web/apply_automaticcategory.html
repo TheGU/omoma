@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% comment %}
+Apply automatic category template for Omoma
+Copyright 2011 Sebastien Maccagnoni-Munch
+
+This file is part of Omoma.
+
+Omoma is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, version 3.
+
+Omoma is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+{% endcomment %}
+
+{% load i18n %}
+{% load omoma %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+    {% contentbox title %}
+
+        {% if transactions %}
+
+            <p>{% trans "This rule fits to the following uncategorized transactions..." %}</p>
+
+            <form class="fulltable" method="POST">
+                {% csrf_token %}
+                <table>
+                    <tr class="header">
+                        <th class="links"></th>
+                        <th class="description">{% trans "Description" %}</th>
+                        <th class="amount">{% trans "Amount" %}</th>
+                        <th class="categories">{% trans "Categories" %}</th>
+                        <th class="date">{% trans "Date" %}</th>
+                        <th class="account">{% trans "Account" %}</th>
+                    </tr>
+                    {% for t in transactions %}
+                        <tr>
+                            <td class="links"><input type="checkbox" name="applyto" value="{{ t.id }}" /></td>
+                            <td class="description">{{ t.description }}{% if t.has_iou %}&nbsp;<img src="/static/icon_iou.png" class="icon" />{% endif %}{% if t.original_description and t.original_description != t.description %}&nbsp;<span class="originaldescription">(&nbsp;{{ t.original_description }}&nbsp;)</span>{% endif %}</td>
+                            <td class="amount">{{ t.amount|signedmoney:t.account }}</td>
+                            <td class="categories">{% for tc in t.transactioncategory_set.all %}{{ tc.category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+                            <td class="date">{{ t.date|date:"SHORT_DATE_FORMAT" }}</td>
+                            <td class="account">{{ t.account }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <input type="submit" value="{% trans "Attach selected transaction to the category" %}" />
+            </form>
+        {% else %}
+            {% trans "This rule does not fit to any uncategorized transaction." %}
+        {% endif %}
+    {% endbox %}
+
+{% endblock content %}

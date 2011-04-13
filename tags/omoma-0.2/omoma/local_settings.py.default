@@ -1,0 +1,53 @@
+# Django settings for Omoma
+# Copyright 2011 Sebastien Maccagnoni-Munch
+#
+# This file is part of Omoma.
+#
+# Omoma is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, version 3.
+#
+# Omoma is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+
+# Django local settings for omoma project.
+
+DEBUG = False
+
+DATABASES = {
+    'default': {
+        # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.sqlite3',
+        # Path to database file if using sqlite3.
+        'NAME': '<PATH_TO_OMOMA>/my_omoma_database.sqlite3',
+        # Not used with sqlite3.
+        'USER': '',
+        # Not used with sqlite3.
+        'PASSWORD': '',
+        # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': '',
+        # Set to empty string for default. Not used with sqlite3.
+        'PORT': '',
+    }
+}
+
+# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
+TIME_ZONE = 'Europe/Paris'
+
+# http://www.i18nguy.com/unicode/language-identifiers.html
+LANGUAGE_CODE = 'fr-fr'
+
+SECRET_KEY = 'Create a secret key here'
+
+TEMPLATE_DIRS = (
+    '<PATH_TO_OMOMA>/templates',
+)
+
+STATIC_ROOT = '<PATH_TO_OMOMA>/media'
+
+OFX2QIF = '/usr/bin/ofx2qif'

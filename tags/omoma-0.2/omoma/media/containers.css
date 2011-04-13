@@ -1,0 +1,151 @@
+/*
+ * CSS for Omoma containers
+ * Copyright 2011 Sebastien Maccagnoni-Munch
+ *
+ * This file is part of Omoma.
+ *
+ * Omoma is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * Omoma is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/*
+ * Body, main containers, etc
+ */
+
+body {
+font-family: sans-serif; font-size: 13px;
+background: #fff; color: #000;
+margin: 0; padding: 0;
+}
+
+/* Header */
+
+div#header {
+width: 100%; height: 1.5em;
+background: #008; color: #ffd;
+}
+
+div#header div#title {
+float: left;
+margin: 0 5px;
+}
+
+div#header div#user {
+float: right;
+margin: 0 5px;
+}
+
+div#header a {
+color: #ff8;
+text-decoration: none;
+}
+
+/* Sidebar */
+
+div#sidebar {
+float:left;
+width: 150px; height: 100%;
+border-right: 1px solid #008;
+}
+
+div#sidebarcontent {
+padding:10px 10px 0 10px;
+display: block;
+}
+
+/* Main content */
+
+div#contentblock { margin-left: 150px; padding: 1em; }
+
+/*
+ * Dialogs (messages alone in a page ; errors etc)
+ */
+
+div.dialog {
+font-size: 130%;
+margin: 10% auto; width: 50%;
+border: 3px solid #800; background: #fa0;
+}
+
+div.dialog .title {
+background: #800; color: #fa0;
+}
+
+div.dialog div.content {
+margin: 1em;
+}
+
+/*
+ * Boxes inside main containers
+ */
+
+/* Main content */
+div#contentblock div.box {
+border: 1px solid #88f; background: #ffd;
+padding: 0; margin: 0 0 1em 0;
+}
+
+div#contentblock div.box h2.title {
+background: #88f;
+margin: 0; padding: 0.2em 1em;
+font-size: 110%;
+}
+
+div#contentblock div.box div.content {
+margin: 1em;
+}
+
+/* Sidebar */
+
+div#sidebar div.box {
+border: 1px solid #88f; background: #ffd;
+padding: 0; margin: 0 0 1em 0;
+}
+
+div#sidebar div.box h2.title {
+background: #88f;
+margin: 0; padding: 0.2em 1em;
+font-size: 100%;
+}
+
+div#sidebar div.box div.content {
+margin: 0; padding: 0;
+}
+
+
+/*
+ * Home widgets
+ */
+
+table.container {
+border-collapse: collapse;
+border: 0; margin: 0; padding: 0;
+}
+
+table.container tr.container {
+border: 0; margin: 0; padding: 0;
+}
+
+table.container td.left {
+padding: 0 0.5em 0 0;
+border: 0; margin: 0;
+}
+
+table.container td.right {
+padding: 0 0 0 0.5em;
+border: 0; margin: 0;
+}
+
+table.container div.box {
+height: 100%;
+vertical-align: top;
+}

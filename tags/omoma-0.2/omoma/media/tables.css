@@ -1,0 +1,164 @@
+/*
+ * CSS for Omoma tables
+ * Copyright 2011 Sebastien Maccagnoni-Munch, Alin Voinea
+ *
+ * This file is part of Omoma.
+ *
+ * Omoma is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * Omoma is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/*
+ * Tables
+ */
+
+table {
+border-collapse: collapse;
+margin: 5px 0;
+width: 100%;
+}
+
+/*
+ * Rows
+ */
+
+th {
+padding: 4px 10px;
+}
+
+tr {
+border-bottom: 1px solid #cbcb00;
+cursor: default;
+}
+tr:hover {
+background: #fff;
+}
+
+tr.header {
+background: #f3f37a;
+border-bottom: 1px solid #929200;
+}
+tr.header:hover {
+background: #f3f37a;
+}
+
+
+/*
+ * Cells
+ */
+
+th, td {
+margin: 0;
+padding: 4px 10px;
+}
+
+th.links, td.links {
+width: 60px;
+padding: 2px 0;
+text-align: right;
+}
+
+table.widgets th.links, table.widgets td.links {
+width: 20px;
+}
+
+th, td {
+text-align: left;
+}
+
+th.currency, td.currency {
+width: 80px;
+}
+
+th.rate, td.rate {
+width: 100px;
+}
+
+th.amount, th.startbalance, th.currentbalance, th.validatedbalance,
+td.amount, td.startbalance, td.currentbalance, td.validatedbalance {
+width: 100px;
+text-align: right;
+}
+
+th.nbtransaction, td.nbtransactions {
+width: 50px;
+text-align: center;
+}
+
+th.ioutype, td.ioutype {
+width: 150px;
+text-align: center;
+}
+
+th.accepted, td.accepted {
+width: 80px;
+text-align: center;
+}
+
+th.date, td.date {
+width: 100px;
+text-align: right;
+}
+
+th.account, td.account
+{
+width: 80px;
+}
+td.account {
+font-size: 80%;
+}
+
+th.categories, td.categories {
+width: 100px;
+}
+td.categories {
+font-size: 80%;
+}
+
+
+/*
+ * Content
+ */
+
+td.links a {
+padding: 1px;
+}
+
+span.originaldescription {
+color: #999;
+font-size: 70%;
+display: block;
+}
+
+span.positiveamount, span.negativeamount {
+font-weight: bold;
+}
+span.negativeamount {
+color: #c00;
+}
+span.positiveamount {
+color: #0c0;
+}
+
+/*
+ * Pagination
+ */
+
+p.pagination {
+margin: 0;
+padding: 0;
+text-align: right;
+}
+span.pagenumber {
+font-weight: bold;
+margin: 0 0.5em;
+}
