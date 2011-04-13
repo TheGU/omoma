@@ -21,8 +21,12 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
 
 {% contentbox %}
     <ul>
-        <li><a href="{% url transactions %}" >{% trans "Home" %}</a></li>
-        <li><a href="{% url ious %}">{% trans "IOUs" %}</a></li>
+        <li>
+            <a href="{% url transactions %}" >{% trans "Home" %}</a>
+        </li>
+        <li>
+            <a href="{% url ious %}">{% trans "IOUs" %}</a>
+        </li>
     </ul>
 {% endbox %}
 
@@ -44,7 +48,14 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
     <ul>
         <li>
             <a href="{% url accounts %}">{% trans "Accounts" %}</a>
+        </li>
+        <li>
             <a href="{% url categories %}">{% trans "Categories" %}</a>
+        </li>
+        <li>
+            <a href="{% url automaticrules %}">{% trans "Rules" %}</a>
+        </li>
+        <li>
             <a href="{% url cleaning %}">{% trans "Cleaning" %}</a>
         </li>
     </ul>
@@ -57,6 +68,9 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
         </li>
         <li>
             <a href="{% url users %}">{% trans "Users" %}</a>
+        </li>
+        <li>
+            <a href="http://code.google.com/p/omoma/issues/entry" target="_blank">{% trans "Report a bug" %}</a>
         </li>
     </ul>
 {% endbox %}
