@@ -161,7 +161,7 @@ class Parser:
                     if inaccount:
                         inaccount = False
                     elif account:
-                        result = import_transaction(transaction)
+                        result = import_transaction(form.request, transaction)
                         if result == True:
                             transactions_added = transactions_added + 1
                         elif result == False:
@@ -178,7 +178,6 @@ class Parser:
                     transaction.amount = line[1:]
                 elif line[0] == 'P' and not inaccount:
                     description = line[1:].strip()
-                    transaction.description = description
                     transaction.original_description = description
 
         return ''.join(msg)

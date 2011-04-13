@@ -396,6 +396,58 @@ class Budget(models.Model):
         verbose_name_plural = _('budgets')
 
 
+class TransactionRenaming(models.Model):
+    """
+    Automatic transactions renaming when importing
+    """
+    owner = models.ForeignKey(User, verbose_name=_('owner'))
+    original_description = models.CharField(max_length=500,
+                                        verbose_name=_('original description'))
+    target_description = models.CharField(max_length=500,
+                                          verbose_name=_('target description'))
+
+    def __unicode__(self):
+        return _('Transaction renaming from "%(original)s" to "%(target)s"') %\
+                                         {'original':self.original_description,
+                                          'target':self.target_description}
+
+    def clean(self):
+        """
+        Clean the original description, all lowercase
+        """
+        self.original_description = self.original_description.lower()
+
+    # pylint: disable=C0111,W0232,R0903
+    class Meta:
+        verbose_name = _('transaction renaming')
+        verbose_name_plural = _('transactions renamings')
+
+
+class AutomaticCategory(models.Model):
+    """
+    Automatic categories assignment
+    """
+    description = models.CharField(max_length=500,
+                                        verbose_name=_('match in description'))
+    category = models.ForeignKey('Category', verbose_name=_('category'))
+
+    def __unicode__(self):
+        return _('Automatic category for "[...]%(description)s[...]" to "%(category)s"') % \
+                                               {'description':self.description,
+                                                'category':self.category}
+
+    def clean(self):
+        """
+        Clean the description, all lowercase
+        """
+        self.description = self.description.lower()
+
+    # pylint: disable=C0111,W0232,R0903
+    class Meta:
+        verbose_name = _('automatic category assignment')
+        verbose_name_plural = _('automatic categories assignments')
+
+
 ########## Forms
 
 
@@ -416,24 +468,6 @@ class AccountForm(forms.ModelForm):
     class Meta:
         model = Account
         exclude = ('owner',)
-
-
-class TransactionForm(forms.ModelForm):
-    """
-    Form for Transactions
-    """
-
-    def __init__(self, request, *args, **kwargs):
-        super(TransactionForm, self).__init__(*args, **kwargs)
-        # Only return transactions owned by the person who requests
-        self.fields['account'] = forms.ModelChoiceField(Account.objects.filter(
-                                                        owner=request.user.id),
-                                                        empty_label=None)
-
-    # pylint: disable=C0111,W0232,R0903
-    class Meta:
-        model = Transaction
-        exclude = ('validated', 'deleted',)
 
 
 class CategoryForm(forms.ModelForm):
@@ -481,3 +515,28 @@ class IOUForm(forms.ModelForm):
         model = IOU
         exclude = ('owner', 'transaction',
                    'recipient_transaction', 'accepted',)
+
+class AutomaticCategoryForm(forms.ModelForm):
+    """
+    Form for automatic categories assignments
+    """
+
+    # pylint: disable=C0111,W0232,R0903
+    class Meta:
+        model = AutomaticCategory
+
+    def __init__(self, request, *args, **kwargs):
+        super(AutomaticCategoryForm, self).__init__(*args, **kwargs)
+        # Only return categories owned by the person who requests
+        self.fields['category'] = forms.ModelChoiceField(
+                                   Category.objects.filter(owner=request.user),
+                                                         empty_label=None)
+
+class TransactionRenamingForm(forms.ModelForm):
+    """
+    Form for automatic categories assignments
+    """
+
+    # pylint: disable=C0111,W0232,R0903
+    class Meta:
+        model = TransactionRenaming

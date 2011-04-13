@@ -20,6 +20,7 @@ Administration configuration for Omoma
 
 from omoma.omoma_web.models import Account, Budget, Category, Currency, IOU
 from omoma.omoma_web.models import Transaction, TransactionCategory
+from omoma.omoma_web.models import AutomaticCategory, TransactionRenaming
 from django.contrib import admin
 
 
@@ -66,3 +67,5 @@ admin.site.register(Currency)
 admin.site.register(Account)
 admin.site.register(Transaction, TransactionAdmin)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(AutomaticCategory)
+admin.site.register(TransactionRenaming)

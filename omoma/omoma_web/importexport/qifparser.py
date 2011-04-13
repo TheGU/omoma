@@ -95,7 +95,7 @@ class Parser:
         for line in self.filedata.split('\n')[1:]:
             if line:
                 if line.strip() == '^':
-                    result = import_transaction(transaction)
+                    result = import_transaction(form.request, transaction)
                     if result == True:
                         transactions_added = transactions_added + 1
                     elif result == False:
@@ -112,7 +112,6 @@ class Parser:
                     transaction.amount = line[1:].strip().replace(',', '')
                 elif line[0] == 'P':
                     descr = line[1:].strip()
-                    transaction.description = descr
                     transaction.original_description = descr
 
         msg = []

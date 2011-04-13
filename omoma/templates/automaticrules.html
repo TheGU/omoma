@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% comment %}
+Automatic rules template for Omoma
+Copyright 2011 Sebastien Maccagnoni-Munch
+
+This file is part of Omoma.
+
+Omoma is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, version 3.
+
+Omoma is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+{% endcomment %}
+
+{% load i18n %}
+{% load omoma %}
+
+{% block title %}{% trans "Automatic rules" %}{% endblock %}
+
+{% block content %}
+    <table class="container">
+        <tr class="container">
+            <td class="left">
+                {% contentbox _('Automatic categories assignations') %}
+                    <p>{% trans "Automatically assign these categories when the content is like..." %}</p>
+
+                    <a href="{% url new_automaticcategory %}"><img src="/static/icon_add.png" class="icon" />{% trans "Add category assignment rule" %}</a>
+                    {% if not categories %}
+                        <p>{% trans "There is no automatic category assignment in this account." %}</p>
+                    {% else %}
+                        <table>
+                            <tr class="header">
+                                <th class="links"></th>
+                                <th class="description">{% trans "Description contains" %}</th>
+                                <th class="category">{% trans "Category" %}</th>
+                            </tr>
+                            {% for category in categories %}
+                                <tr>
+                                    <td class="links">
+                                        <a href="{% url automaticcategory acid=category.id %}">
+                                            <img src="/static/icon_edit.png" class="icon" />
+                                        </a>
+                                        <a href="{% url delete_automaticcategory acid=category.id %}">
+                                            <img src="/static/icon_delete.png" class="icon" />
+                                        </a>
+                                        <a href="{% url apply_automaticcategory acid=category.id %}">
+                                            <img src="/static/icon_apply.png" class="icon" />
+                                        </a>
+                                    </td>
+                                    <td class="description">{{ category.description }}</td>
+                                    <td class="category">{{ category.category }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% endif %}
+                {% endbox %}
+            </td>
+            <td class="right">
+                {% contentbox _('Transactions renaming') %}
+                    <p>{% trans "Automatically rename transactions when importing..." %}</p>
+
+                    <a href="{% url new_transactionrenaming %}"><img src="/static/icon_add.png" class="icon" />{% trans "Add transaction renaming rule" %}</a>
+                    {% if not categories %}
+                        <p>{% trans "There is no automatic category assignment in this account." %}</p>
+                    {% else %}
+
+                        <table>
+                            <tr class="header">
+                                <th class="links"></th>
+                                <th class="original_description">{% trans "Description contains" %}</th>
+                                <th class="target_description">{% trans "Rename to" %}</th>
+                            </tr>
+                            {% for renaming in renamings %}
+                                <tr>
+                                    <td class="links">
+                                        <a href="{% url transactionrenaming trid=renaming.id %}">
+                                            <img src="/static/icon_edit.png" class="icon" />
+                                        </a>
+                                        <a href="{% url delete_transactionrenaming trid=renaming.id %}">
+                                            <img src="/static/icon_delete.png" class="icon" />
+                                        </a>
+                                        <a href="{% url apply_transactionrenaming trid=renaming.id %}">
+                                            <img src="/static/icon_apply.png" class="icon" />
+                                        </a>
+                                    </td>
+                                    <td class="original_description">{{ renaming.original_description }}</td>
+                                    <td class="target_description">{{ renaming.target_description }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% endif %}
+                {% endbox %}
+            </td>
+        </tr>
+    </table>
+{% endblock %}

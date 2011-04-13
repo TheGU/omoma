@@ -270,12 +270,11 @@ class Parser:
 
             transaction.date = datetime.datetime.strptime(\
                                           line[self.index['date']], '%Y-%m-%d')
-            transaction.description = line[self.index['description']]
             transaction.original_description = line[self.index['description']]
             if line[self.index['status']] == 'Reconciled':
                 transaction.validated = True
 
-            transaction.save()
+            import_transaction(form.request, transaction, duplicate=True)
 
             if transaction:
                 for thistag in make_categories:

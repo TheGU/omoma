@@ -167,3 +167,19 @@ urlpatterns += patterns('omoma.omoma_web.views_import',
     (r'^import/cancel/$', 'cancel_import_transactions', None, 'cancel_import_transactions'),
     (r'^account/(?P<aid>\d+)/import/cancel/$', 'cancel_import_transactions', None, 'cancel_import_transactions'),
 )
+
+urlpatterns += patterns('omoma.omoma_web.views_userpreferences',
+    # Single rules
+    (r'^preferences/rules/category/new/$', 'automaticcategory', None, 'new_automaticcategory'),
+    (r'^preferences/rules/category/(?P<acid>\d+)/$', 'automaticcategory', None, 'automaticcategory'),
+    (r'^preferences/rules/renaming/new/$', 'transactionrenaming', None, 'new_transactionrenaming'),
+    (r'^preferences/rules/renaming/(?P<trid>\d+)/$', 'transactionrenaming', None, 'transactionrenaming'),
+    # Lists
+    (r'^preferences/rules/$', 'automaticrules', None, 'automaticrules'),
+    # Delete rules
+    (r'^preferences/rules/category/(?P<acid>\d+)/delete/$', 'delete_automaticcategory', None, 'delete_automaticcategory'),
+    (r'^preferences/rules/renaming/(?P<trid>\d+)/delete/$', 'delete_transactionrenaming', None, 'delete_transactionrenaming'),
+    # Apply rules
+    (r'^preferences/rules/category/(?P<acid>\d+)/apply/$', 'apply_automaticcategory', None, 'apply_automaticcategory'),
+    (r'^preferences/rules/renaming/(?P<trid>\d+)/apply/$', 'apply_transactionrenaming', None, 'apply_transactionrenaming'),
+)

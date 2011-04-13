@@ -26,11 +26,9 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 
 from omoma.omoma_web.models import Account, Category, IOU, Transaction, \
-                                   TransactionCategory
+                                   TransactionCategory, AutomaticCategory
 
 
-# TODO : when cleaning, validate that the required forms are there
-# (destination account for transfers, peer for IOUs...)
 class TransactionForm(forms.Form):
     """
     Custom form for transactions
@@ -178,6 +176,30 @@ class TransactionForm(forms.Form):
                 self.fields['peer%d' % (num+1)].initial = iou.recipient
                 self.fields['peer%damount' % (num+1)].initial = iou.amount
 
+
+    def clean(self):
+        """
+        Clean the form.
+        """
+        cleaned_data = self.cleaned_data
+
+        transaction_type = cleaned_data.get('transaction_type')
+        destination_account = cleaned_data.get('destination_account')
+        peer1 = cleaned_data.get('peer1')
+
+        if transaction_type == 'Transfer' and not destination_account:
+            msg = _('A transfer needs a destination account.')
+            self._errors['destination_account'] = self.error_class([msg])
+        elif transaction_type == 'Give' and not peer1:
+            msg = _('Who did you give this money to?')
+            self._errors['peer1'] = self.error_class([msg])
+        elif transaction_type == 'Receive' and not peer1:
+            msg = _('Who gave you this money?')
+            self._errors['peer1'] = self.error_class([msg])
+
+        return cleaned_data
+
+
     def save(self):
         """
         Save the instance
@@ -230,6 +252,16 @@ class TransactionForm(forms.Form):
             self.__set_transfer()
         else:
             self.__set_peers(self.__list_peers())
+
+
+        description_to_match = self.instance.description.lower()
+
+        categories = AutomaticCategory.objects.filter( \
+                                             category__owner=self.request.user)
+        for category in categories:
+            if category.description in description_to_match:
+                TransactionCategory(transaction=self.instance,
+                                    category=category.category).save()
 
     def __list_categories(self):
         """
