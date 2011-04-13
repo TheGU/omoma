@@ -30,8 +30,8 @@ from django.utils.translation import ugettext as _
 from django.views.generic import list_detail
 
 from omoma.omoma_web.forbidden import Forbidden
-from omoma.omoma_web.models import IOU, Transaction
-from omoma.omoma_web.models import IOUForm, TransactionForm
+from omoma.omoma_web.models import IOU, Transaction, IOUForm
+from omoma.omoma_web.transaction import TransactionForm
 
 
 @login_required
