@@ -126,26 +126,26 @@ margin: 0; padding: 0;
  * Home widgets
  */
 
-table.widgets {
+table.container {
 border-collapse: collapse;
 border: 0; margin: 0; padding: 0;
 }
 
-table.widgets tr.widgets {
+table.container tr.container {
 border: 0; margin: 0; padding: 0;
 }
 
-table.widgets td.leftwidget {
+table.container td.left {
 padding: 0 0.5em 0 0;
 border: 0; margin: 0;
 }
 
-table.widgets td.rightwidget {
+table.container td.right {
 padding: 0 0 0 0.5em;
 border: 0; margin: 0;
 }
 
-table.widgets div.box {
+table.container div.box {
 height: 100%;
 vertical-align: top;
 }
