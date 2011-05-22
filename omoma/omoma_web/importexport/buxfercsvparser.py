@@ -115,9 +115,8 @@ class Parser:
         accindex = headers.index('Account')
         self.index['account'] = accindex
         self.index['status'] = headers.index('Status')
-        self.index['me'] = 8
-        for num, person in enumerate(headers[9:]):
-            self.index[person] = num+9
+        for num, person in enumerate(headers[8:]):
+            self.index[person] = num+8
 
         currencies = {}
         accounts = {}
@@ -139,7 +138,7 @@ class Parser:
         self.all_currencies = currencies.keys()
         self.all_accounts = accounts.keys()
         self.all_tags = tags.keys()
-        self.all_people = headers[9:]
+        self.all_people = headers[8:]
 
     def parse(self, form):
         """
@@ -172,6 +171,12 @@ class Parser:
                     if cat.owner != form.request.user:
                         return False
                     tags[field[3:]] = form.cleaned_data.get(field)
+
+        # Identify "me" in the list of people
+        for person in enumerate(people):
+            if person[1] == form.request.user:
+                index_me = person[0]
+                break
 
         for line in self.transactions:
 
@@ -209,7 +214,7 @@ class Parser:
                         value = origamount / len(origtags)
                     make_categories.append((splitcat[0], value))
 
-            myaction = line[self.index['me']][:3]
+            myaction = line[indexme][:3]
 
             if origtype == 'Expense':
                 # I'm spending money for myself
@@ -223,12 +228,15 @@ class Parser:
                  myaction == 'Get':
                 # I'm paying something for someone else
                 transaction.amount = -origamount
-                for personid, person in enumerate(line[9:]):
-                    if person.startswith('Owe'):
-                        value = person[4:].replace('.', '').replace(',', '.')
-                        value = decimal.Decimal(value)
-                        personobj = people[slugify(self.all_people[personid])]
-                        make_ious.append(('iou', personobj, value, False))
+                for personid, person in enumerate(line[8:]):
+                    if personid != indexme:
+                        if person.startswith('Owe'):
+                            value = person[4:].replace('.', '').replace(',',
+                                                                        '.')
+                            value = decimal.Decimal(value)
+                            personobj = people[slugify(
+                                                    self.all_people[personid])]
+                            make_ious.append(('iou', personobj, value, False))
 
             elif origtype in ('Paid for friend', 'Split bill') and \
                  myaction == 'Owe':
@@ -239,22 +247,28 @@ class Parser:
             elif origtype in ('Settlement', 'Loan') and myaction == 'Get':
                 # I give money to someone
                 transaction.amount = -origamount
-                for personid, person in enumerate(line[9:]):
-                    if person.startswith('Get'):
-                        value = person[4:].replace('.', '').replace(',', '.')
-                        value = decimal.Decimal(value)
-                        personobj = people[slugify(self.all_people[personid])]
-                        make_ious.append(('iou', personobj, value, True))
+                for personid, person in enumerate(line[8:]):
+                    if personid != indexme:
+                        if person.startswith('Get'):
+                            value = person[4:].replace('.', '').replace(',',
+                                                                        '.')
+                            value = decimal.Decimal(value)
+                            personobj = people[slugify(
+                                                    self.all_people[personid])]
+                            make_ious.append(('iou', personobj, value, True))
 
             elif origtype in ('Settlement', 'Loan') and myaction == 'Owe':
                 # I receive money from someone
                 transaction.amount = origamount
-                for personid, person in enumerate(line[9:]):
-                    if person.startswith('Get'):
-                        value = person[4:].replace('.', '').replace(',', '.')
-                        value = decimal.Decimal(value)
-                        personobj = people[slugify(self.all_people[personid])]
-                        make_ious.append(('iou', personobj, value, True))
+                for personid, person in enumerate(line[8:]):
+                    if personid != indexme:
+                        if person.startswith('Get'):
+                            value = person[4:].replace('.', '').replace(',',
+                                                                        '.')
+                            value = decimal.Decimal(value)
+                            personobj = people[slugify(
+                                                    self.all_people[personid])]
+                            make_ious.append(('iou', personobj, value, True))
 
             elif origtype == 'Transfer':
                 # Transfer between two of my accounts
