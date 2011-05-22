@@ -21,6 +21,8 @@ Import/export parsers for Omoma
 import pkgutil
 import sys
 
+from django.utils.encoding import force_unicode
+
 from omoma.omoma_web.models import Transaction, TransactionRenaming
 from omoma.omoma_web.models import AutomaticCategory, TransactionCategory
 
@@ -86,26 +88,27 @@ def import_transaction(request, transaction, duplicate=False):
      * None: error in transaction creation
     """
 
+    original_description = force_unicode(transaction.original_description)
+    
     if not duplicate:
         account = transaction.account
         amount = transaction.amount
         date = transaction.date
-        original_description = transaction.original_description
 
-        tts = Transaction.objects.filter(date=date, amount=amount, account=account,
-                                         original_description=original_description,
-                                         deleted=False)
+        tts = Transaction.objects.filter(date=date, amount=amount,
+                                         deleted=False, account=account,
+                                     original_description=original_description)
         if tts:
             return False
 
-    description_to_match = transaction.original_description.lower()
+    description_to_match = original_description.lower()
     renamings = TransactionRenaming.objects.filter(owner=request.user)
     for renaming in renamings:
         if renaming.original_description in description_to_match:
             transaction.description = renaming.target_description
             break
     else:
-        transaction.description = transaction.original_description
+        transaction.description = original_description
 
     try:
         transaction.save()

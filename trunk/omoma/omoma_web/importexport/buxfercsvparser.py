@@ -27,6 +27,7 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext as _
 
+from omoma.omoma_web.importexport import import_transaction
 from omoma.omoma_web.models import Account, Category, IOU
 from omoma.omoma_web.models import Transaction, TransactionCategory
 
@@ -173,9 +174,12 @@ class Parser:
                     tags[field[3:]] = form.cleaned_data.get(field)
 
         # Identify "me" in the list of people
-        for person in enumerate(people):
-            if person[1] == form.request.user:
-                index_me = person[0]
+        for personid, person in people.items():
+            if person == form.request.user:
+                for pers in enumerate(self.all_people):
+                    if slugify(pers[1]) == personid:
+                        self.index['me'] = pers[0]
+                        break
                 break
 
         for line in self.transactions:
@@ -214,7 +218,7 @@ class Parser:
                         value = origamount / len(origtags)
                     make_categories.append((splitcat[0], value))
 
-            myaction = line[indexme][:3]
+            myaction = line[self.index['me']+8][:3]
 
             if origtype == 'Expense':
                 # I'm spending money for myself
@@ -229,7 +233,7 @@ class Parser:
                 # I'm paying something for someone else
                 transaction.amount = -origamount
                 for personid, person in enumerate(line[8:]):
-                    if personid != indexme:
+                    if personid != self.index['me']:
                         if person.startswith('Owe'):
                             value = person[4:].replace('.', '').replace(',',
                                                                         '.')
@@ -248,7 +252,7 @@ class Parser:
                 # I give money to someone
                 transaction.amount = -origamount
                 for personid, person in enumerate(line[8:]):
-                    if personid != indexme:
+                    if personid != self.index['me']:
                         if person.startswith('Get'):
                             value = person[4:].replace('.', '').replace(',',
                                                                         '.')
@@ -261,7 +265,7 @@ class Parser:
                 # I receive money from someone
                 transaction.amount = origamount
                 for personid, person in enumerate(line[8:]):
-                    if personid != indexme:
+                    if personid != self.index['me']:
                         if person.startswith('Get'):
                             value = person[4:].replace('.', '').replace(',',
                                                                         '.')
@@ -289,6 +293,7 @@ class Parser:
                 transaction.validated = True
 
             import_transaction(form.request, transaction, duplicate=True)
+
 
             if transaction:
                 for thistag in make_categories:
