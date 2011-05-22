@@ -212,8 +212,8 @@ class Parser:
                 origtags = line[self.index['tags']].split(',')
                 for cat in origtags:
                     splitcat = cat.split(':')
-                    if len(splitcat) > 1:
-                        value = decimal.Decimal(splitcat[1])
+                    if len(splitcat) > 1 and splitcat[1]:
+                        value = decimal.Decimal(splitcal[1])
                     else:
                         value = origamount / len(origtags)
                     make_categories.append((splitcat[0], value))
