@@ -136,6 +136,8 @@ class Parser:
                 if tag.strip():
                     tags[tag.split(':')[0].strip()] = True
 
+        filestream.close()
+
         self.all_currencies = currencies.keys()
         self.all_accounts = accounts.keys()
         self.all_tags = tags.keys()
@@ -213,7 +215,7 @@ class Parser:
                 for cat in origtags:
                     splitcat = cat.split(':')
                     if len(splitcat) > 1 and splitcat[1]:
-                        value = decimal.Decimal(splitcal[1])
+                        value = decimal.Decimal(splitcat[1])
                     else:
                         value = origamount / len(origtags)
                     make_categories.append((splitcat[0], value))
