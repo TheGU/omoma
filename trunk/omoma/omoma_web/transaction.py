@@ -136,10 +136,22 @@ class TransactionForm(forms.Form):
         """
         Initialize form data from instance data
         """
-        self.fields['account'].initial = self.instance.account
-        self.fields['date'].initial = self.instance.date
-        self.fields['description'].initial = self.instance.description
-        self.fields['amount'].initial = abs(self.instance.amount)
+        try:
+            self.fields['account'].initial = self.instance.account
+        except:
+            pass
+        try:
+            self.fields['date'].initial = self.instance.date
+        except:
+            pass
+        try:
+            self.fields['description'].initial = self.instance.description
+        except:
+            pass
+        try:
+            self.fields['amount'].initial = abs(self.instance.amount)
+        except:
+            pass
 
         my_ious = IOU.objects.filter(transaction=self.instance)
 
@@ -260,8 +272,12 @@ class TransactionForm(forms.Form):
                                              category__owner=self.request.user)
         for category in categories:
             if category.description in description_to_match:
-                TransactionCategory(transaction=self.instance,
-                                    category=category.category).save()
+                existing = TransactionCategory.objects.filter( \
+                                                     transaction=self.instance,
+                                                    category=category.category)
+                if not existing:
+                    TransactionCategory(transaction=self.instance,
+                                        category=category.category).save()
 
     def __list_categories(self):
         """

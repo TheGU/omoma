@@ -64,7 +64,7 @@ display: block;
 
 /* Main content */
 
-div#contentblock { margin-left: 150px; padding: 1em; }
+div#contentblock { margin-left: 150px; padding: 5px 1em 1em 1em; }
 
 /*
  * Dialogs (messages alone in a page ; errors etc)

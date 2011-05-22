@@ -36,6 +36,7 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
             <dt>{% trans "Children" %}</dt>
             <dd>{% categorytree category %}</dd>
         </dl>
+        <p>{% trans "Transactions will not be deleted." %}</p>
         <p>{% trans "This action cannot be undone." %}</p>
         <form method="POST">
             {% csrf_token %}

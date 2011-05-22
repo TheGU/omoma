@@ -30,12 +30,12 @@ from omoma.omoma_web.models import Transaction, TransactionCategory
 from omoma.omoma_web.models import AutomaticCategory, AutomaticCategoryForm
 from omoma.omoma_web.models import TransactionRenaming, TransactionRenamingForm
 
+
 @login_required
 def automaticrules(request):
     """
     List automatic transaction renaming and category assignation rules
     """
-
     renaming = TransactionRenaming.objects.filter(owner=request.user)
     category = AutomaticCategory.objects.filter(category__owner=request.user)
 
