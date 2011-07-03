@@ -22,10 +22,12 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
 {% load omoma %}
 
 {% block title %}{{ title }}{% endblock %}
+{% block jscript %}$(document).ready(function() { $('#id_date').datepicker($.datepicker.regional['{{ LANGUAGE_CODE }}']); });{% endblock %}
 
 {% block content %}
 
     {% contentbox title %}
+
         <form method="POST">
             {% csrf_token %}
             <table>

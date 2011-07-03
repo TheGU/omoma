@@ -35,43 +35,49 @@ class TransactionForm(forms.Form):
     """
 
     TRANSACTION_TYPES = (
-        ('Expense', 'Expense'),
-        ('Income', 'Income'),
-        ('Salary', 'Salary'),
-        ('Transfer', 'Transfer'),
-        ('Give', 'I gave money to...'),
-        ('Receive', 'I received money from...'),
+        ('Expense', _('Expense')),
+        ('Income', _('Income')),
+        ('Salary', _('Salary')),
+        ('Transfer', _('Transfer')),
+        ('Give', _('I gave money to...')),
+        ('Receive', _('I received money from...')),
     )
 
     account = forms.CharField(label=_('Account'))
     date = forms.DateField(initial=datetime.date.today(), label=_('Date'))
     description = forms.CharField(label=_('Description'))
     amount = forms.DecimalField(label=_('Amount'), min_value=Decimal('0'))
-    transaction_type = forms.ChoiceField(TRANSACTION_TYPES,
-                                         widget=forms.RadioSelect,
-                                         label=_('Transaction type'))
+    transaction_type = forms.ChoiceField(TRANSACTION_TYPES, widget=forms.RadioSelect, label=_('Transaction type'))
+
+    # Categories
     category1 = forms.CharField(label=_('Category'), required=False)
     category1amount = forms.DecimalField(label=_('Amount'), required=False)
     category2 = forms.CharField(label=_('Category'), required=False)
     category2amount = forms.DecimalField(label=_('Amount'), required=False)
     category3 = forms.CharField(label=_('Category'), required=False)
     category3amount = forms.DecimalField(label=_('Amount'), required=False)
-    destination_account = forms.CharField(label=_('Destination account'),
-                                          required=False)
+    category4 = forms.CharField(label=_('Category'), required=False)
+    category4amount = forms.DecimalField(label=_('Amount'), required=False)
+    category5 = forms.CharField(label=_('Category'), required=False)
+    category5amount = forms.DecimalField(label=_('Amount'), required=False)
+
+    # If the transaction is a transfer
+    destination_account = forms.CharField(label=_('Destination account'), required=False)
+
+    # If IOUs are linked to the transaction
     peer1 = forms.CharField(label=_('Person'), required=False)
     peer1amount = forms.DecimalField(label=_('Amount'), required=False)
     peer2 = forms.CharField(label=_('Person'), required=False)
     peer2amount = forms.DecimalField(label=_('Amount'), required=False)
     peer3 = forms.CharField(label=_('Person'), required=False)
     peer3amount = forms.DecimalField(label=_('Amount'), required=False)
+    peer4 = forms.CharField(label=_('Person'), required=False)
+    peer4amount = forms.DecimalField(label=_('Amount'), required=False)
+    peer5 = forms.CharField(label=_('Person'), required=False)
+    peer5amount = forms.DecimalField(label=_('Amount'), required=False)
 
-    def __init__(self, request, data=None, files=None, auto_id='id_%s',
-                 prefix=None, initial=None, error_class=ErrorList,
-                 label_suffix=':', empty_permitted=False, instance=None):
-
-        super(TransactionForm, self).__init__(data, files, auto_id, prefix,
-                                              initial, error_class,
-                                              label_suffix, empty_permitted)
+    def __init__(self, request, data=None, files=None, auto_id='id_%s', prefix=None, initial=None, error_class=ErrorList, label_suffix=':', empty_permitted=False, instance=None):
+        super(TransactionForm, self).__init__(data, files, auto_id, prefix, initial, error_class, label_suffix, empty_permitted)
 
         self.request = request
         self.__init_accounts()
@@ -88,80 +94,49 @@ class TransactionForm(forms.Form):
         """
         Initialize categories lists
         """
-        self.fields['category1'] = forms.ModelChoiceField( \
-                                                       Category.objects.filter(
-                                                      owner=self.request.user),
-                                                           label=_('Category'),
-                                                           required=False)
-        self.fields['category2'] = forms.ModelChoiceField( \
-                                                       Category.objects.filter(
-                                                      owner=self.request.user),
-                                                           label=_('Category'),
-                                                           required=False)
-        self.fields['category3'] = forms.ModelChoiceField( \
-                                                       Category.objects.filter(
-                                                      owner=self.request.user),
-                                                           label=_('Category'),
-                                                           required=False)
+        self.fields['category1'] = forms.ModelChoiceField(Category.objects.filter(owner=self.request.user), label=_('Category'), required=False)
+        self.fields['category2'] = forms.ModelChoiceField(Category.objects.filter(owner=self.request.user), label=_('Category'), required=False)
+        self.fields['category3'] = forms.ModelChoiceField(Category.objects.filter(owner=self.request.user), label=_('Category'), required=False)
+        self.fields['category4'] = forms.ModelChoiceField(Category.objects.filter(owner=self.request.user), label=_('Category'), required=False)
+        self.fields['category5'] = forms.ModelChoiceField(Category.objects.filter(owner=self.request.user), label=_('Category'), required=False)
 
     def __init_peers(self):
         """
         Initialize peers lists (for IOUs)
         """
-        self.fields['peer1'] = forms.ModelChoiceField(User.objects.all(),
-                                                      label=_('Person'),
-                                                      required=False)
-        self.fields['peer2'] = forms.ModelChoiceField(User.objects.all(),
-                                                      label=_('Person'),
-                                                      required=False)
-        self.fields['peer3'] = forms.ModelChoiceField(User.objects.all(),
-                                                      label=_('Person'),
-                                                      required=False)
+        self.fields['peer1'] = forms.ModelChoiceField(User.objects.all(), label=_('Person'), required=False)
+        self.fields['peer2'] = forms.ModelChoiceField(User.objects.all(), label=_('Person'), required=False)
+        self.fields['peer3'] = forms.ModelChoiceField(User.objects.all(), label=_('Person'), required=False)
+        self.fields['peer4'] = forms.ModelChoiceField(User.objects.all(), label=_('Person'), required=False)
+        self.fields['peer5'] = forms.ModelChoiceField(User.objects.all(), label=_('Person'), required=False)
 
     def __init_accounts(self):
         """
         Initialize accounts lists with accounts owned by the user
         """
-        self.fields['account'] = forms.ModelChoiceField(Account.objects.filter(
-                                                      owner=self.request.user),
-                                                        empty_label=None,
-                                                        label=_('Account'))
-        self.fields['destination_account'] = \
-                                 forms.ModelChoiceField(Account.objects.filter(
-                                                      owner=self.request.user),
-                                                label=_('Destination account'),
-                                                        required=False)
+        self.fields['account'] = forms.ModelChoiceField(Account.objects.filter(owner=self.request.user), empty_label=None, label=_('Account'))
+        self.fields['destination_account'] = forms.ModelChoiceField(Account.objects.filter(owner=self.request.user), label=_('Destination account'), required=False)
 
     def __init_from_instance(self):
         """
         Initialize form data from instance data
         """
-        try:
-            self.fields['account'].initial = self.instance.account
-        except:
-            pass
-        try:
-            self.fields['date'].initial = self.instance.date
-        except:
-            pass
-        try:
-            self.fields['description'].initial = self.instance.description
-        except:
-            pass
-        try:
-            self.fields['amount'].initial = abs(self.instance.amount)
-        except:
-            pass
+        try: self.fields['account'].initial = self.instance.account
+        except: pass
+        try: self.fields['date'].initial = self.instance.date
+        except: pass
+        try: self.fields['description'].initial = self.instance.description
+        except: pass
+        try: self.fields['amount'].initial = abs(self.instance.amount)
+        except: pass
 
         my_ious = IOU.objects.filter(transaction=self.instance)
 
         if my_ious:
             if my_ious[0].money_transaction:
-                if self.instance.amount < 0 and request.user in \
-                      my_ious[0].recipient_transaction.account.owner.all():
-                    self.fields['transaction_type'].initial = 'Trans'
-                    self.fields['destination_account'].initial = \
-                                   my_ious[0].recipient_transaction.account
+                if self.instance.amount < 0 and self.request.user in my_ious[0].recipient_transaction.account.owner.all():
+                    self.fields['transaction_type'].initial = 'Transfer'
+                    self.fields['destination_account'].initial = my_ious[0].recipient_transaction.account
                 elif self.instance.amount < 0:
                     self.fields['transaction_type'].initial = 'Give'
                 elif self.instance.amount > 0:
@@ -178,12 +153,11 @@ class TransactionForm(forms.Form):
             else:
                 self.fields['transaction_type'].initial = 'Income'
 
-        for num, category in enumerate(TransactionCategory.objects.filter( \
-                                                   transaction=self.instance)):
+        for num, category in enumerate(TransactionCategory.objects.filter(transaction=self.instance)):
             self.fields['category%d' % (num+1)].initial = category.category
             self.fields['category%damount' % (num+1)].initial = category.amount
 
-        if self.fields['transaction_type'] != 'Trans':
+        if self.fields['transaction_type'] != 'Transfer':
             for num, iou in enumerate(my_ious):
                 self.fields['peer%d' % (num+1)].initial = iou.recipient
                 self.fields['peer%damount' % (num+1)].initial = iou.amount
@@ -291,6 +265,10 @@ class TransactionForm(forms.Form):
         category2amount = self.cleaned_data['category2amount']
         category3 = self.cleaned_data['category3']
         category3amount = self.cleaned_data['category3amount']
+        category4 = self.cleaned_data['category4']
+        category4amount = self.cleaned_data['category4amount']
+        category5 = self.cleaned_data['category5']
+        category5amount = self.cleaned_data['category5amount']
         categories = {}
         if category1:
             if category1amount:
@@ -307,6 +285,16 @@ class TransactionForm(forms.Form):
                 categories[category3] = category3amount
             else:
                 categories[category3] = True
+        if category4:
+            if category4amount:
+                categories[category4] = category3amount
+            else:
+                categories[category4] = True
+        if category5:
+            if category5amount:
+                categories[category5] = category3amount
+            else:
+                categories[category5] = True
 
         return categories
 
@@ -323,6 +311,10 @@ class TransactionForm(forms.Form):
         peer2amount = self.cleaned_data['peer2amount']
         peer3 = self.cleaned_data['peer3']
         peer3amount = self.cleaned_data['peer3amount']
+        peer4 = self.cleaned_data['peer4']
+        peer4amount = self.cleaned_data['peer4amount']
+        peer5 = self.cleaned_data['peer5']
+        peer5amount = self.cleaned_data['peer5amount']
         peers = {}
         peers_total = 0
         noamount_peers = []
@@ -344,6 +336,18 @@ class TransactionForm(forms.Form):
                 peers_total = peers_total + peer3amount
             else:
                 noamount_peers.append(peer3)
+        if peer4:
+            if peer4amount:
+                peers[peer4] = peer4amount
+                peers_total = peers_total + peer4amount
+            else:
+                noamount_peers.append(peer4)
+        if peer5:
+            if peer5amount:
+                peers[peer5] = peer5amount
+                peers_total = peers_total + peer5amount
+            else:
+                noamount_peers.append(peer5)
         if len(noamount_peers):
             remainingamount = amount - peers_total
             dividedamount = remainingamount / (len(noamount_peers) + 1)
@@ -433,10 +437,83 @@ class TransactionForm(forms.Form):
         if not exists:
             dest_transaction = Transaction(account=dest_account,
                                            date=self.instance.date,
-                                         description=self.instance.description,
                                            amount=amount,
-                                           original_description=description)
+                                         description=self.instance.description,
+                                original_description=self.instance.description)
             dest_transaction.save()
             IOU(owner=myself, transaction=self.instance,
                 recipient=myself, amount=amount, money_transaction=True,
                 recipient_transaction=dest_transaction, accepted='a').save()
+
+
+
+class AjaxTransactionForm(TransactionForm):
+    """
+    Custom form for transactions in ajax-generated table rows
+    """
+
+    TRANSACTION_TYPES = (
+        ('Expense', _('Expense')),
+        ('Income', _('Income')),
+        ('Salary', _('Salary')),
+        ('Transfer', _('Transfer')),
+        ('Give', _('I gave')),
+        ('Receive', _('I received')),
+    )
+
+    account = forms.CharField()
+    date = forms.DateField(initial=datetime.date.today(), widget=forms.DateInput(attrs={'class':'intable date'}))
+    description = forms.CharField(widget=forms.TextInput(attrs={'class':'intable description'}))
+    amount = forms.DecimalField(min_value=Decimal('0'), widget=forms.TextInput(attrs={'class':'intable amount'}))
+    transaction_type = forms.ChoiceField(TRANSACTION_TYPES, widget=forms.Select(attrs={'class':'intable type'}), initial='Expense')
+
+    # Categories
+    category1 = forms.CharField(required=False)
+    category1amount = forms.DecimalField(required=False, widget=forms.TextInput(attrs={'class':'intable categoryamount'}))
+    category2 = forms.CharField(required=False)
+    category2amount = forms.DecimalField(required=False, widget=forms.TextInput(attrs={'class':'intable categoryamount'}))
+    category3 = forms.CharField(required=False)
+    category3amount = forms.DecimalField(required=False, widget=forms.TextInput(attrs={'class':'intable categoryamount'}))
+    category4 = forms.CharField(required=False)
+    category4amount = forms.DecimalField(required=False, widget=forms.TextInput(attrs={'class':'intable categoryamount'}))
+    category5 = forms.CharField(required=False)
+    category5amount = forms.DecimalField(required=False, widget=forms.TextInput(attrs={'class':'intable categoryamount'}))
+
+    # If the transaction is a transfer
+    destination_account = forms.CharField(required=False)
+
+    # If IOUs are linked to the transaction
+    peer1 = forms.CharField(required=False)
+    peer1amount = forms.DecimalField(required=False, widget=forms.TextInput(attrs={'class':'intable peeramount'}))
+    peer2 = forms.CharField(required=False)
+    peer2amount = forms.DecimalField(required=False, widget=forms.TextInput(attrs={'class':'intable peeramount'}))
+    peer3 = forms.CharField(required=False)
+    peer3amount = forms.DecimalField(required=False, widget=forms.TextInput(attrs={'class':'intable peeramount'}))
+    peer4 = forms.CharField(required=False)
+    peer4amount = forms.DecimalField(required=False, widget=forms.TextInput(attrs={'class':'intable peeramount'}))
+    peer5 = forms.CharField(required=False)
+    peer5amount = forms.DecimalField(required=False, widget=forms.TextInput(attrs={'class':'intable peeramount'}))
+
+    def __init_categories(self):
+        """
+        Initialize categories lists
+        """
+        self.fields['category1'] = forms.ModelChoiceField(Category.objects.filter(owner=self.request.user), required=False, widget=forms.Select(attrs={'class':'intable category'}))
+        self.fields['category2'] = forms.ModelChoiceField(Category.objects.filter(owner=self.request.user), required=False, widget=forms.Select(attrs={'class':'intable category'}))
+        self.fields['category3'] = forms.ModelChoiceField(Category.objects.filter(owner=self.request.user), required=False, widget=forms.Select(attrs={'class':'intable category'}))
+        self.fields['category4'] = forms.ModelChoiceField(Category.objects.filter(owner=self.request.user), required=False, widget=forms.Select(attrs={'class':'intable category'}))
+        self.fields['category5'] = forms.ModelChoiceField(Category.objects.filter(owner=self.request.user), required=False, widget=forms.Select(attrs={'class':'intable category'}))
+
+    def __init_peers(self):
+        """
+        Initialize peers lists (for IOUs)
+        """
+        self.fields['peer1'] = forms.ModelChoiceField(User.objects.exclude(id=self.request.user.id), required=False, widget=forms.Select(attrs={'class':'intable peer'}))
+        self.fields['peer2'] = forms.ModelChoiceField(User.objects.exclude(id=self.request.user.id), required=False, widget=forms.Select(attrs={'class':'intable peer'}))
+        self.fields['peer3'] = forms.ModelChoiceField(User.objects.exclude(id=self.request.user.id), required=False, widget=forms.Select(attrs={'class':'intable peer'}))
+        self.fields['peer4'] = forms.ModelChoiceField(User.objects.exclude(id=self.request.user.id), required=False, widget=forms.Select(attrs={'class':'intable peer'}))
+        self.fields['peer5'] = forms.ModelChoiceField(User.objects.exclude(id=self.request.user.id), required=False, widget=forms.Select(attrs={'class':'intable peer'}))
+
+    def __init_accounts(self):
+        self.fields['account'] = forms.ModelChoiceField(Account.objects.filter(owner=self.request.user), widget=forms.Select(attrs={'class':'intable account'}))
+        self.fields['destination_account'] = forms.ModelChoiceField(Account.objects.filter(owner=self.request.user), widget=forms.Select(attrs={'class':'intable destinationaccount'}), required=False)

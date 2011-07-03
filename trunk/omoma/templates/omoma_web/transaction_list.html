@@ -23,6 +23,8 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
 
 {% block title %}{{ title }}{% endblock %}
 
+{% block jscript %}$(document).ready(function() { enable_transactionlinks(); });{% endblock %}
+
 {% block content %}
 
     {% if account %}
@@ -65,22 +67,20 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
                 </tr>
 
                 {% for t in transaction_list %}
-                    <tr>
+                    <tr id="{{ t.id }}">
                         <td class="links">
                             {% if deleted %}
                                 <a href="{% url restore_transaction tid=t.id %}">
                                     <img src="/static/icon_recover.png" class="icon" />
                                 </a>
                             {% else %}
-                                {% if not t.validated %}
-                                    <a href="{% if aid %}{% url transaction tid=t.id aid=aid %}{% else %}{% url transaction tid=t.id %}{% endif %}">
-                                        <img src="/static/icon_edit.png" class="icon" />
-                                    </a>
-                                    <a href="{% if aid %}{% url delete_transaction tid=t.id aid=aid %}{% else %}{% url delete_transaction tid=t.id %}{% endif %}">
-                                        <img src="/static/icon_delete.png" class="icon" />
-                                    </a>
-                                {% endif %}
-                                <a href="{% if aid %}{% url validate_transaction tid=t.id aid=aid %}{% else %}{% url validate_transaction tid=t.id %}{% endif %}">
+                                <a {% if t.validated %}style="display:none;" {% endif %}class="editlink" href="{% if aid %}{% url transaction tid=t.id aid=aid %}{% else %}{% url transaction tid=t.id %}{% endif %}">
+                                    <img src="/static/icon_edit.png" class="icon" />
+                                </a>
+                                <a {% if t.validated %}style="display:none;" {% endif %}class="deletelink" href="{% if aid %}{% url delete_transaction tid=t.id aid=aid %}{% else %}{% url delete_transaction tid=t.id %}{% endif %}">
+                                    <img src="/static/icon_delete.png" class="icon" />
+                                </a>
+                                <a class="validatelink" href="{% if aid %}{% url validate_transaction tid=t.id aid=aid %}{% else %}{% url validate_transaction tid=t.id %}{% endif %}">
                                     {% if t.validated %}
                                         <img src="/static/icon_validated.png" class="icon" />
                                     {% else %}
@@ -89,13 +89,11 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
                                 </a>
                             {% endif %}
                         </td>
-                        <td class="description">{{ t.description }}{% if t.has_iou %}&nbsp;<img src="/static/icon_iou.png" class="icon" />{% endif %}{% if t.original_description and t.original_description != t.description %}&nbsp;<span class="originaldescription">(&nbsp;{{ t.original_description }}&nbsp;)</span>{% endif %}</td>
+                        <td class="description">{{ t.description }}{% if t.has_iou %}&nbsp;<img src="/static/icon_iou.png" class="icon iouicon" /> <div class="ioudetails hidden"><ul>{% for i in t.display_ious %}<li>{{ i }}</li>{% endfor %}</ul></div>{% endif %}{% if t.original_description and t.original_description != t.description %}<div class="originaldescription">(&nbsp;{{ t.original_description }}&nbsp;)</div>{% endif %}</td>
                         <td class="amount">{{ t.amount|signedmoney:t.account }}</td>
                         <td class="categories">{% for tc in t.transactioncategory_set.all %}{{ tc.category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
                         <td class="date">{{ t.date|date:"SHORT_DATE_FORMAT" }}</td>
-                        {% if not account %}
-                            <td class="account">{{ t.account.name }}</td>
-                        {% endif %}
+                        <td class="account">{{ t.account.name }}</td>
                     </tr>
                 {% endfor %}
 

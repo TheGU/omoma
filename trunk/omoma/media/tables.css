@@ -52,6 +52,13 @@ background: #f3f37a;
 }
 
 
+tr.edited {
+background: #ffa;
+}
+tr.edited:hover {
+background: #ff7;
+}
+
 /*
  * Cells
  */
@@ -118,7 +125,7 @@ font-size: 80%;
 }
 
 th.categories, td.categories {
-width: 100px;
+width: 130px;
 }
 td.categories {
 font-size: 80%;
@@ -133,10 +140,32 @@ td.links a {
 padding: 1px;
 }
 
-span.originaldescription {
+div.originaldescription {
 color: #999;
 font-size: 70%;
 display: block;
+margin:0; padding: 0;
+}
+
+tr.edited div.originaldescription {
+color: #000;
+}
+
+img.iouicon {
+cursor: pointer;
+}
+
+div.ioudetails {
+ margin: 0; padding: 0;
+ display: none;
+}
+
+div.ioudetails ul {
+margin:0;
+}
+
+div.ioudetails li {
+margin: 0;
 }
 
 span.positiveamount, span.negativeamount {

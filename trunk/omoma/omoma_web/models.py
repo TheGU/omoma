@@ -165,6 +165,18 @@ class Transaction(models.Model):
         return not not IOU.objects.filter(Q(transaction=self) |
                                                  Q(recipient_transaction=self))
 
+    def display_ious(self):
+        """
+        Returns a string describing all IOUs
+        """
+        ious = []
+        for i in IOU.objects.filter(transaction=self):
+            ious.append(i.ownerdescription())
+        for i in IOU.objects.filter(recipient_transaction=self):
+            ious.append(i.recipientdescription())
+        return ious
+        
+
     def __unicode__(self):
         return self.description
 
@@ -323,6 +335,37 @@ class IOU(models.Model):
             else:
                 return _('He/she paid for me')
 
+    def recipientdescription(self):
+        """
+        String describing the IOU for its recipient
+        """
+        if self.money_transaction:
+            if self.transaction.amount > 0:
+                return _('%(owner)s received %(amount).2f %(currency)s from me') % {
+                         'owner':self.owner.username,
+                         'amount':self.amount,
+                         'currency':self.transaction.account.currency.short_name
+                        }
+            else:
+                return _('%(owner)s gave %(amount).2f %(currency)s to me') % {
+                         'owner':self.owner.username,
+                         'amount':self.amount,
+                         'currency':self.transaction.account.currency.short_name
+                        }
+        else:
+            if self.transaction.amount > 0:
+                return _('%(owner)s received %(amount).2f %(currency)s for me') % {
+                         'owner':self.owner.username,
+                         'amount':self.amount,
+                         'currency':self.transaction.account.currency.short_name
+                        }
+            else:
+                return _('%(owner)s paid %(amount).2f %(currency)s for me') % {
+                         'owner':self.owner.username,
+                         'amount':self.amount,
+                         'currency':self.transaction.account.currency.short_name
+                        }
+
     def ownertype(self):
         """
         String representing the type of this IOU for its owner
@@ -337,6 +380,37 @@ class IOU(models.Model):
                 return _('I received for him/her')
             else:
                 return _('I paid for him/her')
+
+    def ownerdescription(self):
+        """
+        String describing the IOU for its recipient
+        """
+        if self.money_transaction:
+            if self.transaction.amount > 0:
+                return _('I received %(amount).2f %(currency)s from %(recipient)s') % {
+                         'amount':self.amount,
+                         'currency':self.transaction.account.currency.short_name,
+                         'recipient':self.recipient.username
+                        }
+            else:
+                return _('I gave %(amount).2f %(currency)s to %(recipient)s') % {
+                         'amount':self.amount,
+                         'currency':self.transaction.account.currency.short_name,
+                         'recipient':self.recipient.username
+                        }
+        else:
+            if self.transaction.amount > 0:
+                return _('I received %(amount).2f %(currency)s for %(recipient)s') % {
+                         'amount':self.amount,
+                         'currency':self.transaction.account.currency.short_name,
+                         'recipient':self.recipient.username
+                        }
+            else:
+                return _('I paid %(amount).2f %(currency)s for %(recipient)s') % {
+                         'amount':self.amount,
+                         'currency':self.transaction.account.currency.short_name,
+                         'recipient':self.recipient.username
+                        }
 
     # pylint: disable=C0111,W0232,R0903
     class Meta:
@@ -537,6 +611,6 @@ class TransactionRenamingForm(forms.ModelForm):
     Form for automatic categories assignments
     """
 
-    # pylint: disable=C0111,W0232,R0903
     class Meta:
         model = TransactionRenaming
+        exclude = ('owner',)

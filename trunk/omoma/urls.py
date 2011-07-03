@@ -183,3 +183,13 @@ urlpatterns += patterns('omoma.omoma_web.views_userpreferences',
     (r'^preferences/rules/category/(?P<acid>\d+)/apply/$', 'apply_automaticcategory', None, 'apply_automaticcategory'),
     (r'^preferences/rules/renaming/(?P<trid>\d+)/apply/$', 'apply_transactionrenaming', None, 'apply_transactionrenaming'),
 )
+
+urlpatterns += patterns('omoma.omoma_web.ajax',
+    (r'^ajax/validate/(?P<tid>\d+)/$', 'validate_transaction', None, 'ajax_validate_transaction'),
+    (r'^ajax/delete/(?P<tid>\d+)/$', 'delete_transaction', None, 'ajax_delete_transaction'),
+    (r'^ajax/edit/(?P<tid>\d+)/$', 'edit_transaction', None, 'ajax_edit_transaction'),
+    (r'^ajax/apply/(?P<tid>\d+)/$', 'apply_edit_transaction', None, 'ajax_apply_edit_transaction'),
+    (r'^ajax/cancel/(?P<tid>\d+)/$', 'cancel_edit_transaction', None, 'ajax_cancel_edit_transaction'),
+    (r'^ajax/getbalances/$', 'accounts_balances', None, 'ajax_accounts_balances'),
+    (r'^ajax/getnotifications/$', direct_to_template, {'template': 'notifications.html'}, 'ajax_notifications'),
+)

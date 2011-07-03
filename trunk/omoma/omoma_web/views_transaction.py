@@ -116,7 +116,7 @@ def transaction(request, tid=None, iid=None, aid=None):
         'new': not tid,
         'title': _('Transaction "%s"') % transactionobj.description \
                  if transactionobj else _('New transaction'),
-        'form': form,
+        'form': form
     }, RequestContext(request))
 
 
@@ -139,7 +139,7 @@ def delete_transaction(request, tid, aid=None, restore=False):
         i.save()
 
     transactionobj.deleted = not transactionobj.deleted
-    transactionobj.validates = False
+    transactionobj.validated = False
     transactionobj.save()
 
     if restore:

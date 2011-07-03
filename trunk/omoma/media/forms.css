@@ -42,3 +42,80 @@ padding: 3px;
 
 ul.errorlist li {
 }
+
+/* In ajax-generated table lines */
+
+input.intable.description {
+width:100%;
+border: 1px dashed #dd9;
+background: #ffa;
+}
+
+ul.intableious {
+margin:0;
+}
+
+ul.intableious li {
+margin: 0;
+}
+
+select.intable.peer {
+width:5em;
+border: 1px dashed #dd9;
+background: #ffa;
+}
+
+input.intable.peeramount {
+width:4em;
+border: 1px dashed #dd9;
+background: #ffa;
+}
+
+select.intable.type {
+width:100%;
+border: 1px dashed #dd9;
+background: #ffa;
+}
+
+input.intable.amount {
+width:100%;
+border: 1px dashed #dd9;
+background: #ffa;
+text-align: right;
+}
+
+select.intable.destinationaccount {
+width:100%;
+border: 1px dashed #dd9;
+background: #ffa;
+text-align: right;
+}
+
+select.intable.category {
+font-size: 90%;
+width: 75%;
+border: 1px dashed #dd9;
+background: #ffa;
+}
+
+input.intable.categoryamount {
+font-size: 90%;
+width: 24%;
+border: 1px dashed #dd9;
+background: #ffa;
+text-align: right;
+}
+
+input.intable.date {
+width:100%;
+border: 1px dashed #dd9;
+background: #ffa;
+text-align: right;
+}
+
+select.intable.account {
+font-size: 90%;
+width: 100%;
+border: 1px dashed #dd9;
+background: #ffa;
+}

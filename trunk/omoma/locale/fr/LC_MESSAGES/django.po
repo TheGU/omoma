@@ -18,7 +18,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-13 23:51+0200\n"
+"POT-Creation-Date: 2011-07-03 13:30+0200\n"
 "Last-Translator: Sebastien Maccagnoni-Munch <sebastien@tiramiseb.fr>\n"
 "Language: french\n"
 "MIME-Version: 1.0\n"
@@ -62,336 +62,419 @@ msgstr "Nouvel utilisateur"
 msgid "User \"%s\" successfully deleted"
 msgstr "Utilisateur \"%s\" effacé"
 
-#: omoma_web/models.py:42 omoma_web/models.py:77 omoma_web/models.py:189
+#: omoma_web/ajax.py:93 omoma_web/views_transaction.py:152
+#, python-format
+msgid "Transaction \"%s\" successfully deleted"
+msgstr "Transaction \"%s\" effacée"
+
+#: omoma_web/models.py:40 omoma_web/models.py:75 omoma_web/models.py:199
 msgid "name"
 msgstr "nom"
 
-#: omoma_web/models.py:43
+#: omoma_web/models.py:41
 msgid "short name"
 msgstr "nom court"
 
-#: omoma_web/models.py:45
+#: omoma_web/models.py:43
 msgid "change rate"
 msgstr "taux de change"
 
-#: omoma_web/models.py:68 omoma_web/models.py:78
+#: omoma_web/models.py:66 omoma_web/models.py:76
 msgid "currency"
 msgstr "monnaie"
 
-#: omoma_web/models.py:69
+#: omoma_web/models.py:67
 msgid "currencies"
 msgstr "monnaies"
 
-#: omoma_web/models.py:76 omoma_web/models.py:186 omoma_web/models.py:285
-#: omoma_web/models.py:405
+#: omoma_web/models.py:74 omoma_web/models.py:196 omoma_web/models.py:295
+#: omoma_web/models.py:477
 msgid "owner"
 msgstr "propriétaire"
 
-#: omoma_web/models.py:80
+#: omoma_web/models.py:78
 msgid "start balance"
 msgstr "solde de départ"
 
-#: omoma_web/models.py:116 omoma_web/models.py:135
+#: omoma_web/models.py:114 omoma_web/models.py:133
 msgid "account"
 msgstr "compte"
 
-#: omoma_web/models.py:117
+#: omoma_web/models.py:115
 msgid "accounts"
 msgstr "comptes"
 
-#: omoma_web/models.py:136
+#: omoma_web/models.py:134
 msgid "date"
 msgstr "date"
 
-#: omoma_web/models.py:138
+#: omoma_web/models.py:136
 msgid "description"
 msgstr "description"
 
-#: omoma_web/models.py:140 omoma_web/models.py:224 omoma_web/models.py:291
+#: omoma_web/models.py:138 omoma_web/models.py:234 omoma_web/models.py:301
 msgid "amount"
 msgstr "montant"
 
-#: omoma_web/models.py:142 omoma_web/models.py:407
+#: omoma_web/models.py:140 omoma_web/models.py:479
 msgid "original description"
 msgstr "description originale"
 
-#: omoma_web/models.py:143
+#: omoma_web/models.py:141
 msgid "salary"
 msgstr "salaire"
 
-#: omoma_web/models.py:144
+#: omoma_web/models.py:142
 msgid "validated"
 msgstr "validé"
 
-#: omoma_web/models.py:145
+#: omoma_web/models.py:143
 msgid "deleted"
 msgstr "effacé"
 
-#: omoma_web/models.py:176 omoma_web/models.py:221 omoma_web/models.py:287
+#: omoma_web/models.py:186 omoma_web/models.py:231 omoma_web/models.py:297
 msgid "transaction"
 msgstr "transaction"
 
-#: omoma_web/models.py:177 templates/omoma_web/account_confirm_delete.html:43
+#: omoma_web/models.py:187 templates/omoma_web/account_confirm_delete.html:43
 msgid "transactions"
 msgstr "transactions"
 
-#: omoma_web/models.py:188
+#: omoma_web/models.py:198
 msgid "parent"
 msgstr "parent"
 
-#: omoma_web/models.py:206 omoma_web/models.py:222 omoma_web/models.py:382
-#: omoma_web/models.py:434
+#: omoma_web/models.py:216 omoma_web/models.py:232 omoma_web/models.py:454
+#: omoma_web/models.py:506
 msgid "category"
 msgstr "catégorie"
 
-#: omoma_web/models.py:207
+#: omoma_web/models.py:217
 msgid "categories"
 msgstr "catégories"
 
-#: omoma_web/models.py:245
+#: omoma_web/models.py:255
 #, python-format
 msgid "%(category)s for \"%(transaction)s\""
 msgstr "%(category)s pour \"%(transaction)s\""
 
-#: omoma_web/models.py:251
+#: omoma_web/models.py:261
 msgid "transaction category"
 msgstr "catégorie de transaction"
 
-#: omoma_web/models.py:252
+#: omoma_web/models.py:262
 msgid "transaction categories"
 msgstr "catégories de transaction"
 
-#: omoma_web/models.py:280 omoma_web/models.py:298
+#: omoma_web/models.py:290 omoma_web/models.py:308
 msgid "accepted"
 msgstr "accepté"
 
-#: omoma_web/models.py:281
+#: omoma_web/models.py:291
 msgid "rejected"
 msgstr "refusé"
 
-#: omoma_web/models.py:282
+#: omoma_web/models.py:292
 msgid "pending"
 msgstr "en attente"
 
-#: omoma_web/models.py:289
+#: omoma_web/models.py:299
 msgid "recipient"
 msgstr "destinataire"
 
-#: omoma_web/models.py:293
+#: omoma_web/models.py:303
 msgid "money transaction"
 msgstr "transaction monétaire"
 
-#: omoma_web/models.py:296
+#: omoma_web/models.py:306
 msgid "recipient transaction"
 msgstr "transaction de destination"
 
-#: omoma_web/models.py:301
+#: omoma_web/models.py:311
 #, python-format
 msgid "IOU for \"%(transaction)s\" to \"%(recipient)s\""
 msgstr "Règlement pour \"%(transaction)s\" à \"%(recipient)s\""
 
-#: omoma_web/models.py:319
+#: omoma_web/models.py:329
 msgid "He/she received from me"
 msgstr "Il/elle a reçu de ma part"
 
-#: omoma_web/models.py:321
+#: omoma_web/models.py:331
 msgid "He/she gave to me"
 msgstr "Il/elle m'a donné"
 
-#: omoma_web/models.py:324
+#: omoma_web/models.py:334
 msgid "He/she received for me"
 msgstr "Il/elle a reçu pour moi"
 
-#: omoma_web/models.py:326
+#: omoma_web/models.py:336
 msgid "He/she paid for me"
 msgstr "Il/elle a payé pour moi"
 
-#: omoma_web/models.py:334
+#: omoma_web/models.py:344
+#, python-format
+msgid "%(owner)s received %(amount).2f %(currency)s from me"
+msgstr "%(owner)s a reçu %(amount).2f %(currency)s de ma part"
+
+#: omoma_web/models.py:350
+#, python-format
+msgid "%(owner)s gave %(amount).2f %(currency)s to me"
+msgstr "%(owner)s m'a donné %(amount).2f %(currency)s"
+
+#: omoma_web/models.py:357
+#, python-format
+msgid "%(owner)s received %(amount).2f %(currency)s for me"
+msgstr "%(owner)s a reçu %(amount).2f %(currency)s pour moi"
+
+#: omoma_web/models.py:363
+#, python-format
+msgid "%(owner)s paid %(amount).2f %(currency)s for me"
+msgstr "%(owner)s a payé %(amount).2f %(currency)s pour moi"
+
+#: omoma_web/models.py:375
 msgid "I received from him/her"
 msgstr "J'ai reçu de sa part"
 
-#: omoma_web/models.py:336
+#: omoma_web/models.py:377
 msgid "I gave to him/her"
 msgstr "Je lui ai donné"
 
-#: omoma_web/models.py:339
+#: omoma_web/models.py:380
 msgid "I received for him/her"
 msgstr "J'ai reçu pour lui/elle"
 
-#: omoma_web/models.py:341
+#: omoma_web/models.py:382
 msgid "I paid for him/her"
 msgstr "J'ai payé pour lui/elle"
 
-#: omoma_web/models.py:346
+#: omoma_web/models.py:390
+#, python-format
+msgid "I received %(amount).2f %(currency)s from %(recipient)s"
+msgstr "J'ai reçu %(amount).2f %(currency)s de %(recipient)s"
+
+#: omoma_web/models.py:396
+#, python-format
+msgid "I gave %(amount).2f %(currency)s to %(recipient)s"
+msgstr "J'ai donné %(amount).2f %(currency)s à %(recipient)s"
+
+#: omoma_web/models.py:403
+#, python-format
+msgid "I received %(amount).2f %(currency)s for %(recipient)s"
+msgstr "J'ai reçu %(amount).2f %(currency)s pour %(recipient)s"
+
+#: omoma_web/models.py:409
+#, python-format
+msgid "I paid %(amount).2f %(currency)s for %(recipient)s"
+msgstr "J'ai payé %(amount).2f %(currency)s pour %(recipient)s"
+
+#: omoma_web/models.py:418
 msgid "IOU"
 msgstr "Règlement"
 
-#: omoma_web/models.py:347 omoma_web/views_iou.py:54 templates/sidebar.html:28
+#: omoma_web/models.py:419 omoma_web/views_iou.py:54 templates/sidebar.html:28
 #: templates/omoma_web/iou_list.html:24
 msgid "IOUs"
 msgstr "Règlements"
 
-#: omoma_web/models.py:375
+#: omoma_web/models.py:447
 msgid "year (12 months)"
 msgstr "année (12 mois)"
 
-#: omoma_web/models.py:376
+#: omoma_web/models.py:448
 msgid "semester (6 months)"
 msgstr "semestre (6 mois)"
 
-#: omoma_web/models.py:377
+#: omoma_web/models.py:449
 msgid "quarter (3 months)"
 msgstr "trimestre (3 mois)"
 
-#: omoma_web/models.py:378
+#: omoma_web/models.py:450
 msgid "month (28 to 31 days)"
 msgstr "mois (28 à 31 jours)"
 
-#: omoma_web/models.py:379
+#: omoma_web/models.py:451
 msgid "week (7 days)"
 msgstr "semaine (7 jours)"
 
-#: omoma_web/models.py:380
+#: omoma_web/models.py:452
 msgid "envelope"
 msgstr "enveloppe"
 
-#: omoma_web/models.py:384
+#: omoma_web/models.py:456
 msgid "period start"
 msgstr "début de la période"
 
-#: omoma_web/models.py:388
+#: omoma_web/models.py:460
 msgid "period length"
 msgstr "durée de la période"
 
-#: omoma_web/models.py:390
+#: omoma_web/models.py:462
 msgid "limit"
 msgstr "limite"
 
-#: omoma_web/models.py:393
+#: omoma_web/models.py:465
 #, python-format
 msgid "Budget for %s"
 msgstr "Budget pour %s"
 
-#: omoma_web/models.py:397
+#: omoma_web/models.py:469
 msgid "budget"
 msgstr "budget"
 
-#: omoma_web/models.py:398
+#: omoma_web/models.py:470
 msgid "budgets"
 msgstr "budgets"
 
-#: omoma_web/models.py:409
+#: omoma_web/models.py:481
 msgid "target description"
 msgstr "description de destination"
 
-#: omoma_web/models.py:412
+#: omoma_web/models.py:484
 #, python-format
 msgid "Transaction renaming from \"%(original)s\" to \"%(target)s\""
 msgstr "Renommage de transactions de \"%(original)s\" à \"%(target)s\""
 
-#: omoma_web/models.py:424
+#: omoma_web/models.py:496
 msgid "transaction renaming"
 msgstr "renommage de transaction"
 
-#: omoma_web/models.py:425
+#: omoma_web/models.py:497
 msgid "transactions renamings"
 msgstr "renommages de transactions"
 
-#: omoma_web/models.py:433
+#: omoma_web/models.py:505
 msgid "match in description"
 msgstr "correspondance dans la description"
 
-#: omoma_web/models.py:437
+#: omoma_web/models.py:509
 #, python-format
 msgid ""
 "Automatic category for \"[...]%(description)s[...]\" to \"%(category)s\""
 msgstr ""
 "Catégorie \"%(category)s\" automatique pour for \"[...]%(description)s[...]\""
 
-#: omoma_web/models.py:449
+#: omoma_web/models.py:521
 msgid "automatic category assignment"
 msgstr "assignation automatique de catégorie"
 
-#: omoma_web/models.py:450
+#: omoma_web/models.py:522
 msgid "automatic categories assignments"
 msgstr "assignations automatiques de catégories"
 
-#: omoma_web/transaction.py:46 omoma_web/transaction.py:128
+#: omoma_web/transaction.py:38 omoma_web/transaction.py:231
+msgid "Expense"
+msgstr "Dépense"
+
+#: omoma_web/transaction.py:39 omoma_web/transaction.py:232
+msgid "Income"
+msgstr "Revenu"
+
+#: omoma_web/transaction.py:40 omoma_web/transaction.py:233
+msgid "Salary"
+msgstr "Salaire"
+
+#: omoma_web/transaction.py:41 omoma_web/transaction.py:234
+msgid "Transfer"
+msgstr "Transfert"
+
+#: omoma_web/transaction.py:42
+msgid "I gave"
+msgstr "J'ai donné"
+
+#: omoma_web/transaction.py:43
+msgid "I received"
+msgstr "J'ai reçu"
+
+#: omoma_web/transaction.py:235
+msgid "I gave money to..."
+msgstr ""
+
+#: omoma_web/transaction.py:236
+msgid "I received money from..."
+msgstr "J'ai reçu de l'argent de..."
+
+#: omoma_web/transaction.py:239 omoma_web/transaction.py:350
 #: omoma_web/importexport/qifparser.py:66
 #: templates/omoma_web/apply_automaticcategory.html:43
 #: templates/omoma_web/apply_transactionrenaming.html:43
-#: templates/omoma_web/transaction_list.html:63
+#: templates/omoma_web/transaction_list.html:65
 #: templates/widgets/balance.html:32
 msgid "Account"
 msgstr "Compte"
 
-#: omoma_web/transaction.py:47 templates/attach_iou.html:34
+#: omoma_web/transaction.py:240 templates/attach_iou.html:34
 #: templates/attach_iou.html.py:51 templates/pending_ious.html:39
 #: templates/pending_ious.html.py:75
 #: templates/omoma_web/apply_automaticcategory.html:42
 #: templates/omoma_web/apply_transactionrenaming.html:42
 #: templates/omoma_web/iou.html:50 templates/omoma_web/iou_list.html:43
 #: templates/omoma_web/iou_list.html:106
-#: templates/omoma_web/transaction.html:87
-#: templates/omoma_web/transaction_list.html:61
+#: templates/omoma_web/transaction.html:89
+#: templates/omoma_web/transaction_list.html:63
 msgid "Date"
 msgstr "Date"
 
-#: omoma_web/transaction.py:48 templates/attach_iou.html:31
+#: omoma_web/transaction.py:241 templates/attach_iou.html:31
 #: templates/attach_iou.html.py:49 templates/pending_ious.html:36
 #: templates/pending_ious.html.py:72
 #: templates/omoma_web/apply_automaticcategory.html:39
 #: templates/omoma_web/apply_transactionrenaming.html:39
 #: templates/omoma_web/iou_list.html:38 templates/omoma_web/iou_list.html:103
-#: templates/omoma_web/transaction_list.html:58
+#: templates/omoma_web/transaction_list.html:60
 msgid "Description"
 msgstr "Description"
 
-#: omoma_web/transaction.py:49 omoma_web/transaction.py:54
-#: omoma_web/transaction.py:56 omoma_web/transaction.py:58
-#: omoma_web/transaction.py:62 omoma_web/transaction.py:64
-#: omoma_web/transaction.py:66 templates/attach_iou.html:33
+#: omoma_web/transaction.py:242 omoma_web/transaction.py:249
+#: omoma_web/transaction.py:251 omoma_web/transaction.py:253
+#: omoma_web/transaction.py:255 omoma_web/transaction.py:257
+#: omoma_web/transaction.py:264 omoma_web/transaction.py:266
+#: omoma_web/transaction.py:268 omoma_web/transaction.py:270
+#: omoma_web/transaction.py:272 templates/attach_iou.html:33
 #: templates/pending_ious.html:38 templates/pending_ious.html.py:74
 #: templates/omoma_web/apply_automaticcategory.html:40
 #: templates/omoma_web/apply_transactionrenaming.html:40
 #: templates/omoma_web/iou_list.html:42 templates/omoma_web/iou_list.html:105
-#: templates/omoma_web/transaction.html:55
-#: templates/omoma_web/transaction_list.html:59
+#: templates/omoma_web/transaction.html:57
+#: templates/omoma_web/transaction_list.html:61
 #: templates/widgets/creditors_and_debtors.html:33
 msgid "Amount"
 msgstr "Montant"
 
-#: omoma_web/transaction.py:52
+#: omoma_web/transaction.py:245
 msgid "Transaction type"
 msgstr "Type de transaction"
 
-#: omoma_web/transaction.py:53 omoma_web/transaction.py:55
-#: omoma_web/transaction.py:57 omoma_web/transaction.py:94
-#: omoma_web/transaction.py:99 omoma_web/transaction.py:104
+#: omoma_web/transaction.py:248 omoma_web/transaction.py:250
+#: omoma_web/transaction.py:252 omoma_web/transaction.py:254
+#: omoma_web/transaction.py:256 omoma_web/transaction.py:300
+#: omoma_web/transaction.py:305 omoma_web/transaction.py:310
+#: omoma_web/transaction.py:315 omoma_web/transaction.py:320
 #: templates/automaticrules.html:41
 msgid "Category"
 msgstr "Catégorie"
 
-#: omoma_web/transaction.py:59 omoma_web/transaction.py:132
+#: omoma_web/transaction.py:260 omoma_web/transaction.py:354
 msgid "Destination account"
 msgstr "Compte de destination"
 
-#: omoma_web/transaction.py:61 omoma_web/transaction.py:63
-#: omoma_web/transaction.py:65 omoma_web/transaction.py:112
-#: omoma_web/transaction.py:115 omoma_web/transaction.py:118
+#: omoma_web/transaction.py:263 omoma_web/transaction.py:265
+#: omoma_web/transaction.py:267 omoma_web/transaction.py:269
+#: omoma_web/transaction.py:271 omoma_web/transaction.py:328
+#: omoma_web/transaction.py:331 omoma_web/transaction.py:334
+#: omoma_web/transaction.py:337 omoma_web/transaction.py:340
 #: templates/widgets/creditors_and_debtors.html:31
 msgid "Person"
 msgstr "Personne"
 
-#: omoma_web/transaction.py:191
+#: omoma_web/transaction.py:417
 msgid "A transfer needs a destination account."
 msgstr "Un transfert a besoin d'un compte de destination"
 
-#: omoma_web/transaction.py:194
+#: omoma_web/transaction.py:420
 msgid "Who did you give this money to?"
 msgstr "À qui avez-vous donné cet argent ?"
 
-#: omoma_web/transaction.py:197
+#: omoma_web/transaction.py:423
 msgid "Who gave you this money?"
 msgstr "Qui vous a donné cet argent ?"
 
@@ -405,7 +488,7 @@ msgstr "Compte \"%s\" modifié"
 msgid "Account \"%s\" successfully created"
 msgstr "Compte \"%s\" créé"
 
-#: omoma_web/views_account.py:77 omoma_web/importexport/buxfercsvparser.py:71
+#: omoma_web/views_account.py:77 omoma_web/importexport/buxfercsvparser.py:72
 #: omoma_web/importexport/ofxparser.py:74
 #, python-format
 msgid "Account \"%s\""
@@ -502,19 +585,19 @@ msgid "New IOU for \"%s\""
 msgstr "Nouveau règlement pour \"%s\""
 
 #: omoma_web/views_iou.py:102 omoma_web/views_userpreferences.py:75
-#: omoma_web/views_userpreferences.py:116
+#: omoma_web/views_userpreferences.py:118
 #, python-format
 msgid "%s successfully modified"
 msgstr "%s modifié"
 
 #: omoma_web/views_iou.py:105 omoma_web/views_userpreferences.py:78
-#: omoma_web/views_userpreferences.py:119
+#: omoma_web/views_userpreferences.py:121
 #, python-format
 msgid "%s successfully created"
 msgstr "%s créé"
 
-#: omoma_web/views_iou.py:139 omoma_web/views_userpreferences.py:220
-#: omoma_web/views_userpreferences.py:236
+#: omoma_web/views_iou.py:139 omoma_web/views_userpreferences.py:222
+#: omoma_web/views_userpreferences.py:238
 #, python-format
 msgid "%s successfully deleted"
 msgstr "%s effacé"
@@ -569,26 +652,21 @@ msgstr "Transaction \"%s\" modifiée"
 msgid "Transaction \"%s\" successfully created"
 msgstr "Transaction \"%s\" créée"
 
-#: omoma_web/views_transaction.py:117
+#: omoma_web/views_transaction.py:118
 #, python-format
 msgid "Transaction \"%s\""
 msgstr "Transaction \"%s\""
 
-#: omoma_web/views_transaction.py:118 templates/attach_iou.html:70
+#: omoma_web/views_transaction.py:119 templates/attach_iou.html:70
 msgid "New transaction"
 msgstr "Nouvelle transaction"
 
-#: omoma_web/views_transaction.py:147
+#: omoma_web/views_transaction.py:148
 #, python-format
 msgid "Transaction \"%s\" successfully restored"
 msgstr "Transaction \"%s\" restaurée"
 
-#: omoma_web/views_transaction.py:151
-#, python-format
-msgid "Transaction \"%s\" successfully deleted"
-msgstr "Transaction \"%s\" effacée"
-
-#: omoma_web/views_transaction.py:189
+#: omoma_web/views_transaction.py:190
 msgid "Successfully removed deleted transactions"
 msgstr "Transactions effacées supprimées"
 
@@ -617,33 +695,37 @@ msgstr "Nouvelle catégorie pour \"%s\""
 msgid "Category \"%(category)s\" successfully deleted from \"%(transaction)s\""
 msgstr "Catégorie \"%(category)s\" effacée de \"%(transaction)s\""
 
-#: omoma_web/views_userpreferences.py:154
+#: omoma_web/views_userpreferences.py:108
+msgid "New transaction renaming"
+msgstr "Nouveau renommage de transaction"
+
+#: omoma_web/views_userpreferences.py:156
 #, python-format
 msgid "The category has been applied to %d transactions"
 msgstr "La catégorie a été appliquée à %d transactions"
 
-#: omoma_web/views_userpreferences.py:159
+#: omoma_web/views_userpreferences.py:161
 msgid "The category has not been applied to any transaction."
 msgstr "La catégorie n'a été appliquée à aucune transaction."
 
-#: omoma_web/views_userpreferences.py:194
+#: omoma_web/views_userpreferences.py:196
 #, python-format
 msgid "%d transactions renamed."
 msgstr "%d transactions renommées."
 
-#: omoma_web/views_userpreferences.py:198
+#: omoma_web/views_userpreferences.py:200
 msgid "No transaction has been renamed."
 msgstr "Aucune transaction n'a été renommée"
 
-#: omoma_web/importexport/buxfercsvparser.py:54
+#: omoma_web/importexport/buxfercsvparser.py:55
 msgid "Create categories when unspecified"
 msgstr "Créer des catégories quand elles ne sont pas spécifiées."
 
-#: omoma_web/importexport/buxfercsvparser.py:69
+#: omoma_web/importexport/buxfercsvparser.py:70
 msgid "Transactions without account"
 msgstr "Transactions sans compte"
 
-#: omoma_web/importexport/buxfercsvparser.py:93
+#: omoma_web/importexport/buxfercsvparser.py:94
 #, python-format
 msgid "Tag \"%s\""
 msgstr "Tag \"%s\""
@@ -707,23 +789,23 @@ msgstr "%d transactions existent déjà."
 msgid "Failed to add %d transactions."
 msgstr "Echec de l'ajout de %d transactions."
 
-#: omoma_web/templatetags/omoma.py:223
+#: omoma_web/templatetags/omoma.py:226
 msgid "lent me"
 msgstr "m'a prêté"
 
-#: omoma_web/templatetags/omoma.py:229
+#: omoma_web/templatetags/omoma.py:232
 msgid "owes me"
 msgstr "me doit"
 
-#: omoma_web/templatetags/omoma.py:390
+#: omoma_web/templatetags/omoma.py:393
 msgid "You have pending IOU(s)!"
 msgstr "Vous avez un/des règlement(s) en attente !"
 
-#: omoma_web/templatetags/omoma.py:396
+#: omoma_web/templatetags/omoma.py:399
 msgid "Someone rejected your IOU(s)!"
 msgstr "Quelqu'un a refusé votre/vos règlement(s) !"
 
-#: omoma_web/templatetags/omoma.py:500
+#: omoma_web/templatetags/omoma.py:501
 msgid "logout"
 msgstr "déconnexion"
 
@@ -748,14 +830,14 @@ msgid "You are about to attach the following IOU to a transaction:"
 msgstr "Vous allez attacher le règlement suivant à une transaction :"
 
 #: templates/attach_iou.html:32 templates/pending_ious.html:37
-#: templates/omoma_web/iou.html:49 templates/omoma_web/transaction.html:86
+#: templates/omoma_web/iou.html:49 templates/omoma_web/transaction.html:88
 msgid "From"
 msgstr "De"
 
 #: templates/attach_iou.html:35 templates/pending_ious.html:40
 #: templates/pending_ious.html.py:76 templates/omoma_web/iou_list.html:44
 #: templates/omoma_web/iou_list.html:107
-#: templates/omoma_web/transaction.html:56
+#: templates/omoma_web/transaction.html:58
 msgid "Type of IOU"
 msgstr "Type de règlement"
 
@@ -772,7 +854,7 @@ msgstr "Les transactions suivantes peuvent correspondre à ce règlement :"
 #: templates/omoma_web/apply_transactionrenaming.html:41
 #: templates/omoma_web/category_list.html:24
 #: templates/omoma_web/category_list.html:27
-#: templates/omoma_web/transaction_list.html:60
+#: templates/omoma_web/transaction_list.html:62
 msgid "Categories"
 msgstr "Catégories"
 
@@ -791,10 +873,10 @@ msgstr "Créer et modifier"
 #: templates/omoma_web/account_confirm_delete.html:49
 #: templates/omoma_web/automaticcategory.html:36
 #: templates/omoma_web/category.html:34
-#: templates/omoma_web/category_confirm_delete.html:43
+#: templates/omoma_web/category_confirm_delete.html:44
 #: templates/omoma_web/currency.html:35
 #: templates/omoma_web/currency_confirm_delete.html:41
-#: templates/omoma_web/iou.html:34 templates/omoma_web/transaction.html:36
+#: templates/omoma_web/iou.html:34 templates/omoma_web/transaction.html:38
 #: templates/omoma_web/transactioncategory.html:36
 #: templates/omoma_web/transactionrenaming.html:36
 #: templates/omoma_web/transactions_confirm_delete.html:34
@@ -845,7 +927,7 @@ msgstr "Renommer en"
 #: templates/choose_import_format.html:24
 #: templates/choose_import_format.html:28
 #: templates/import_transactions.html:24 templates/import_transactions.html:28
-#: templates/omoma_web/transaction_list.html:46
+#: templates/omoma_web/transaction_list.html:48
 msgid "Import transactions"
 msgstr "Importer des transactions"
 
@@ -897,7 +979,7 @@ msgstr "Connexion"
 
 #: templates/pending_ious.html:24 templates/pending_ious.html.py:29
 #: templates/omoma_web/iou.html:43 templates/omoma_web/iou_list.html:96
-#: templates/omoma_web/transaction.html:80
+#: templates/omoma_web/transaction.html:82
 msgid "Pending IOUs"
 msgstr "Règlements en attente"
 
@@ -911,7 +993,7 @@ msgstr "Règlements rejetés"
 
 #: templates/pending_ious.html:73 templates/omoma_web/iou_list.html:40
 #: templates/omoma_web/iou_list.html:104
-#: templates/omoma_web/transaction.html:54
+#: templates/omoma_web/transaction.html:56
 msgid "Recipient"
 msgstr "Destinataire"
 
@@ -965,7 +1047,7 @@ msgstr "Rapporter un bogue"
 #: templates/auth/user.html:33 templates/omoma_web/account.html:33
 #: templates/omoma_web/automaticcategory.html:35
 #: templates/omoma_web/category.html:33 templates/omoma_web/currency.html:34
-#: templates/omoma_web/iou.html:33 templates/omoma_web/transaction.html:35
+#: templates/omoma_web/iou.html:33 templates/omoma_web/transaction.html:37
 #: templates/omoma_web/transactioncategory.html:35
 #: templates/omoma_web/transactionrenaming.html:35
 msgid "Create"
@@ -974,7 +1056,7 @@ msgstr "Créer"
 #: templates/auth/user.html:33 templates/omoma_web/account.html:33
 #: templates/omoma_web/automaticcategory.html:38
 #: templates/omoma_web/category.html:33 templates/omoma_web/currency.html:34
-#: templates/omoma_web/iou.html:33 templates/omoma_web/transaction.html:38
+#: templates/omoma_web/iou.html:33 templates/omoma_web/transaction.html:40
 #: templates/omoma_web/transactioncategory.html:35
 #: templates/omoma_web/transactionrenaming.html:38
 msgid "Modify"
@@ -1013,7 +1095,7 @@ msgstr "E-mail"
 
 #: templates/auth/user_confirm_delete.html:39
 #: templates/omoma_web/account_confirm_delete.html:45
-#: templates/omoma_web/category_confirm_delete.html:39
+#: templates/omoma_web/category_confirm_delete.html:40
 #: templates/omoma_web/currency_confirm_delete.html:37
 #: templates/omoma_web/transactions_confirm_delete.html:30
 msgid "This action cannot be undone."
@@ -1021,7 +1103,7 @@ msgstr "Cette action ne pourra pas être annulée."
 
 #: templates/auth/user_confirm_delete.html:42
 #: templates/omoma_web/account_confirm_delete.html:48
-#: templates/omoma_web/category_confirm_delete.html:42
+#: templates/omoma_web/category_confirm_delete.html:43
 #: templates/omoma_web/currency_confirm_delete.html:40
 #: templates/omoma_web/transactions_confirm_delete.html:33
 msgid "Yes, remove"
@@ -1105,7 +1187,7 @@ msgid "This rule does not fit to any transaction."
 msgstr "Cette règle ne peut s'appliquer à aucune transaction"
 
 #: templates/omoma_web/automaticcategory.html:39
-#: templates/omoma_web/transaction.html:39
+#: templates/omoma_web/transaction.html:41
 #: templates/omoma_web/transactionrenaming.html:39
 msgid "Back"
 msgstr "Retour"
@@ -1124,6 +1206,10 @@ msgstr ""
 #: templates/omoma_web/category_confirm_delete.html:36
 msgid "Children"
 msgstr "Dépendances"
+
+#: templates/omoma_web/category_confirm_delete.html:39
+msgid "Transactions will not be deleted."
+msgstr "Les transactions ne seront pas effacées."
 
 #: templates/omoma_web/category_list.html:28
 msgid "Add category"
@@ -1151,11 +1237,11 @@ msgstr "Taux de change"
 msgid "Add currency"
 msgstr "Ajouter une monnaie"
 
-#: templates/omoma_web/iou.html:44 templates/omoma_web/transaction.html:81
+#: templates/omoma_web/iou.html:44 templates/omoma_web/transaction.html:83
 msgid "The following pending IOUs could match this transaction:"
 msgstr "Les règlements suivants peuvent correspondre à cette transaction :"
 
-#: templates/omoma_web/iou.html:51 templates/omoma_web/transaction.html:88
+#: templates/omoma_web/iou.html:51 templates/omoma_web/transaction.html:90
 msgid "Type"
 msgstr "Type"
 
@@ -1167,29 +1253,29 @@ msgstr "Il n'y a pas de règlement."
 msgid "You are waiting for the following IOUs to be accepted:"
 msgstr "Vous attendez que les règlements suivants soient acceptés :"
 
-#: templates/omoma_web/transaction.html:49
+#: templates/omoma_web/transaction.html:51
 msgid "IOUs from other people"
 msgstr "Règlements d'autres personnes"
 
-#: templates/omoma_web/transaction.html:57
+#: templates/omoma_web/transaction.html:59
 msgid "Accepted"
 msgstr "Accepté"
 
-#: templates/omoma_web/transaction_list.html:41
+#: templates/omoma_web/transaction_list.html:43
 #: templates/omoma_web/transactions_confirm_delete.html:24
 #: templates/omoma_web/transactions_confirm_delete.html:28
 msgid "Remove all deleted transactions"
 msgstr "Supprimer toutes les transactions effacées"
 
-#: templates/omoma_web/transaction_list.html:43
+#: templates/omoma_web/transaction_list.html:45
 msgid "There is no deleted transaction."
 msgstr "Il n'y a pas de transaction effacée."
 
-#: templates/omoma_web/transaction_list.html:46
+#: templates/omoma_web/transaction_list.html:48
 msgid "Add transaction"
 msgstr "Ajouter une transaction"
 
-#: templates/omoma_web/transaction_list.html:48
+#: templates/omoma_web/transaction_list.html:50
 msgid "There is no transaction in this account."
 msgstr "Il n'y a pas de transaction dans ce compte."
 
