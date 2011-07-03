@@ -100,10 +100,12 @@ def transactionrenaming(request, trid=None):
                                                        owner=request.user)
         if ruleslist:
             ruleobj = ruleslist[0]
+            title = unicode(ruleobj)
         else:
             return Forbidden()
     else:
-        ruleobj = None
+        ruleobj = TransactionRenaming(owner=request.user)
+        title = _('New transaction renaming')
 
     if request.method == 'POST':
         form = TransactionRenamingForm(request.POST, instance=ruleobj)
@@ -125,7 +127,7 @@ def transactionrenaming(request, trid=None):
 
     return render_to_response('omoma_web/transactionrenaming.html', {
         'new': not trid,
-        'title': ruleobj,
+        'title': title,
         'form': form,
     }, RequestContext(request))
 

@@ -66,7 +66,7 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
                     <p>{% trans "Automatically rename transactions when importing..." %}</p>
 
                     <a href="{% url new_transactionrenaming %}"><img src="/static/icon_add.png" class="icon" />{% trans "Add transaction renaming rule" %}</a>
-                    {% if not categories %}
+                    {% if not renamings %}
                         <p>{% trans "There is no automatic category assignment in this account." %}</p>
                     {% else %}
 

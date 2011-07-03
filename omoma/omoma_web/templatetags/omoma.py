@@ -21,7 +21,10 @@ Django template tags and filters for Omoma
 import datetime
 
 from django import template
+from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.utils import formats
+from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
@@ -97,7 +100,7 @@ def do_contentbox(parser, token):
             boxcontent = ['<div class="box">']
             if self.title:
                 boxcontent.append('<h2 class="title">%s</h2>' %
-                                                   self.title.resolve(context))
+                                    force_unicode(self.title.resolve(context)))
             boxcontent.append('<div class="content">')
             boxcontent.append(self.nodelist.render(context))
             boxcontent.append('</div></div>')
@@ -479,8 +482,6 @@ def do_get_transactions_matching_iou(parser, token):
     return TransactionsMatchingIOUNode(parser.compile_filter(contents[1]))
 
 
-
-@register.tag
 def do_username(parser, token):
     """
     Display the username along with a "logout" link
@@ -501,6 +502,20 @@ def do_username(parser, token):
     return UsernameNode()
 
 
+@register.tag
+def do_date_input_format(parser, token):
+    """
+    Return a value from settings
+    """
+    class DateInputFormat(template.Node):
+
+        def render(self, context):
+            return formats.get_format('DATE_INPUT_FORMATS')[0]
+
+    return DateInputFormat()
+    
+    
+
 register.tag('categorytree', do_categorytree)
 register.tag('contentbox', do_contentbox)
 register.tag('getaccountslist', do_get_accounts_list)
@@ -514,7 +529,7 @@ register.tag('getnotifications', do_get_notifications)
 register.tag('getotherpendingiouslist', do_get_other_pending_ious_list)
 register.tag('gettransactionsmatchingiou', do_get_transactions_matching_iou)
 register.tag('username', do_username)
-
+register.tag('dateinputformat', do_date_input_format)
 
 
 
@@ -547,6 +562,43 @@ def signedmoney(amount, account):
     return mark_safe('%s %.2f %s' % (signstr, abs(amount),
                                      account.currency.short_name))
 
+def djangodatetojquery(djangodate):
+    """
+    Format a django date template string to a jQuery date template
+
+    It only translates parts understood by jQuery
+    """
+
+    tmpdate = djangodate.replace('%c', '[c]')\
+                        .replace('%d', '[d]')\
+                        .replace('%D', '[D]')\
+                        .replace('%F', '[F]')\
+                        .replace('%j', '[j]')\
+                        .replace('%l', '[l]')\
+                        .replace('%m', '[m]')\
+                        .replace('%M', '[M]')\
+                        .replace('%n', '[n]')\
+                        .replace('%r', '[r]')\
+                        .replace('%y', '[y]')\
+                        .replace('%Y', '[Y]')\
+                        .replace('%z', '[z]')
+
+    jquerydate = tmpdate.replace('[j]', 'd')\
+                        .replace('[d]', 'dd')\
+                        .replace('[z]', 'o')\
+                        .replace('[D]', 'D')\
+                        .replace('[l]', 'DD')\
+                        .replace('[n]', 'm')\
+                        .replace('[m]', 'mm')\
+                        .replace('[M]', 'M')\
+                        .replace('[F]', 'MM')\
+                        .replace('[y]', 'y')\
+                        .replace('[Y]', 'yy')\
+                        .replace('[c]', 'ISO_8601')\
+                        .replace('[r]', 'RFC_2822')
+    return mark_safe(jquerydate)
+
 
 register.filter(money)
 register.filter(signedmoney)
+register.filter(djangodatetojquery)

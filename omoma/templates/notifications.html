@@ -20,18 +20,16 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
 {% load omoma %}
 {% getnotifications %}
 
-{% if messages or notifications %}
-    <div id="notifications">
-        {% if messages %}
-            {% for message in messages %}
-                <div{% if forloop.last and not notifications %} class="lastmessage"{% endif %}>{{ message }}</div>
-            {% endfor %}
-        {% endif %}
+<div id="notifications">
+    {% if messages %}
+        {% for message in messages %}
+            <div{% if forloop.last and not notifications %} class="lastmessage"{% endif %}>{{ message }}</div>
+        {% endfor %}
+    {% endif %}
 
-        {% if notifications %}
-            {% for n in notifications %}
-                <a href="{{ n.link }}"{% if forloop.last %} class="lastnotification"{% endif %}>{{ n.text }}</a>
-            {% endfor %}
-        {% endif %}
-    </div>
-{% endif %}
+    {% if notifications %}
+        {% for n in notifications %}
+            <a href="{{ n.link }}"{% if forloop.last %} class="lastnotification"{% endif %}>{{ n.text }}</a>
+        {% endfor %}
+    {% endif %}
+</div>

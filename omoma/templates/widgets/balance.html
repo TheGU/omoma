@@ -24,7 +24,7 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
 
     {% contentbox _('Balance') %}
 
-        <table>
+        <table id="balances">
             <tr class="header">
                 {% if not account %}
                     <th class="links"></th>
@@ -35,7 +35,7 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
             </tr>
 
             {% if account %}
-                <tr>
+                <tr id="account{{ account.id }}">
                     <td class="name">{{ account.name }}</td>
                     <td class="currentbalance">{{ account.current_balance|signedmoney:account }}</td>
                     <td class="validatedbalance">{{ account.validated_balance|signedmoney:account }}</td>
@@ -45,7 +45,7 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
                 {% getaccountslist %}
 
                 {% for account in accountslist %}
-                    <tr>
+                    <tr id="account{{ account.id }}">
                         <td class="links">
                             <a href="{% url transactions aid=account.id %}">
                                 <img src="/static/icon_details.png" class="icon" />
