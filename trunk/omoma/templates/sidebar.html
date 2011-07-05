@@ -19,19 +19,11 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
 
 {% load omoma %}{% load i18n %}
 
-{% contentbox %}
-    <ul>
-        <li>
-            <a href="{% url transactions %}" >{% trans "Home" %}</a>
-        </li>
-        <li>
-            <a href="{% url ious %}">{% trans "IOUs" %}</a>
-        </li>
-    </ul>
-{% endbox %}
-
 {% contentbox _("Accounts") %}
     <ul>
+        <li>
+            <a href="{% url transactions %}">[{% trans "All" %}]</a>
+        </li>
         {% getaccountslist %}
         {% for a in accountslist %}
             <li>
@@ -44,13 +36,21 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
     </ul>
 {% endbox %}
 
+{% contentbox _("Other") %}
+    <ul>
+        <li>
+            <a href="{% url ious %}">{% trans "IOUs" %}</a>
+        </li>
+        <li>
+            <a href="{% url categories %}">{% trans "Categories" %}</a>
+        </li>
+    </ul>
+{% endbox %}
+
 {% contentbox _("Setup") %}
     <ul>
         <li>
             <a href="{% url accounts %}">{% trans "Accounts" %}</a>
-        </li>
-        <li>
-            <a href="{% url categories %}">{% trans "Categories" %}</a>
         </li>
         <li>
             <a href="{% url automaticrules %}">{% trans "Rules" %}</a>

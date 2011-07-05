@@ -23,13 +23,13 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
 <div id="notifications">
     {% if messages %}
         {% for message in messages %}
-            <div{% if forloop.last and not notifications %} class="lastmessage"{% endif %}>{{ message }}</div>
+            <div{% if forloop.last and not notifications or forloop.first %} class="{% if forloop.first %}firstnotification{% endif %} {% if forloop.last and not notifications %}lastnotification{% endif %}"{% endif %}>{{ message }}</div>
         {% endfor %}
     {% endif %}
 
     {% if notifications %}
         {% for n in notifications %}
-            <a href="{{ n.link }}"{% if forloop.last %} class="lastnotification"{% endif %}>{{ n.text }}</a>
+            <a href="{{ n.link }}"{% if forloop.last or firloop.first and not messages %} class="{% if forloop.first and not messages %}firstnotification{% endif %} {% if forloop.last %}lastnotification{% endif %}"{% endif %}>{{ n.text }}</a>
         {% endfor %}
     {% endif %}
 </div>
