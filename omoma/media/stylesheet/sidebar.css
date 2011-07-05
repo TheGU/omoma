@@ -1,0 +1,77 @@
+/*
+ * Sidebar CSS for Omoma
+ * Copyright 2011 Sebastien Maccagnoni-Munch
+ *
+ * This file is part of Omoma.
+ *
+ * Omoma is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * Omoma is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Omoma. If not, see <http://www.gnu.org/licenses/>.
+ */
+ 
+/***** Sidebar containers *****/
+div#sidebar {
+float:left;
+width: 150px; height: 100%;
+}
+
+div#sidebarcontent {
+padding:10px 10px 0 10px;
+display: block;
+}
+
+/***** Sidebar boxes *****/
+div#sidebar div.box {
+padding: 0; margin: 0 0 1em 0;
+}
+div#sidebar div.box h2.title {
+background: #92a97b;
+margin: 0; padding: 0.2em 1em;
+font-size: 100%;
+color: #fff;
+-moz-border-top-left-radius: 6px;
+-moz-border-top-right-radius: 6px;
+-webkit-border-top-left-radius: 6px;
+-webkit-border-top-right-radius: 6px;
+border-top-left-radius: 6px;
+border-top-right-radius: 6px;
+}
+div#sidebar div.box div.content {
+margin: 0; padding: 1px;
+border-top: 0;
+border-left: 1px solid #92a97b;
+border-right: 1px solid #92a97b;
+border-bottom: 1px solid #92a97b;
+background: #fff;
+-moz-border-bottom-left-radius: 6px;
+-moz-border-bottom-right-radius: 6px;
+-webkit-border-bottom-left-radius: 6px;
+-webkit-border-bottom-right-radius: 6px;
+border-bottom-left-radius: 6px;
+border-bottom-right-radius: 6px;
+}
+
+/***** Sidebar boxes content *****/
+div#sidebar ul {
+list-style-type: none;
+padding: 0; margin: 0;
+}
+div#sidebar a {
+text-decoration: none;
+display: block;
+padding: 1px 4px;
+color: #000;
+}
+div#sidebar a:hover {
+background: #a57785;
+color: #fff;
+border-radius: 5px;
+}
