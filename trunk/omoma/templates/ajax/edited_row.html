@@ -33,6 +33,9 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
     <td class="description">
         {% csrf_token %}
         {{ form.description }}
+        {% if form.instance.original_description and form.instance.original_description != form.instance.description %}
+            <div class="originaldescription">(&nbsp;{{ form.instance.original_description }}&nbsp;)</div>
+        {% endif %}
         <ul class="intableious">
             <li><span class="peerdescription"></span>{{ form.peer1 }}&nbsp;{{form.peer1amount }}</li>
             <li><span class="peerdescription"></span>{{ form.peer2 }}&nbsp;{{form.peer2amount }}</li>
@@ -40,9 +43,6 @@ along with Omoma. If not, see <http://www.gnu.org/licenses/>.
             <li><span class="peerdescription"></span>{{ form.peer4 }}&nbsp;{{form.peer4amount }}</li>
             <li><span class="peerdescription"></span>{{ form.peer5 }}&nbsp;{{form.peer5amount }}</li>
         </ul>
-        {% if form.instance.original_description and form.instance.original_description != form.instance.description %}
-            <div class="originaldescription">(&nbsp;{{ form.instance.original_description }}&nbsp;)</div>
-        {% endif %}
     </td>
     
     <td class="amount">
