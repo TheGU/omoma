@@ -86,7 +86,7 @@ class TransactionForm(forms.Form):
 
         if instance:
             self.instance = instance
-            self.__init_from_instance()
+            self.init_from_instance()
         else:
             self.instance = Transaction()
 
@@ -117,7 +117,7 @@ class TransactionForm(forms.Form):
         self.fields['account'] = forms.ModelChoiceField(Account.objects.filter(owner=self.request.user), empty_label=None, label=_('Account'))
         self.fields['destination_account'] = forms.ModelChoiceField(Account.objects.filter(owner=self.request.user), label=_('Destination account'), required=False)
 
-    def __init_from_instance(self):
+    def init_from_instance(self):
         """
         Initialize form data from instance data
         """
@@ -460,6 +460,19 @@ class AjaxTransactionForm(TransactionForm):
         ('Give', _('I gave')),
         ('Receive', _('I received')),
     )
+
+    def __init__(self, request, data=None, files=None, auto_id='id_%s', prefix=None, initial=None, error_class=ErrorList, label_suffix=':', empty_permitted=False, instance=None):
+        super(AjaxTransactionForm, self).__init__(request, data, files, auto_id, prefix, initial, error_class, label_suffix, empty_permitted)
+
+        self.__init_accounts()
+        self.__init_categories()
+        self.__init_peers()
+
+        if instance:
+            self.instance = instance
+            self.init_from_instance()
+        else:
+            self.instance = Transaction()
 
     account = forms.CharField()
     date = forms.DateField(initial=datetime.date.today(), widget=forms.DateInput(attrs={'class':'intable date'}))
