@@ -213,6 +213,7 @@ class Category(models.Model):
 
     # pylint: disable=C0111,W0232,R0903
     class Meta:
+        ordering = ('parent__name', 'name',)
         verbose_name = _('category')
         verbose_name_plural = _('categories')
 
