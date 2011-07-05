@@ -15,13 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Omoma. If not, see <http://www.gnu.org/licenses/>.
 
+//~ $(document).ready(function() {
+    //~ $('#notifications').children().click(function() {
+        //~ $(this).slideUp();
+    //~ });
+//~ });
+
 $(document).ready(function() {
     $('#notifications').children().click(function() {
         $(this).slideUp();
     });
-});
-
-$(document).ready(function() {
     $('body').ajaxSuccess(function() {
         // Update balances
         $.ajax({
@@ -51,6 +54,16 @@ $(document).ready(function() {
                 });
             }
         });
+    });
+});
+
+$(window).load(function() {
+    $('table.container tr.container').each(function(index) {
+        var leftbox = $(this).find('td.left > div.box > div.content');
+        var rightbox = $(this).find('td.right > div.box > div.content');
+        var maxheight = Math.max(leftbox.height(), rightbox.height());
+        leftbox.height(maxheight);
+        rightbox.height(maxheight);
     });
 });
 
