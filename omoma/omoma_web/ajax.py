@@ -17,7 +17,7 @@
 Account API access for Omoma
 """
 
-import json
+import simplejson as json
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
