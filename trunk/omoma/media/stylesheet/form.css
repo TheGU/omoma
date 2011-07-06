@@ -18,14 +18,13 @@
  */
 
 form:not(.fulltable) table {
+background: transparent;
 width: auto;
 }
 
 form:not(.fulltable) table tr {
+background: transparent;
 border: 0;
-}
-form:not(.fulltable) table tr:hover {
-background: none;
 }
 
 form:not(.fulltable) ul {
