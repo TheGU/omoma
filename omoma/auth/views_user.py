@@ -24,7 +24,7 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.views.generic import list_detail
 from omoma_web.forbidden import Forbidden
-from auth.user import User, UserForm
+from auth.user import User, UserFormForAdmin as UserForm
 
 @login_required
 def users(request):

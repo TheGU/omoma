@@ -29,7 +29,30 @@ from django.utils.translation import ugettext as _
 from omoma.omoma_web.models import Transaction, TransactionCategory
 from omoma.omoma_web.models import AutomaticCategory, AutomaticCategoryForm
 from omoma.omoma_web.models import TransactionRenaming, TransactionRenamingForm
+from omoma.omoma_web.models import UserProfileForm
+from omoma.auth.user import UserForm
 
+
+@login_required
+def profile(request):
+    """
+    User's profile
+    """
+    user = request.user
+    profile = request.user.get_profile()
+
+    if request.method == 'POST':
+        userform = UserForm(request.POST, instance=user)
+        if userform.is_valid():
+            userform.save()
+        profileform = UserProfileForm(request.POST, instance=profile)
+        if profileform.is_valid():
+            profileform.save()
+    else:
+        userform = UserForm(instance=user)
+        profileform = UserProfileForm(instance=profile)
+
+    return render_to_response('profile.html', {'userform':userform, 'profileform':profileform}, RequestContext(request))
 
 @login_required
 def automaticrules(request):
@@ -52,8 +75,7 @@ def automaticcategory(request, acid=None):
     Configuration (or creation) view of an automatic category assignment
     """
     if acid:
-        ruleslist = AutomaticCategory.objects.filter(pk=acid,
-                                                     category__owner=request.user)
+        ruleslist = AutomaticCategory.objects.filter(pk=acid, category__owner=request.user)
         if ruleslist:
             ruleobj = ruleslist[0]
         else:
@@ -64,18 +86,16 @@ def automaticcategory(request, acid=None):
     if request.method == 'POST':
         form = AutomaticCategoryForm(request, request.POST, instance=ruleobj)
         if form.is_valid():
-            # Validate the category is owned by the user
-            if form.cleaned_data['category'].owner != request.user:
+
+            if form.cleaned_data['category'].owner != request.user: # The category is not owned by the user
                 return Forbidden()
 
             form.save()
 
             if ruleobj:
-                messages.info(request,
-                   _('%s successfully modified') % form.instance)
+                messages.info(request, _('%s successfully modified') % form.instance)
             else:
-                messages.info(request,
-                    _('%s successfully created') % form.instance)
+                messages.info(request, _('%s successfully created') % form.instance)
 
             return HttpResponseRedirect(reverse('automaticrules'))
 
@@ -96,8 +116,7 @@ def transactionrenaming(request, trid=None):
     Configuration (or creation) view of an automatic transaction renaming
     """
     if trid:
-        ruleslist = TransactionRenaming.objects.filter(pk=trid,
-                                                       owner=request.user)
+        ruleslist = TransactionRenaming.objects.filter(pk=trid, owner=request.user)
         if ruleslist:
             ruleobj = ruleslist[0]
             title = unicode(ruleobj)
@@ -114,11 +133,9 @@ def transactionrenaming(request, trid=None):
             form.save()
 
             if ruleobj:
-                messages.info(request,
-                   _('%s successfully modified') % form.instance)
+                messages.info(request, _('%s successfully modified') % form.instance)
             else:
-                messages.info(request,
-                    _('%s successfully created') % form.instance)
+                messages.info(request, _('%s successfully created') % form.instance)
 
             return HttpResponseRedirect(reverse('automaticrules'))
 
@@ -137,8 +154,7 @@ def apply_automaticcategory(request, acid):
     """
     Apply a transaction renaming rule to existing transactions
     """
-    ruleslist = AutomaticCategory.objects.filter(pk=acid,
-                                                 category__owner=request.user)
+    ruleslist = AutomaticCategory.objects.filter(pk=acid, category__owner=request.user)
     if ruleslist:
         ruleobj = ruleslist[0]
     else:
@@ -148,17 +164,12 @@ def apply_automaticcategory(request, acid):
         selected = request.POST.getlist('applyto')
         if len(selected):
             for transactionid in selected:
-                trans = Transaction.objects.get(id=transactionid,
-                                                account__owner=request.user)
-                TransactionCategory(transaction=trans,
-                                    category=ruleobj.category).save()
-            messages.info(request,
-                      _('The category has been applied to %d transactions') % \
-                                                                 len(selected))
+                trans = Transaction.objects.get(id=transactionid, account__owner=request.user)
+                TransactionCategory(transaction=trans, category=ruleobj.category).save()
+            messages.info(request, _('The category has been applied to %d transactions') % len(selected))
             return HttpResponseRedirect(reverse('automaticrules'))
         else:
-            messages.info(request,
-                    _('The category has not been applied to any transaction.'))
+            messages.info(request, _('The category has not been applied to any transaction.'))
 
     alltransactions = Transaction.objects.filter(description__icontains= \
                                                  ruleobj.description)
@@ -189,19 +200,16 @@ def apply_transactionrenaming(request, trid):
         selected = request.POST.getlist('applyto')
         if len(selected):
             for transactionid in selected:
-                trans = Transaction.objects.get(id=transactionid,
-                                                account__owner=request.user)
+                trans = Transaction.objects.get(id=transactionid, account__owner=request.user)
                 trans.description = ruleobj.target_description
                 trans.save()
-            messages.info(request, _('%d transactions renamed.')%len(selected))
+            messages.info(request, _('%d transactions renamed.') % len(selected))
             return HttpResponseRedirect(reverse('automaticrules'))
         else:
             messages.info(request,
                     _('No transaction has been renamed.'))
 
-    transactions = Transaction.objects.filter(
-            Q(original_description__icontains=ruleobj.original_description) & \
-                                    ~Q(description=ruleobj.target_description))
+    transactions = Transaction.objects.filter( Q(original_description__icontains=ruleobj.original_description) & ~Q(description=ruleobj.target_description) )
 
     return render_to_response('omoma_web/apply_transactionrenaming.html', {
         'title': unicode(ruleobj),
@@ -214,8 +222,7 @@ def delete_automaticcategory(request, acid):
     """
     Delete a transaction renaming rule
     """
-    ruleslist = AutomaticCategory.objects.filter(pk=acid,
-                                                 category__owner=request.user)
+    ruleslist = AutomaticCategory.objects.filter(pk=acid, category__owner=request.user)
     if ruleslist:
         rname = unicode(ruleslist[0])
         ruleslist[0].delete()
@@ -230,8 +237,7 @@ def delete_transactionrenaming(request, trid):
     """
     Delete a transaction renaming rule
     """
-    ruleslist = TransactionRenaming.objects.filter(pk=trid,
-                                                   owner=request.user)
+    ruleslist = TransactionRenaming.objects.filter(pk=trid, owner=request.user)
     if ruleslist:
         rname = unicode(ruleslist[0])
         ruleslist[0].delete()

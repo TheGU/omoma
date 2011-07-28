@@ -34,9 +34,7 @@ class UserForm(forms.ModelForm):
     # pylint: disable=C0111,W0232,R0903
     class Meta:
         model = User
-        exclude = ('is_staff', 'is_active', 'is_superuser',
-                   'last_login', 'date_joined',
-                   'groups', 'user_permissions', 'password')
+        exclude = ('username', 'is_staff', 'is_active', 'is_superuser', 'last_login', 'date_joined', 'groups', 'user_permissions', 'password')
 
     def clean_confirm(self):
         """ Validate and clean confirm field
@@ -54,3 +52,10 @@ class UserForm(forms.ModelForm):
         if password:
             self.instance.set_password(password)
         super(UserForm, self).save()
+
+class UserFormForAdmin(UserForm):
+    """ User form for admin
+    """
+    class Meta:
+        model = User
+        exclude = ('is_staff', 'is_active', 'is_superuser', 'last_login', 'date_joined', 'groups', 'user_permissions', 'password')

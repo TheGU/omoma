@@ -18,13 +18,37 @@ Django models for Omoma
 """
 # pylint: disable=E1101
 
+from decimal import Decimal
+
 from django import forms
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q, Sum
+from django.db.models.signals import post_save
 from django.utils.translation import ugettext as _
 
 ########## Models
+
+class UserProfile(models.Model):
+    """
+    An user profile, to define user preferences
+    """
+    user = models.OneToOneField(User)
+
+    def __unicode__(self):
+        return _('Profile for %s') % self.user.username
+
+    default_currency = models.ForeignKey('Currency', verbose_name=_('default currency'), null=True, blank=True)
+
+    class Meta:
+        verbose_name = _('user profile')
+        verbose_name_plural = _('users profiles')
+
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+post_save.connect(create_user_profile, sender=User, dispatch_uid="users-profilecreation-signal")
+
 
 
 class Currency(models.Model):
@@ -35,7 +59,7 @@ class Currency(models.Model):
     For example, if "euro" is 1 and "dollar" is 1.2,
     then 1 dollar = 0.83 euro
 
-    The short name could be the sign representing the currency ($, etc...)
+    The short name is the "sign" representing the currency ($, USD, etc.)
     """
     name = models.CharField(max_length=100, verbose_name=_('name'))
     short_name = models.CharField(max_length=10, verbose_name=_('short name'))
@@ -54,7 +78,7 @@ class Currency(models.Model):
     @property
     def used(self):
         """
-        Is this currency used?
+        Is this currency in use?
         """
         accounts = Account.objects.filter(currency=self)
         if len(accounts):
@@ -102,6 +126,30 @@ class Account(models.Model):
             return self.start_balance + transactionsum['amount__sum']
         else:
             return self.start_balance
+
+    def current_balance_as_default_currency(self):
+        """
+        Last balance of the account, in the default currency
+        """
+        default_currency = self.owner.all()[0].get_profile().default_currency
+        own_currency_balance = self.current_balance()
+
+        if self.currency == default_currency:
+            return own_currency_balance
+        else:
+            return Decimal('%.2f' % (own_currency_balance * self.currency.rate / default_currency.rate))
+
+    def validated_balance_as_default_currency(self):
+        """
+        Last validated balance of the account, in the default currency
+        """
+        default_currency = self.owner.all()[0].get_profile().default_currency
+        own_currency_balance = self.validated_balance()
+
+        if self.currency == default_currency:
+            return own_currency_balance
+        else:
+            return Decimal('%.2f' % (own_currency_balance * self.currency.rate / default_currency.rate))
 
     def count_transactions(self):
         """
@@ -525,9 +573,17 @@ class AutomaticCategory(models.Model):
 
 ########## Forms
 
+class UserProfileForm(forms.ModelForm):
+    """ Form for UserProfiles
+    """
+
+    class Meta:
+        model = UserProfile
+        exclude = ('user')
+
 
 class CurrencyForm(forms.ModelForm):
-    """ Form for Currency
+    """ Form for Currencies
     """
     # pylint: disable=C0111,W0232,R0903
     class Meta:

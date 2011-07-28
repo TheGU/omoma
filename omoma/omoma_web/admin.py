@@ -18,9 +18,7 @@ Administration configuration for Omoma
 """
 # pylint: disable=R0904
 
-from omoma.omoma_web.models import Account, Budget, Category, Currency, IOU
-from omoma.omoma_web.models import Transaction, TransactionCategory
-from omoma.omoma_web.models import AutomaticCategory, TransactionRenaming
+from omoma.omoma_web.models import Account, Budget, Category, Currency, IOU, Transaction, TransactionCategory, UserProfile, AutomaticCategory, TransactionRenaming
 from django.contrib import admin
 
 
@@ -63,6 +61,7 @@ class TransactionAdmin(admin.ModelAdmin):
     inlines = [TransactionCategoryInline, IOUInline]
 
 
+admin.site.register(UserProfile)
 admin.site.register(Currency)
 admin.site.register(Account)
 admin.site.register(Transaction, TransactionAdmin)

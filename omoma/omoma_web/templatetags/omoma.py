@@ -144,6 +144,39 @@ def do_get_accounts_list(parser, token):
     return AccountsListNode()
 
 # pylint: disable=W0613
+def do_get_accounts_totals(parser, token):
+    """
+    Set the "totalcurrent" and "totalvalidated" vars to the totals...
+
+    Usage::
+
+        {% getaccountstotals %}
+        <ul>
+            <li>{{ totalcurrent }}</li>
+            <li>{{ totalvalidated }}</li>
+        </ul>
+    """
+
+    class AccountsTotalsNode(template.Node):
+        """
+        Create the accounts list
+        """
+        def render(self, context):
+            totalcurrent = 0
+            totalvalidated = 0
+        
+            userid = context['request'].user.id
+            for account in Account.objects.filter(owner=userid):
+                a = account.current_balance_as_default_currency()
+                totalcurrent = totalcurrent + account.current_balance_as_default_currency()
+                totalvalidated = totalvalidated + account.validated_balance_as_default_currency()
+            context['totalcurrent'] = totalcurrent
+            context['totalvalidated'] = totalvalidated
+            return ''
+
+    return AccountsTotalsNode()
+
+# pylint: disable=W0613
 def do_get_iou_peers_list(parser, token):
     """
     Set the "ioupeerslist" var to the list of debtors and creditors
@@ -495,10 +528,10 @@ def do_username(parser, token):
         Username login/logout widget
         """
         def render(self, context):
+            profile = reverse('profile')
             username = context['request'].user.username
             logout = reverse('logout')
-            return  '%s - <a href="%s">%s</a>' % (username, logout,
-                                                  _('logout'))
+            return  '<a href="%s">%s</a> - <a href="%s">%s</a>' % (profile, username, logout, _('logout'))
     return UsernameNode()
 
 
@@ -519,6 +552,7 @@ def do_date_input_format(parser, token):
 register.tag('categorytree', do_categorytree)
 register.tag('contentbox', do_contentbox)
 register.tag('getaccountslist', do_get_accounts_list)
+register.tag('getaccountstotals', do_get_accounts_totals)
 register.tag('getioupeerslist', do_get_iou_peers_list)
 register.tag('getiouslinkedtorecipienttransaction',
              do_get_ious_linked_to_recipient_transaction)
@@ -562,6 +596,7 @@ def signedmoney(amount, account):
     return mark_safe('%s %.2f %s' % (signstr, abs(amount),
                                      account.currency.short_name))
 
+@register.filter
 def djangodatetojquery(djangodate):
     """
     Format a django date template string to a jQuery date template
@@ -597,8 +632,3 @@ def djangodatetojquery(djangodate):
                         .replace('[c]', 'ISO_8601')\
                         .replace('[r]', 'RFC_2822')
     return mark_safe(jquerydate)
-
-
-register.filter(money)
-register.filter(signedmoney)
-register.filter(djangodatetojquery)

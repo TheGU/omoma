@@ -169,6 +169,8 @@ urlpatterns += patterns('omoma.omoma_web.views_import',
 )
 
 urlpatterns += patterns('omoma.omoma_web.views_userpreferences',
+    # Profile
+    (r'^preferences/$', 'profile', None, 'profile'),
     # Single rules
     (r'^preferences/rules/category/new/$', 'automaticcategory', None, 'new_automaticcategory'),
     (r'^preferences/rules/category/(?P<acid>\d+)/$', 'automaticcategory', None, 'automaticcategory'),
