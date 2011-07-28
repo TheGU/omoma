@@ -89,7 +89,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
 )
 
-
+AUTH_PROFILE_MODULE = 'omoma_web.UserProfile'
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'

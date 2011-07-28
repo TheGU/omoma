@@ -130,3 +130,7 @@ color: #c00;
 span.positiveamount {
 color: #0c0;
 }
+
+tr#balancetotals td {
+font-weight: bold;
+}
