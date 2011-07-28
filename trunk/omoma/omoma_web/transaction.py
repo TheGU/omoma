@@ -134,7 +134,8 @@ class TransactionForm(forms.Form):
 
         if my_ious:
             if my_ious[0].money_transaction:
-                if self.instance.amount < 0 and self.request.user in my_ious[0].recipient_transaction.account.owner.all():
+                recipient_owners = my_ious[0].recipient_transaction
+                if self.instance.amount < 0 and  recipient_owners and self.request.user in recipient_owners.account.owner.all():
                     self.fields['transaction_type'].initial = 'Transfer'
                     self.fields['destination_account'].initial = my_ious[0].recipient_transaction.account
                 elif self.instance.amount < 0:
