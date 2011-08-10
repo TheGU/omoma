@@ -16,7 +16,7 @@ It has not been tested on other versions, but should probably work.
 Omoma uses *Django* (the framework used by Omoma), SQLite and
 the OFX tools. Run the following command::
 
-    sudo apt-get install python-django python-pysqlite2 ofx
+    sudo apt-get install python-django python-pysqlite2 ofx python-simplejson
 
 Installing and configuring Omoma
 ================================
