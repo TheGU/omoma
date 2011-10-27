@@ -1,0 +1,48 @@
+{% load static %}{% load i18n %}{% spaceless %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Omoma - Online Money Management</title>
+    <script type="text/javascript" src="{% get_static_prefix %}javascript/jquery-1.6.4.min.js"></script>
+    <script type="text/javascript" src="{% get_static_prefix %}javascript/jquery-ui-1.8.16.custom.min.js"></script>
+    <script type="text/javascript" src="{% get_static_prefix %}javascript/jquery-ui-i18n.js"></script>
+    <script type="text/javascript" src="{% get_static_prefix %}javascript/jquery.form.js"></script>
+    <script type="text/javascript" src="{% get_static_prefix %}javascript/jquery.meio.mask.min.js"></script>
+    <script type="text/javascript" src="{% get_static_prefix %}javascript/pure_min.js"></script>
+    <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
+    <script type="text/javascript" src="{% get_static_prefix %}javascript/omoma-common.js"></script>
+    <script type="text/javascript" src="{% get_static_prefix %}javascript/omoma-sidebar.js"></script>
+    <script type="text/javascript" src="{% get_static_prefix %}javascript/omoma-panels.js"></script>
+    <script type="text/javascript" src="{% get_static_prefix %}javascript/omoma-forms.js"></script>
+    <link rel="stylesheet" href="{% get_static_prefix %}style/jquery-ui-1.8.16.omoma.css" />
+    <link rel="stylesheet" href="{% get_static_prefix %}style/omoma-common.css" />
+    <link rel="stylesheet" href="{% get_static_prefix %}style/omoma-containers.css" />
+    <link rel="stylesheet" href="{% get_static_prefix %}style/omoma-content.css" />
+    <link rel="stylesheet" href="{% get_static_prefix %}style/omoma-sidebar.css" />
+</head>
+
+<body>
+    <div id="header" class="shadow">
+        <div id="headerlinks">
+            {% if request.user.is_authenticated %}
+                {% if request.user.is_staff %}<a href="{% url admin:index %}" target="_blank"><span class="jquery-icon jquery-icon-4b1c6c-ffffff ui-icon-gear"></span>&nbsp;{% trans "administration" %}</a> - {% endif %}<a href="#" id="profileopener"><span class="jquery-icon jquery-icon-4b1c6c-ffffff ui-icon-person"></span>&nbsp;{% trans "preferences" %}</a> - <a href="{% url logout %}"><span class="jquery-icon jquery-icon-4b1c6c-ffffff ui-icon-power"></span>&nbsp;{% trans "logout" %}</a>
+            {% else %}
+                <a href="#" id="loginopener"><span class="manual-jquery-icon-4b1c6c-ffffff ui-icon-person"></span>{% trans "login" %}</a> - <a href="#" id="subscribeopener"><span class="jquery-icon jquery-icon-4b1c6c-ffffff ui-icon-flag"></span>{% trans "subscribe" %}</a>
+            {% endif %}
+        </div>
+        <a href="{% url home %}" id="headerlogo">Omoma</a>
+    </div>
+
+    {% block body %}
+        <p>Page content</p>
+    {% endblock %}
+
+    <div id="footer">{% trans "Omoma is copyright 2011 Sébastien Maccagnoni-Munch. More information coming later." %}</div>
+
+    <div id="dialogbox">
+    </div>
+</body>
+
+</html>
+{% endspaceless %}

@@ -1,0 +1,14 @@
+Some notes on Omoma installation...
+###################################
+
+This document is *NOT* a step-by-step installation procedure for Omoma.
+
+Prerequisite
+============
+
+* Django 1.3
+* South
+
+sudo easy_install django
+sudo easy_install South
+sudo easy_install django-contrib-requestprovider

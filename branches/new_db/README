@@ -1,0 +1,38 @@
+Omoma is a financial application.
+
+Its name means "Online Money Management".
+
+Omoma is distributed as a set of Django applications.
+
+Copyright Notice
+================
+
+Omoma is copyright (C) 2011  Sébastieb Maccagnoni-Munch
+
+Omoma is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, version 3.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License ("LICENSE" file) for more details.
+
+
+History
+=======
+
+Omoma creation started in late 2010.
+
+In february 2011, a first version was released.
+
+In autumn 2011, Omoma is being rewritten with new and better concepts.
+
+Omoma is developed as a hobby, on evenings or weekends.
+
+Details
+========
+
+For details, see the Omoma website:
+
+http://code.google.com/p/omoma/

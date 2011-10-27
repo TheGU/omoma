@@ -1,0 +1,11 @@
+[
+    {
+        "model": "foundations.currency",
+        "pk": 1,
+        "fields": {
+            "symbol": "\u20ac",
+            "name": "euro",
+            "rate": "1"
+        }
+    }
+]

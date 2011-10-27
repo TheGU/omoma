@@ -1,0 +1,20 @@
+div.padding { padding: 10px; }
+
+div#textpage { width: 750px; margin: 35px auto 0 auto; padding: 0; text-align: justify; border-radius: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; box-shadow: 0px 0px 30px #aaa; -webkit-box-shadow: 0px 0px 30px #aaa; -moz-box-shadow: 0px 0px 30px #aaa; background-color: #fff; }
+
+div#panelcontainer { margin: 25px 0 0 0; padding-left:220px; height: 600px; }
+* html div#panelcontainer { height: 1%; }
+
+div#sidebar { width:200px; height: 100%; float:left; margin-left:-210px; padding: 0; font-size: 11px; overflow: auto; }
+
+div#main { width:100%; border-left:220px solid #92ccc6; margin-left:-220px; float:right; height: 100%; }
+div#mainmenu, div#submenu { margin: 10px 10px 0 0; padding: 3px 10px; background: #fff; border-radius: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; box-shadow: 0px 0px 30px #aaa; -webkit-box-shadow: 0px 0px 30px #aaa; -moz-box-shadow: 0px 0px 30px #aaa; }
+div#maincontent, div#maincontentwithsubmenu { margin: 10px 10px 0 0; padding: 0; background: #fff; border-radius: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; box-shadow: 0px 0px 30px #aaa; -webkit-box-shadow: 0px 0px 30px #aaa; -moz-box-shadow: 0px 0px 30px #aaa; overflow: auto; }
+
+div#mainmenu ul { margin: 0; padding: 0; list-style-type: none; }
+div#mainmenu li { margin: 0; padding: 0 10px; display:inline; }
+div#mainmenu a { vertical-align: middle; }
+div#mainmenu img { vertical-align: middle; width: 24px; height: 24px; }
+a.activepage span { font-weight: bold; text-decoration: underline; }
+a.activepage img { background-color: #fbd2b4; border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; }
+a.inactivepage span { display: none; }

@@ -1,0 +1,322 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-10-20 00:33+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+
+#: foundations/forms.py:12
+msgid "Password"
+msgstr ""
+
+#: foundations/forms.py:13
+msgid "Password (again)"
+msgstr ""
+
+#: foundations/forms.py:27
+msgid "The two password fields didn't match."
+msgstr ""
+
+#: foundations/forms.py:48
+msgid "All envelopes"
+msgstr ""
+
+#: foundations/forms.py:49
+msgid "All transactions"
+msgstr ""
+
+#: foundations/forms.py:50
+msgid "All categories"
+msgstr ""
+
+#: foundations/models.py:19 transactions/models.py:21
+#: transactions/models.py:91 transactions/models.py:92
+msgid "name"
+msgstr ""
+
+#: foundations/models.py:20
+msgid "short name"
+msgstr ""
+
+#: foundations/models.py:21
+msgid "change rate"
+msgstr ""
+
+#: foundations/models.py:30
+msgid "currencies"
+msgstr ""
+
+#: foundations/models.py:43
+msgid "default currency"
+msgstr ""
+
+#: foundations/models.py:44
+msgid "home page"
+msgstr ""
+
+#: foundations/models.py:45
+msgid "sidebar content"
+msgstr ""
+
+#: templates/panelsbase.html:31
+msgid "Transactions"
+msgstr ""
+
+#: templates/panelsbase.html:36 templates/panelsbase.html.py:72
+msgid "Envelopes"
+msgstr ""
+
+#: templates/panelsbase.html:41 templates/panelsbase.html.py:78
+msgid "Categories"
+msgstr ""
+
+#: templates/panelsbase.html:46 templates/panelsbase.html.py:84
+msgid "Community"
+msgstr ""
+
+#: templates/panelsbase.html:66
+msgid "Accounts"
+msgstr ""
+
+#: templates/skeleton.html:46
+msgid "administration"
+msgstr ""
+
+#: templates/skeleton.html:46
+msgid "preferences"
+msgstr ""
+
+#: templates/skeleton.html:46
+msgid "logout"
+msgstr ""
+
+#: templates/skeleton.html:48
+msgid "login"
+msgstr ""
+
+#: templates/skeleton.html:48
+msgid "subscribe"
+msgstr ""
+
+#: templates/skeleton.html:60
+msgid ""
+"Omoma is copyright 2011 Sébastien Maccagnoni-Munch. More information coming "
+"later."
+msgstr ""
+
+#: templates/admin/base_site.html:4 templates/admin/base_site.html.py:7
+msgid "Omoma administration"
+msgstr ""
+
+#: templates/app/transactions.html:26 templates/app/transactions.html.py:38
+msgid "Description"
+msgstr ""
+
+#: templates/app/transactions.html:27 templates/app/transactions.html.py:39
+msgid "Category"
+msgstr ""
+
+#: templates/app/transactions.html:28 templates/app/transactions.html.py:40
+msgid "Amount"
+msgstr ""
+
+#: templates/app/transactions.html:29
+msgid "Account"
+msgstr ""
+
+#: templates/app/transactions.html:30 templates/app/transactions.html.py:41
+msgid "Date"
+msgstr ""
+
+#: templates/app/transactions.html:31
+msgid "Reset"
+msgstr ""
+
+#: templates/app/transactions.html:58
+msgid "No transaction..."
+msgstr ""
+
+#: templates/app/dialog/configureaccounts.html:6
+msgid "Your accounts have been saved."
+msgstr ""
+
+#: templates/app/dialog/configureaccounts.html:15
+msgid "Name"
+msgstr ""
+
+#: templates/app/dialog/configureaccounts.html:16
+msgid "Start balance"
+msgstr ""
+
+#: templates/app/dialog/configureaccounts.html:17
+msgid "Currency"
+msgstr ""
+
+#: templates/app/dialog/configureaccounts.html:28
+msgid "New"
+msgstr ""
+
+#: templates/app/dialog/configureaccounts.html:37
+msgid "Save accounts"
+msgstr ""
+
+#: templates/app/dialog/profile.html:7
+msgid "Your preferences have been saved."
+msgstr ""
+
+#: templates/app/dialog/profile.html:17
+msgid "Save"
+msgstr ""
+
+#: templates/app/dialog/successful_login.html:3
+msgid "Login successful!"
+msgstr ""
+
+#: templates/app/sidebar/accounts.html:7
+msgid "Configure&nbsp;accounts"
+msgstr ""
+
+#: templates/app/sidebar/accounts.html:20
+msgid "No account configured."
+msgstr ""
+
+#: templates/visitor/home.html:25 templates/visitor/dialog/login.html:25
+msgid "Login"
+msgstr "Connexion"
+
+#: templates/visitor/dialog/login.html:7
+msgid "Your username and password didn't match. Please try again."
+msgstr ""
+
+#: transactions/models.py:20 transactions/models.py:89
+msgid "owner"
+msgstr ""
+
+#: transactions/models.py:22 transactions/models.py:65
+#: transactions/models.py:125 transactions/models.py:167
+#: transactions/models.py:189
+msgid "currency"
+msgstr ""
+
+#: transactions/models.py:23
+msgid "start balance"
+msgstr ""
+
+#: transactions/models.py:29 transactions/models.py:63
+msgid "account"
+msgstr ""
+
+#: transactions/models.py:30
+msgid "accounts"
+msgstr ""
+
+#: transactions/models.py:41
+msgid "description"
+msgstr ""
+
+#: transactions/models.py:42
+msgid "original description"
+msgstr ""
+
+#: transactions/models.py:62 transactions/models.py:122
+#: transactions/models.py:164
+msgid "transaction"
+msgstr ""
+
+#: transactions/models.py:64 transactions/models.py:124
+#: transactions/models.py:166 transactions/models.py:188
+msgid "amount"
+msgstr ""
+
+#: transactions/models.py:66
+msgid "is reconciled"
+msgstr ""
+
+#: transactions/models.py:72
+#, python-format
+msgid "%(amount)s for %(transaction)s"
+msgstr ""
+
+#: transactions/models.py:75
+msgid "transaction assignment"
+msgstr ""
+
+#: transactions/models.py:76
+msgid "transactions assignments"
+msgstr ""
+
+#: transactions/models.py:90
+msgid "parent"
+msgstr ""
+
+#: transactions/models.py:108 transactions/models.py:123
+#: transactions/models.py:142
+msgid "category"
+msgstr ""
+
+#: transactions/models.py:109
+msgid "categories"
+msgstr ""
+
+#: transactions/models.py:128
+#, python-format
+msgid "%(category)s for \"%(transaction)s\""
+msgstr ""
+
+#: transactions/models.py:131
+msgid "transaction category"
+msgstr ""
+
+#: transactions/models.py:132
+msgid "transaction categories"
+msgstr ""
+
+#: transactions/models.py:148 transactions/models.py:165
+msgid "envelope"
+msgstr ""
+
+#: transactions/models.py:149
+msgid "envelopes"
+msgstr ""
+
+#: transactions/models.py:171
+#, python-format
+msgid "%(amount)s from %(transaction)s into %(category)s"
+msgstr ""
+
+#: transactions/models.py:174
+msgid "salary to envelope"
+msgstr ""
+
+#: transactions/models.py:175
+msgid "salary to envelopes"
+msgstr ""
+
+#: transactions/models.py:186
+msgid "from envelope"
+msgstr ""
+
+#: transactions/models.py:187
+msgid "to envelope"
+msgstr ""
+
+#: transactions/models.py:192
+msgid "envelope transfer"
+msgstr ""
+
+#: transactions/models.py:193
+msgid "envelopes transfers"
+msgstr ""

@@ -1,0 +1,22 @@
+/* Boxes */
+div.sidecontent, div.sideplaceholder { margin: 10px 0 0 0; padding: 0; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; }
+div.sidecontent { background: #fff; }
+div.sideplaceholder { border: 1px dashed #18645c; height: 20px; }
+
+/* Boxes title */
+div.sidecontent h1 { margin:0; padding: 1px 1px 1px 5px; font-size: 13px; font-weight: bold; cursor: pointer; background: #4b1c6c url(images/ui-bg_highlight-soft_50_4b1c6c_1x100.png) 40% 40% repeat-x; color: #fff; -webkit-border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-radius-topleft: 5px; -moz-border-radius-topright: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px; }
+
+/* Hidden boxes */
+div.sidecontent.hidden > div.sideboxcontent { display: none; }
+div.sidecontent.hidden > h1 { -webkit-border-bottom-left-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-radius-bottomleft: 5px; -moz-border-radius-bottomright: 5px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; }
+
+/* Icons */
+div.sidecontent div.sideboxtitleicons { float: right; }
+div.sidecontent.hidden span.sideboxspecificicons { display: none; }
+
+/* Boxes content */
+div.sideboxcontent { padding: 2px 8px; }
+div.sideboxcontent table { width: 100%; }
+tr.siderow td, tr.siderowtotal td { border-top: 1px solid #4b1c6c; border-bottom: 1px solid #4b1c6c; }
+tr.siderow td.value, tr.siderowtotal td.value { text-align: right; }
+tr.siderowtotal { font-weight: bold; }
