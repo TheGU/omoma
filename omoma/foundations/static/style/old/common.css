@@ -1,0 +1,109 @@
+* {
+    position: relative;
+}
+
+body {
+    font-family: sans-serif;
+    font-size: 13px;
+    background-color: #92ccc6;
+    color: #4b1c6c;
+    margin: 0;
+    padding: 0;
+}
+
+table {
+ border-collapse: collapse;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Put shadows around an element */
+.shadow {
+    box-shadow: 0px 0px 30px #aaa;
+    -webkit-box-shadow: 0px 0px 30px #aaa;
+    -moz-box-shadow: 0px 0px 30px #aaa;
+}
+
+/* Pages part container */
+.container {
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    background-color: #fff;
+    padding: 0;
+}
+
+.alignright {
+    float: right;
+    text-align: right;
+}
+
+.margins { padding: 15px; }
+.sidemargins { padding: 0 15px; }
+
+.icon {
+    width: 24px;
+    height: 24px;
+}
+
+div#textpage {
+    width: 750px;
+    margin: 35px auto 0 auto;
+    text-align: justify;
+}
+
+div.tooltip {
+    position: absolute;
+    left: -9999px;
+    top: 25px;
+    padding: 5px;
+    /* ui-state-highlight */
+    border: 1px solid #a15b27;
+    background: #fbd2b4 url(images/ui-bg_flat_100_fbd2b4_40x100.png) 50% 50% repeat-x;
+    color: #000000;
+    /* ui-corner-all */
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    /* ui-widget */
+    font-family: sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    z-index: 500;
+}
+:hover > div.tooltip {
+    left: 0;
+}
+
+span.manual-jquery-icon-4b1c6c-ffffff, span.manual-jquery-icon-ffffff-000000, span.manual-jquery-icon-4b1c6c-cd0a0a {
+    width: 16px;
+    height: 16px;
+    display:inline-block;
+    vertical-align: middle;
+}
+
+span.manual-jquery-icon-4b1c6c-ffffff {
+    background-image: url(images/ui-icons_4b1c6c_256x240.png);
+}
+
+:hover > span.manual-jquery-icon-4b1c6c-ffffff {
+    background-image: url(images/ui-icons_ffffff_256x240.png);
+}
+
+span.manual-jquery-icon-4b1c6c-cd0a0a {
+    background-image: url(images/ui-icons_4b1c6c_256x240.png);
+}
+
+:hover > span.manual-jquery-icon-4b1c6c-cd0a0a {
+    background-image: url(images/ui-icons_cd0a0a_256x240.png);
+}
+
+span.manual-jquery-icon-ffffff-000000 {
+    background-image: url(images/ui-icons_ffffff_256x240.png);
+}
+
+:hover > span.manual-jquery-icon-ffffff-000000 {
+    background-image: url(images/ui-icons_000000_256x240.png);
+}

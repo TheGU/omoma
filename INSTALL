@@ -1,91 +1,14 @@
-################
-Installing Omoma
-################
+Some notes on Omoma installation...
+###################################
 
-This document explains how to install Omoma.
-
-**For a complete and simple how-to install Omoma on Ubuntu,
-please see the INSTALL_UBUNTU file.**
-
-This document only contains technical information.
+This document is *NOT* a step-by-step installation procedure for Omoma.
 
 Prerequisite
 ============
 
- * Somewhere to host the web service
- * Python (version 2.5 or 2.6)
- * Django (version 1.2)
- * OFX Tools
- * python-simplejson
- * A SQL database (PostgreSQL, SQLite, MySQL, Oracle)
- * optionally, a web server
+* Django 1.3
+* South
 
-Hosting service
-===============
-
-You can host the service on your own computer, of course.
-
-You can also host it on the Internet, see the following URI:
-http://code.djangoproject.com/wiki/DjangoFriendlyWebHosts
-
-Python and Django
-=================
-
-To install Python and Django, please refer to the following URI:
-http://docs.djangoproject.com/en/1.2/topics/install/
-
-You can get more details on installing/deploying Django at the following URI:
-http://djangobook.com/en/2.0/chapter12/
-
-Database
-========
-
-You need a database to store Django data. Either PostgreSQL, SQLite, MySQL,
-or Oracle. You have to create a database and give Django access to it (with
-rights to create tables).
-
-Configuring Omoma
-=================
-
-The configuration takes place in settings.py
-
-You need to configure :
-
- * DEBUG: True of False, it's up to you
- * DATABASES: set what applies to your database in "default"
- * TIME_ZONE: your timezone
- * LANGUAGE_CODE: your language identifier
- * SECRET_KEY: any random string
- * TEMPLATE_DIRS: that depends on the place where you've installed Omoma
-   It should reference the "templates" subdir in the Omoma directory
- * LOGIN_URL and LOGIN_REDIRECT_URL: you may add a prefix if you serve Omoma
-   in a subdirectory
-
-Preparing Omoma
-===============
-
-You can put the Omoma code anywhere you want.
-``/opt/omoma`` may be a good choice.
-
-Then, from the Omoma directory, execute the following command::
-
-    python manage.py syncdb
-
-Running Omoma
-=============
-
-You can either use a web server or run the development server.
-
-To install with a web server, see the following URI:
-http://docs.djangoproject.com/en/1.2/howto/deployment/
-
-To run the development server, execute the following command::
-
-    python manage.py runserver
-
-If you want Omoma to be reachable from other computers on your network, you
-may run the following command::
-
-    python manage.py runserver 0.0.0.0:8000
-
-... but for real "production" use, a real web server is prefered.
+sudo easy_install django
+sudo easy_install South
+sudo easy_install django-contrib-requestprovider

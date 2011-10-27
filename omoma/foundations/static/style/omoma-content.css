@@ -1,0 +1,42 @@
+
+
+form#transactionsfilter ul {
+    margin: 0;
+    padding: 0;
+/*
+    list-style-type: none;
+*/
+}
+
+form#transactionsfilter ul li {
+    display:inline;
+}
+
+/*
+div.menucontainer {
+    padding: 3px 10px;
+}
+
+div.menucontainer ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+div.menucontainer ul li {
+    display:inline;
+    margin: 0;
+    padding: 0 10px;
+}
+
+div.menucontainer a {
+    vertical-align: middle;
+}
+
+div.menucontainer a:hover {
+    color: #18645c;
+}
+
+div.menucontainer img {
+    vertical-align: middle;
+}*/

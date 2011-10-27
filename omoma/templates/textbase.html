@@ -1,0 +1,12 @@
+{% extends "skeleton.html" %}
+{% load i18n %}
+
+{% block body %}
+    <div id="textpage">
+        <div class="padding">
+            {% block content %}
+                <p>Text content</p>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,58 +1,50 @@
-# Copyright 2011 Sebastien Maccagnoni-Munch
-#
-# This file is part of Omoma.
-#
-# Omoma is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, version 3.
-#
-# Omoma is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Omoma. If not, see <http://www.gnu.org/licenses/>.
-"""
-Django settings for Omoma
-"""
-# pylint: disable=W0614
-
-from local_settings import * # pylint: disable=W0401,W0403
+from localsettings import *
 
 TEMPLATE_DEBUG = DEBUG
 
-ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
-)
-
 MANAGERS = ADMINS
 
-SITE_ID = 1
+db_engine = {
+    'mysql': 'mysql',
+    'oracle': 'oracle',
+    'postgresql': 'postgresql_psycopg2',
+    'sqlite': 'sqlite3'
+}[DB_TYPE]
 
-# If you set this to False, Django will make some optimizations so as not
-# to load the internationalization machinery.
+
+DATABASES = {
+    'default': {
+        'ENGINE': db_engine,
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASS,
+        'HOST': DB_HOST,
+        'PORT': DB_PORT,
+    }
+}
+
+TEMPLATE_DIRS = (
+    '%s/templates' % OMOMA_DIR,
+)
+
+LOGIN_URL = '/login'
+LOGIN_REDIRECT_URL = '/dialog/loginok'
+
 USE_I18N = True
-
-# If you set this to False, Django will not format dates, numbers and
-# calendars according to the current locale
 USE_L10N = True
 
-# Absolute path to the directory that holds media.
-# Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = ''
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash if there is a path component (optional in other cases).
-# Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = ''
 
-# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
-# trailing slash.
-# Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+STATIC_ROOT = '%s/consolidatedstatic/' % OMOMA_DIR
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+)
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
 
-# List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
@@ -65,6 +57,17 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'gadjo.requestprovider.middleware.RequestProvider',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.contrib.messages.context_processors.messages",
+    "django.core.context_processors.request",
 )
 
 ROOT_URLCONF = 'omoma.urls'
@@ -73,23 +76,37 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'omoma',
+    'omoma.foundations',
+    'omoma.transactions',
+    'omoma.community',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    'omoma_web',
+    'south',
+    # Remove the next one when lipsum is not needed anymore
+    'django.contrib.webdesign'
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.contrib.messages.context_processors.messages",
-    "django.core.context_processors.request",
-)
+AUTH_PROFILE_MODULE = 'foundations.UserProfile'
 
-AUTH_PROFILE_MODULE = 'omoma_web.UserProfile'
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    }
+}
 
-LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/'
+ANONYMOUS_USER_ID = 1

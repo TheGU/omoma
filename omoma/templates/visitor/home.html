@@ -1,0 +1,39 @@
+{% extends "textbase.html" %}
+{% load i18n %}
+
+{% block content %}
+<h1>{% trans "Welcome to Omoma!" %}</h1>
+<p><em>{% trans "<strong>O</strong>(nline)<strong>mo</strong>(ney)<strong>ma</strong>(nagement)</em> is a personal finance software, aimed at simplifying money management with envelope budgeting and recording of debts among your community." %}</p>
+
+<div id="details">
+    <ul>
+        <li><a href="#discover">{% trans "Discover Omoma" %}</a></li>
+        <li><a href="#envelope">{% trans "Envelope budgeting" %}</a></li>
+        <li><a href="#community">{% trans "Community" %}</a></li>
+    </ul>
+    <div id="discover">
+        <p>{% trans "<em>Omoma</em> combines major features that make personal finance management easy..." %}</p>
+        <ul>
+            <li>{% trans "Bank statements importation" %}</li>
+            <li>{% trans "Automatic transaction renaming" %}</li>
+            <li>{% trans "Automatic categories assignment" %}</li>
+            <li>{% trans "Envelope budgeting" %}</li>
+            <li>{% trans "Debts (IOUs) managements" %}</li>
+        </ul>
+    </div>
+    <div id="envelope">
+        <p>{% trans "More information coming later." %}</p>
+    </div>
+    <div id="community">
+        <p>{% trans "More information coming later." %}</p>
+    </div>
+</div>
+
+<p>{% trans "<em>Omoma</em> is still in an early development stage, you cannot try it for the moment... Stay tuned!" %}</p>
+<!--
+<p>{% trans "Wanna try <em>Omoma</em>? Just click on the \"subscribe\" link in the top right corner of this page!" %}</p>
+-->
+{% if login %}
+    <script type="text/javascript">$(document).ready(function() { opendialog("login", "{% trans "Login" %}"); });</script>
+{% endif %}
+{% endblock %}

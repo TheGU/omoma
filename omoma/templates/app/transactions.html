@@ -1,0 +1,97 @@
+{% extends "panelsbase.html" %}
+{% load i18n %}
+
+{% block submenucontent %}
+<p>A<span class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-check"></span></span></p>
+<form id="transactionsfilter" action="{% url transactions %}" method="POST">
+<!--
+    <ul class="ui-widget ui-helper-clearfix">
+-->
+    <ul>
+        <li class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-check"></span></li>
+        <li><div class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-plus"></span></div></li>
+<!--
+        <li>
+            <span class="ui-state-default ui-corner-all">
+                <span class="ui-icon ui-icon-check"></span>
+            </span>
+        </li>
+        <li class="ui-state-default ui-corner-all">
+            <span class="ui-icon ui-icon-plus"></span>
+        </li>
+-->
+<!--
+        <li>
+            <select name="account" id="filteraccount">
+                {% for account in accounts %}
+                    <option value="{{ account.id }}">{{ account.name }}</option>
+                {% endfor %}
+            </select>
+        </li>
+-->
+
+    </ul>
+</form>
+{% endblock %}
+
+{% block oldsubmenucontent %}
+<!-- TODO This form should be beautiful ! -->
+<form id="transactionsfilter" action="{% url transactions %}" method="POST">
+    <ul class="ui-widget ui-helper-clearfix">
+        <li class="ui-state-default ui-corner-all">
+            <span class="ui-icon ui-icon-check"></span>
+        </li>
+        <li>
+            <select name="account" id="filteraccount">
+                {% for account in accounts %}
+                    <option value="{{ account.id }}">{{ account.name }}</option>
+                {% endfor %}
+            </select>
+        </li>
+        <li class="ui-state-default ui-corner-all">
+            <span class="ui-icon ui-icon-plus"></span>
+        </li>
+    </ul>
+    {% csrf_token %}
+<!--
+    {% trans "Description" %} <input type="text" name="description" id="filterdescription" />
+    {% trans "Category" %} <input type="text" name="category" class="category" />
+    {% trans "Amount" %} <input type="text" name="amount" class="amount" />
+    {% trans "Date" %} <input type="text" name="datestart" id="filterdatestart" />...<input type="text" name="dateend" id="filterdateend" />
+    <input id="filterapply" type="submit" class="ui-state-default ui-corner-all" value="{% trans "Apply" %}"/>
+    <input id="filtercancel" type="reset" class="ui-state-default ui-corner-all" value="{% trans "Reset" %}"/>
+-->
+</form>
+{% endblock %}
+
+
+{% block content %}
+<!-- TODO Transactions list -->
+<div id="transactions">
+    {% load webdesign %}{% lorem 9 p %}
+    <table>
+        <tr>
+            <th></th>
+            <th>{% trans "Description" %}</th>
+            <th>{% trans "Category" %}</th>
+            <th>{% trans "Amount" %}</th>
+            <th>{% trans "Date" %}</th>
+        </tr>
+        <tr>
+            <td>X</td>
+            <td>Tutu</td>
+            <td>Maison</td>
+            <td>10 € (Compte Courant)</td>
+            <td>01/01/2011</td>
+        </tr>
+        <tr>
+            <td>X</td>
+            <td>Tutu</td>
+            <td>Maison</td>
+            <td>10 € (Compte Courant)</td>
+            <td>01/01/2011</td>
+        </tr>
+    </table>
+    {% trans "No transaction..." %}
+</div>
+{% endblock %}

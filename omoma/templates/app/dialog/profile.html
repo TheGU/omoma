@@ -1,0 +1,19 @@
+{% load i18n %}
+{% spaceless %}
+{% if not userform.errors and not profileform.errors and saved %}
+    <div class="ui-widget">
+        <div id="profilesaved" class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">
+            <p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>{% trans "Your preferences have been saved." %}</p>
+        </div>
+    </div>
+{% endif %}
+<form id="profileform" action="{% url profile %}" method="POST">
+    {% csrf_token %}
+    <table>
+        {{ userform }}
+        {{ profileform }}
+    </table>
+    <input type="submit" value="{% trans "Save" %}" class="ui-state-default ui-corner-all" />
+</form>
+<script>updateinputelements(); dialogform('profile', 'profilesaved');</script>
+{% endspaceless %}

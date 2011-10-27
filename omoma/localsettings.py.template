@@ -1,0 +1,40 @@
+# Debug mode
+# Options: False, True
+DEBUG = True
+
+# Database type
+# Options: mysql, oracle, postgresql, sqlite
+DB_TYPE = 'sqlite'
+# Database name
+# with sqlite3, this is the path to the database file
+DB_NAME = '/path/to/a/sqlite3/database.sqlite3'
+# Database user
+# not used with sqlite3
+DB_USER = ''
+# Database password
+# not used with sqlite3
+DB_PASS = ''
+# Database host
+# not used with sqlite3, or localhost if empty
+DB_HOST = ''
+# Database port
+# not used with sqlite3, or default port if empty
+DB_PORT = ''
+
+# Admins names and email addresses
+ADMINS = (
+    ('Name of the admin', 'admin.email@address.com'),
+)
+
+# The SMTP server used to send emails
+EMAIL_HOST = 'smtp.server.com'
+
+# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
+TIME_ZONE = 'Europe/Paris'
+
+# http://www.i18nguy.com/unicode/language-identifiers.html
+LANGUAGE_CODE = 'fr-fr'
+
+SECRET_KEY = 'SomeRandomSecretKey'
+
+OMOMA_DIR = '/path/to/the/omoma/directory/omoma'

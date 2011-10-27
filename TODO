@@ -1,0 +1,42 @@
+Account: delete link
+Account: display sum in sidebar
+Account: link to a filtered transactions list
+Account: choice in filter
+
+Category: category management in main panel
+Category: display category sum in main panel
+Category: display category sum for each currency in a popup
+
+Currency: global currency and rates update
+Currency: custom currency creation
+
+Transaction: list to display transactions in main panel
+Transaction: filter in main panel
+Transaction: form to edit transaction
+Transaction: use the form for new transactions
+
+TransactionCategory: include in the list
+TransactionCategory: include in the form
+
+TransactionAssignment: include in the list
+TransactionAssignment: include in the form
+
+SalaryToEnvelope
+
+Envelope
+
+EnvelopeTransfer
+
+Debt
+
+Condition
+
+AutomaticCategory
+
+AutomaticDescription
+
+EnvelopeDistributionTemplate
+
+AutomaticDebt
+
+Paying User management

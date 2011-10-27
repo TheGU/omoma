@@ -1,0 +1,79 @@
+{% extends "skeleton.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block body %}
+<div id="panelcontainer">
+
+    <div id="main">
+        <div id="mainmenu">
+            <ul>
+                <li id="menuentry_transactions">
+                    <a href="{% url transactions %}" class="{% if menuentry != 'transactions' %}in{% endif %}activepage">
+                        <img id="menuicon_transactions" src="{% get_static_prefix %}images/icon_transactions.png" />&nbsp;<span id="menutext_transactions">{% trans 'Transactions' %}</span>
+                    </a>
+                </li>
+                <li id="menuentry_envelopes">
+                    <a href="{% url envelopes %}" class="{% if menuentry != 'envelopes' %}in{% endif %}activepage">
+                        <img id="menuicon_envelopes" src="{% get_static_prefix %}images/icon_envelopes.png" />&nbsp;<span id="menutext_envelopes">{% trans 'Envelopes' %}</span>
+                    </a>
+                </li>
+                <li id="menuentry_categories">
+                    <a href="{% url categories %}" class="{% if menuentry != 'categories' %}in{% endif %}activepage">
+                        <img id="menuicon_categories" src="{% get_static_prefix %}images/icon_categories.png" />&nbsp;<span id="menutext_categories">{% trans 'Categories' %}</span>
+                    </a>
+                </li>
+                <li id="menuentry_community">
+                    <a href="{% url community %}" class="{% if menuentry != 'community' %}in{% endif %}activepage">
+                        <img id="menuicon_community" src="{% get_static_prefix %}images/icon_community.png" />&nbsp;<span id="menutext_community">{% trans 'Community' %}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        {% if submenu %}
+            <div id="submenu">
+                {% block submenucontent %}
+                    Submenu
+                {% endblock %}
+            </div>
+        {% endif %}
+        <div id="maincontent{% if submenu %}withsubmenu{% endif %}">
+            <div class="padding">
+                {% block content %}
+                    Content
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <div id="sidebar">
+        {% for item in request.user.get_profile.sidebar_as_table %}
+            <div class="sidecontent{% if not item.1 %} hidden{% endif %}" id="{{ item.0 }}">
+                <h1>
+                    <div class="sideboxtitleicons">
+                        <span class="sideboxspecificicons"></span>
+                        <span class="sideboxopencloseicon jquery-icon jquery-icon-ffffff-000000"></span>
+                    </div>
+                    <span class="sideboxtitle">{{ item.0 }}</span>
+                </h1>
+                <div class="sideboxcontent">
+                    <table>
+                        <tr class="siderow">
+                            <td class="name"></td>
+                            {% if item.0 == "sideaccounts" %}
+                                <td class="value"></td>
+                            {% endif %}
+                        </tr>
+                        {% if item.0 == "sideaccounts" %}
+                            <tr class="siderowtotal">
+                                <td class="name">Total</td>
+                                <td class="value"></td>
+                            </tr>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% spaceless %}{% load i18n %}
+{% if form.errors %}
+    <div class="ui-widget">
+        <div class="ui-state-error ui-corner-all" id="loginerror" style="padding: 0 .7em;">
+            <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>{% trans "Your username and password didn't match. Please try again." %}</p>
+        </div>
+    </div>
+{% endif %}
+<form id="loginform" action="{% url login %}" method="POST">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>{{ form.username.label_tag }}</td>
+            <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.password.label_tag }}</td>
+            <td>{{ form.password }}</td>
+        </tr>
+    </table>
+
+    <input type="hidden" name="next" value="{{ next }}" />
+    <input type="submit" value="{% trans "Login" %}" class="ui-state-default ui-corner-all" />
+</form>
+<script>updateinputelements(); dialogform('login', 'loginerror');</script>
+{% endspaceless %}
