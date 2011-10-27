@@ -7,7 +7,7 @@ Omoma is distributed as a set of Django applications.
 Copyright Notice
 ================
 
-Omoma is copyright (C) 2011  Sébastieb Maccagnoni-Munch
+Omoma is copyright (C) 2011  Sébastien Maccagnoni-Munch
 
 Omoma is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -17,6 +17,9 @@ This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Affero General Public License ("LICENSE" file) for more details.
+
+
+SORRY THIS LICENSE IS NOT DETAILED IN ALL FILES OF THE PROJET. IT IS EASIER FOR ME IN THE FIRST STEPS OF DEVELOPMENT.
 
 
 History
