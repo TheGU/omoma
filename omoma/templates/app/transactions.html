@@ -1,15 +1,19 @@
 {% extends "panelsbase.html" %}
 {% load i18n %}
 
+
 {% block submenucontent %}
-<p>A<span class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-check"></span></span></p>
+{% endblock %}
+
+{% block old2submenucontent %}
 <form id="transactionsfilter" action="{% url transactions %}" method="POST">
+    <ul>
+        <li class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-plus"></span></li>
+        <li><div class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-plus"></span></div></li>
+        <li><span class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-plus"></span></span></li>
 <!--
     <ul class="ui-widget ui-helper-clearfix">
 -->
-    <ul>
-        <li class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-check"></span></li>
-        <li><div class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-plus"></span></div></li>
 <!--
         <li>
             <span class="ui-state-default ui-corner-all">

@@ -10,7 +10,10 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls), name='admin'),
-    url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog', {'packages': ('omoma',)}),
+    url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog', {'packages': ('omoma',)}, name='jsi18n'),
+
+    # TODO Help pages
+    url(r'^help/$', TemplateView.as_view(), name='help'),
 )
 
 urlpatterns += patterns('omoma.foundations.views',
@@ -44,7 +47,9 @@ urlpatterns += patterns('omoma.transactions.views',
 
     # Accounts dialogs
     url(r'^dialog/accounts/$', 'configureaccounts', name='configureaccounts'),
-    url(r'^dialog/deleteaccount/(?P<accountid>\d+)$', 'deleteaccount', name='deleteaccount'),
+    url(r'^dialog/newaccount/$', 'newaccount', name='newaccount'),
+    url(r'^dialog/deleteaccount(?P<accountid>\d+)/$', 'confirmdeleteaccount', name='confirmdeleteaccount'),
+    url(r'^dialog/deleteaccount(?P<accountid>\d+)/delete/$', 'deleteaccount', name='deleteaccount'),
 )
 
 urlpatterns += patterns('omoma.transactions.jsonviews',

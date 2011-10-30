@@ -51,8 +51,14 @@
             <div class="sidecontent{% if not item.1 %} hidden{% endif %}" id="{{ item.0 }}">
                 <h1>
                     <div class="sideboxtitleicons">
-                        <span class="sideboxspecificicons"></span>
-                        <span class="sideboxopencloseicon jquery-icon jquery-icon-ffffff-000000"></span>
+                        <span class="sideboxspecificicons">
+                            {% if item.0 == "sideaccounts" %}
+                                <span id="accountsopener" class="jquery-icon jquery-icon-ffffff-000000 ui-icon-wrench"></span>
+                            {% endif %}
+                        </span>
+                        <span class="sideboxopencloseicon">
+                            <span class="jquery-icon jquery-icon-ffffff-000000"></span>
+                        </span>
                     </div>
                     <span class="sideboxtitle">{{ item.0 }}</span>
                 </h1>

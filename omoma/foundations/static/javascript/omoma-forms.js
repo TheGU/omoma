@@ -23,3 +23,5 @@ function updateinputelements() {
     $('input.category').autocomplete({source:"{% url jsoncategories %}", minLength: 0});
     $('input.category').focus(function() { $(this).autocomplete("search", ""); });
 }
+
+$(document).ready(function() { updateinputelements(); });
