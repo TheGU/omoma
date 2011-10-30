@@ -1,0 +1,12 @@
+{% load i18n %}
+{% spaceless %}
+<form id="newaccountform" action="{% url newaccount %}" method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form }}
+    </table>
+    <input type="submit" value="{% trans "Create" %}" />
+    <button type="button" id="cancelnewaccount">{% trans "Cancel" %}</button>
+</form>
+<script>$('button#cancelnewaccount').click(function (event) { opendialog("accounts", gettext("Configure accounts")); event.preventDefault(); });updateinputelements(); dialogform('newaccount', 'newaccountcreated');</script>
+{% endspaceless %}

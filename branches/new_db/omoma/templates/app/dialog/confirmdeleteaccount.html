@@ -1,0 +1,20 @@
+{% load i18n %}
+{% spaceless %}
+{% trans "Are you sure you want to delete this account ?" %}
+
+<table>
+    <tr>
+        <th>{% trans "Name" %}</th>
+        <td>{{ account.name }}</td>
+    </tr>
+    {# TODO More details here (number of transactions, etc) #}
+</table>
+
+<button type="button" id="deleteaccount">{% trans "Yes, delete account" %}</button>
+<button type="button" id="canceldeleteaccount">{% trans "Cancel" %}</button>
+
+<script>
+    $('button#deleteaccount').click(function (event) { opendialog("deleteaccount{{ account.id }}/delete", gettext("Configure accounts")); event.preventDefault(); });
+    $('button#canceldeleteaccount').click(function (event) { opendialog("accounts", gettext("Configure accounts")); event.preventDefault(); });
+</script>
+{% endspaceless %}

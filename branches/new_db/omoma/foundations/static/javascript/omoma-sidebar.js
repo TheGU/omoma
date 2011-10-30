@@ -17,49 +17,31 @@ $(document).ready(function() {
     $('div#sideenvelopes > h1 > span.sideboxtitle').html('Envelopes');
     $('div#sidecategories > h1 > span.sideboxtitle').html('Categories');
     $('div#sidecommunity > h1 > span.sideboxtitle').html('Community');
+    $('div#sidecurrencies > h1 > span.sideboxtitle').html('Currencies');
 
     // Icons for sidebox
-    $('span.sideboxopencloseicon').addClass('ui-icon-triangle-1-n');
-    $('div.sidecontent.hidden span.sideboxopencloseicon').removeClass('ui-icon-triangle-1-n').addClass('ui-icon-triangle-1-s');
+    $('span.sideboxopencloseicon > span').addClass('ui-icon-triangle-1-n');
+    $('div.sidecontent.hidden span.sideboxopencloseicon > span').removeClass('ui-icon-triangle-1-n').addClass('ui-icon-triangle-1-s');
 
     // Update sideboxes content
     preparesideaccounts();
     updatesideaccounts();
     // TODO Other boxes
 
-
     // Toggle sidebox visibility
-    $('div.sidecontent h1').click( function (event) {
-        $(this).parents('div.sidecontent').toggleClass('hidden');
-        icon = $(this).find('span.sideboxopencloseicon');
+    $('div.sidecontent span.sideboxopencloseicon > span').click( function (event) {
+        var icon = $(this);
+        icon.parents('div.sidecontent').toggleClass('hidden');
         icon.toggleClass('ui-icon-triangle-1-n');
         icon.toggleClass('ui-icon-triangle-1-s');
-        $.get('/sidebar/toggle/'+$(this).parents('div.sidecontent').attr('id'));
+        $.get('/sidebar/toggle/'+icon.parents('div.sidecontent').attr('id'));
     });
+
+    // Display accounts configuration dialog
+    $('#accountsopener').click(function(event) {
+        opendialog("accounts", gettext("Configure accounts"));
+        $('div#dialogbox').bind('dialogclose', updatesideaccounts);
+        event.preventDefault();
+    });
+
 });
-
-
-
-
-
-
-
-
-
-//~
-//~
-//~ function setaccountsopener() {
-    //~ $('#accountsopener').click(function(event) {
-        //~ $("div#dialogbox").load("{% url configureaccounts %}", function() {
-            //~ $("div#dialogbox").dialog({modal: true, resizable: false, position: "center", width:500, title: gettext("Configure&nbsp;accounts"), close: function() {
-                //~ if ($('img#sidemenuicon_accounts').hasClass('activesidemenu')) {
-                    //~ $('div#accountssidecontainer').load('/sidebar/accounts/');
-                //~ };
-            //~ }});
-        //~ });
-//~
-        //~ event.preventDefault();
-    //~ });
-//~ }
-//~
-//~
