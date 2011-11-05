@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from django.db import models
+from django.db import models, router
+from django.db.models import Q
 from django.dispatch import receiver
 from django.utils.translation import ugettext as _
 
@@ -19,8 +20,8 @@ class Currency(models.Model):
     """
     owner = models.ForeignKey(User, null=True, blank=True)
     name = models.CharField(max_length=100, verbose_name=_('name'))
-    symbol = models.CharField(max_length=10, verbose_name=_('short name'))
-    rate = models.DecimalField(max_digits=20, decimal_places=10, default=1.00, verbose_name=_('change rate'))
+    symbol = models.CharField(max_length=10, verbose_name=_('symbol'))
+    rate = models.DecimalField(max_digits=20, decimal_places=10, default=1.00, verbose_name=_('exchange rate'))
 
     def __unicode__(self):
         """
@@ -28,8 +29,48 @@ class Currency(models.Model):
         """
         return "%s (%s)" % (self.name, self.symbol)
 
+    def rate_to_currency(self, currency):
+        """
+        Rate from this currency to the specified currency
+        """
+        return self.rate / currency.rate
+
+
+    def rate_to_currency_as_string(self, currency):
+        """
+        Rate from this currency to the specified currency as a string
+        """
+        rate = self.rate_to_currency(currency)
+        return _(u'%(symbol)s1=%(comparedsymbol)s%(rate).2f') % {'symbol':self.symbol, 'comparedsymbol':currency.symbol, 'rate':rate}
+
+    def is_used(self):
+        """
+        Return True if the currency is in use or False if it is not used (and can be deleted)
+        """
+        using = router.db_for_write(self.__class__, instance=self)
+        collector = models.deletion.Collector(using=using)
+        collector.collect([self])
+        if len(collector.data.keys()) <= 1:
+            return False
+        return True
+
     class Meta:
         verbose_name_plural = _('currencies')
+
+
+def user_currencies(user):
+    """
+    Return currencies available for a single user :
+    - global currencies
+    - his own currencies
+    - currencies applied on his accounts
+    """
+    # Maybe there is some bettery way than doing two requests... with only the first one, some currencies may be displayed multiple times
+    currencies = Currency.objects.filter( Q(owner=user) | Q(owner=None) | Q(account__owner=user) )
+    uniqcurrencies = {}
+    for e in currencies:
+        uniqcurrencies[e] = 1
+    return Currency.objects.filter(id__in=[currency.id for currency in uniqcurrencies.keys()])
 
 
 
@@ -55,6 +96,8 @@ class UserProfile(models.Model):
 
     def sidebar_as_table(self):
         return [(entry, entry in self.sidebardisplay) for entry in self.sidebarorder.split(',')]
+
+
 
 @receiver(models.signals.post_save)
 def create_profile(sender, instance, created, **kwargs):

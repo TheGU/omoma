@@ -15,7 +15,11 @@ function dialogform(name, notice) {
 $(document).ready(function() {
     $("#details").tabs(); // Details tabs on the homepage
     // Header links
-    $('#profileopener').click(function(event) { opendialog("profile", gettext("Profile and preferences")); event.preventDefault(); });
+    $('#profileopener').click(function(event) {
+        opendialog("profile", gettext("Profile and preferences"));
+        $('div#dialogbox').bind('dialogclose', updatesideall);
+        event.preventDefault();
+    });
     $('#loginopener').click(function(event) { opendialog("login", gettext("Login")); event.preventDefault(); });
     $('#subscribeopener').click(function(event) { opendialog("subscribe", gettext("Subscribe")); event.preventDefault(); });
 });

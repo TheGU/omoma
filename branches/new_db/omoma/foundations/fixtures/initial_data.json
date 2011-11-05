@@ -4,7 +4,7 @@
         "pk": 1,
         "fields": {
             "symbol": "\u20ac",
-            "name": "euro",
+            "name": "Euro",
             "rate": "1"
         }
     }

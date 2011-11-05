@@ -1,0 +1,12 @@
+{% load i18n %}
+{% spaceless %}
+<form id="newcurrencyform" action="{% url newcurrency %}" method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form }}
+    </table>
+    <input type="submit" value="{% trans "Create" %}" />
+    <button type="button" id="cancelnewcurrency">{% trans "Cancel" %}</button>
+</form>
+<script>$('button#cancelnewcurrency').click(function (event) { opendialog("currencies", gettext("Configure currencies")); event.preventDefault(); });updateinputelements(); dialogform('newcurrency', 'newcurrencycreated');</script>
+{% endspaceless %}

@@ -20,7 +20,7 @@ function updateinputelements() {
     // Amount input
     $('input.amount').setMask({mask: '99.999 999 999 999', type: 'reverse', defaultValue: '', autoTab: false, selectCharsOnFocus: true});
     // Category input
-    $('input.category').autocomplete({source:"{% url jsoncategories %}", minLength: 0});
+    $('input.category').autocomplete({source:"/json/categories", minLength: 0});
     $('input.category').focus(function() { $(this).autocomplete("search", ""); });
 }
 

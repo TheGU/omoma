@@ -1,42 +1,32 @@
+/* Transactions filter */
+form#transactionsfilter td { padding: 2px; }
+form#transactionsfilter th { font-size: 10px; }
+th.filterintro { text-align: left; }
+td.filterdescription input, td.filtercategory input { width: 100%; }
+td.filteramount input { width: 90px; }
+td.filteraccount select { width: 90px; }
+td.filterintro, td.filteramount, td.filteraccount, td.filterdate { width: 10px; white-space: nowrap; }
 
+/* Transactions table(s) */
+div#transactions { overflow: auto; height: 500px; }
+div#transactionsheader th { background: #4b1c6c url(images/ui-bg_highlight-soft_50_4b1c6c_1x100.png) 40% 40% repeat-x; color: #ffffff; text-align: left; }
+div#transactionsheader tr, div#transactions tr { border-bottom: solid 1px #4b1c6c; }
+div#transactions tr:hover { background-color: #fbd2b4; }
+div#transactions td { vertical-align: top; }
 
-form#transactionsfilter ul {
-    margin: 0;
-    padding: 0;
-/*
-    list-style-type: none;
-*/
-}
+/* TODO Maybe find a better look for the "new transaction" line */
+tr#newtransaction { background-color: #fbd2b4; }
 
-form#transactionsfilter ul li {
-    display:inline;
-}
+/* Transactions table columns widths */
+div#transactionsheader td.tools, div#transactions td.tools { width: 60px; }
+div#transactionsheader td.amount, div#transactions td.amount { width: 150px; }
+div#transactionsheader td.category, div#transactions td.category { width: 200px; }
+div#transactionsheader td.date, div#transactions td.date { width: 90px; }
 
-/*
-div.menucontainer {
-    padding: 3px 10px;
-}
+/* Transactions table content */
+div#transactions span.originaldescription, div#transactions span.amountaccount { font-size: 9px; color: #b386d2; }
+div#transactions span.amount { display: block; white-space: nowrap; overflow: hidden; }
 
-div.menucontainer ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-}
+div#transactions span.amountvalue { display: inline-block; width: 90px; text-align: right; }
 
-div.menucontainer ul li {
-    display:inline;
-    margin: 0;
-    padding: 0 10px;
-}
-
-div.menucontainer a {
-    vertical-align: middle;
-}
-
-div.menucontainer a:hover {
-    color: #18645c;
-}
-
-div.menucontainer img {
-    vertical-align: middle;
-}*/
+div#transactions td { border-left: 1px solid #999; }

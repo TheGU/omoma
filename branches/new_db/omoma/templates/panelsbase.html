@@ -55,6 +55,9 @@
                             {% if item.0 == "sideaccounts" %}
                                 <span id="accountsopener" class="jquery-icon jquery-icon-ffffff-000000 ui-icon-wrench"></span>
                             {% endif %}
+                            {% if item.0 == "sidecurrencies" %}
+                                <span id="currenciesopener" class="jquery-icon jquery-icon-ffffff-000000 ui-icon-wrench"></span>
+                            {% endif %}
                         </span>
                         <span class="sideboxopencloseicon">
                             <span class="jquery-icon jquery-icon-ffffff-000000"></span>
@@ -66,9 +69,7 @@
                     <table>
                         <tr class="siderow">
                             <td class="name"></td>
-                            {% if item.0 == "sideaccounts" %}
-                                <td class="value"></td>
-                            {% endif %}
+                            <td class="value"></td>
                         </tr>
                         {% if item.0 == "sideaccounts" %}
                             <tr class="siderowtotal">

@@ -1,12 +1,15 @@
+/* Input elements colors and style */
 input[type=text], input[type=password], select { border: 1px solid #4b1c6c; background: #fbe2cf; font-weight: normal; color: #4b1c6c; -moz-border-radius: 4px; border-radius: 4px; -webkit-border-radius: 4px; }
 input[type=text]:focus, input[type=password]:focus { background: #fff; }
 
-.button, input[type=submit], button, a.button:link, a.button:visited { border: 1px solid #d3d3d3; background: #b386d2 url(images/ui-bg_inset-hard_50_b386d2_1x100.png) 50% 50% repeat-x; font-weight: normal; color: #000000; cursor: pointer; text-decoration: none; -moz-border-radius: 4px; border-radius: 4px; -webkit-border-radius: 4px; }
+.button, input[type=submit], input[type=reset], button, a.button:link, a.button:visited { border: 1px solid #d3d3d3; background: #b386d2 url(images/ui-bg_inset-hard_50_b386d2_1x100.png) 50% 50% repeat-x; font-weight: normal; color: #000000; cursor: pointer; text-decoration: none; -moz-border-radius: 4px; border-radius: 4px; -webkit-border-radius: 4px; padding: 0 2px 2px 2px; }
 .button a, .button a:link, .button a:visited { color: #000000; text-decoration: none; }
 
-.button:hover, input[type=submit]:hover, button:hover, .button a:hover { color: #fff; }
+.button:hover, input[type=submit]:hover, input[type=reset]:hover, button:hover, .button a:hover { color: #fff; }
 
-/*
-TODO See if this would be useful...
-.button .ui-icon { background-image: url(images/ui-icons_000000_256x240.png); }
-*/
+
+/* Profile and preferences */
+form#profileform input, form#profileform select { width: 100%; }
+
+/* New transaction */
+form#newtransaction input.category { width: 100%; }
