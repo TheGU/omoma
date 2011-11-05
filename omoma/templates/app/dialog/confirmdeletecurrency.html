@@ -1,0 +1,13 @@
+{% load i18n %}
+{% spaceless %}
+{{ currency.name }}: {% trans "Are you sure you want to delete this currency ?" %}
+
+<form id="deletecurrencyform" action="{% url deletecurrency currency.id %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="confirmdelete" value="{{ currency.id }}" />
+    <input type="submit" value="{% trans "Yes, delete currency" %}" />
+    <button type="button" id="canceldeletecurrency">{% trans "Cancel" %}</button>
+</form>
+
+<script>$('button#canceldeletecurrency').click(function (event) { opendialog("currencies", gettext("Configure currencies")); event.preventDefault(); }); dialogform('deletecurrency', 'currenciessaved');</script>
+{% endspaceless %}

@@ -9,7 +9,16 @@ body {
 
 a { text-decoration: none; }
 
-table { border-collapse: collapse; }
+table { border-collapse: collapse; width: 100%; }
+
+span.jquery-icon { width: 16px; height: 16px; display:inline-block; vertical-align: middle; }
+span.jquery-icon-4b1c6c-ffffff { background-image: url(images/ui-icons_4b1c6c_256x240.png); }
+:hover > span.jquery-icon-4b1c6c-ffffff { background-image: url(images/ui-icons_ffffff_256x240.png); }
+span.jquery-icon-4b1c6c-cd0a0a { background-image: url(images/ui-icons_4b1c6c_256x240.png); }
+:hover > span.jquery-icon-4b1c6c-cd0a0a { background-image: url(images/ui-icons_cd0a0a_256x240.png); }
+span.jquery-icon-ffffff-000000 { background-image: url(images/ui-icons_ffffff_256x240.png); }
+:hover > span.jquery-icon-ffffff-000000 { background-image: url(images/ui-icons_000000_256x240.png); }
+
 
 /******************** Header ********************/
 div#header {
@@ -31,10 +40,3 @@ div#headerlinks a:hover {
     color: #fff;
 }
 div#headerlinks {  float: right; text-align: right; }
-span.jquery-icon { width: 16px; height: 16px; display:inline-block; vertical-align: middle; }
-span.jquery-icon-4b1c6c-ffffff { background-image: url(images/ui-icons_4b1c6c_256x240.png); }
-:hover > span.jquery-icon-4b1c6c-ffffff { background-image: url(images/ui-icons_ffffff_256x240.png); }
-span.jquery-icon-4b1c6c-cd0a0a { background-image: url(images/ui-icons_4b1c6c_256x240.png); }
-:hover > span.jquery-icon-4b1c6c-cd0a0a { background-image: url(images/ui-icons_cd0a0a_256x240.png); }
-span.jquery-icon-ffffff-000000 { background-image: url(images/ui-icons_ffffff_256x240.png); }
-:hover > span.jquery-icon-ffffff-000000 { background-image: url(images/ui-icons_000000_256x240.png); }

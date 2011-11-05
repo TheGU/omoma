@@ -39,6 +39,17 @@ urlpatterns += patterns('omoma.foundations.views',
     url(r'^envelopes/$',  'mainpanelview', {'page':'envelopes'}, name='envelopes'),
     url(r'^categories/$',  'mainpanelview', {'page':'categories'}, name='categories'),
     url(r'^community/$',  'mainpanelview', {'page':'community'}, name='community'),
+
+    # Currencies dialogs
+    url(r'^dialog/currencies/$', 'configurecurrencies', name='configurecurrencies'),
+    url(r'^dialog/newcurrency/$', 'newcurrency', name='newcurrency'),
+    url(r'^dialog/deletecurrency(?P<currencyid>\d+)/$', 'deletecurrency', name='deletecurrency'),
+)
+
+urlpatterns += patterns('omoma.foundations.jsonviews',
+
+    # List currencies with details
+    url(r'^json/currencies/$', 'currencies', name='jsoncurrencies'),
 )
 
 urlpatterns += patterns('omoma.transactions.views',
@@ -48,8 +59,7 @@ urlpatterns += patterns('omoma.transactions.views',
     # Accounts dialogs
     url(r'^dialog/accounts/$', 'configureaccounts', name='configureaccounts'),
     url(r'^dialog/newaccount/$', 'newaccount', name='newaccount'),
-    url(r'^dialog/deleteaccount(?P<accountid>\d+)/$', 'confirmdeleteaccount', name='confirmdeleteaccount'),
-    url(r'^dialog/deleteaccount(?P<accountid>\d+)/delete/$', 'deleteaccount', name='deleteaccount'),
+    url(r'^dialog/deleteaccount(?P<accountid>\d+)/$', 'deleteaccount', name='deleteaccount'),
 )
 
 urlpatterns += patterns('omoma.transactions.jsonviews',
@@ -59,5 +69,5 @@ urlpatterns += patterns('omoma.transactions.jsonviews',
 
     # List categories
     url(r'^json/categories/$', 'categories', name='jsoncategories'),
-    #~ url(r'^json/transactions/$', 'transactions', name='jsontransactions'),
+    url(r'^json/transactions/$', 'transactions', name='jsontransactions'),
 )

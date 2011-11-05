@@ -1,9 +1,13 @@
 // Resize panels according to the window height
 function setpanelssize() {
-    mainmenu = $('div#mainmenu').height(); submenu = $('div#submenu').height();
+    mainmenu = $('div#mainmenu').height();
+    submenu = $('div#submenu').height();
+    panelcontainer = $('div#panelcontainer').height();
+    transactionsheader = $('div#transactionsheader').height()
     $('div#panelcontainer').height($(window).height() - 45);
-    $('div#maincontent').height($('div#panelcontainer').height() - 25 - mainmenu);
-    $('div#maincontentwithsubmenu').height($('div#panelcontainer').height() - 40 - mainmenu - submenu);
+    $('div#maincontent').height(panelcontainer - 25 - mainmenu);
+    $('div#maincontentwithsubmenu').height(panelcontainer - mainmenu - submenu - 40);
+    $('div#transactions').height(panelcontainer - mainmenu - submenu - transactionsheader - 65);
 }
 
 $(document).ready(function() {

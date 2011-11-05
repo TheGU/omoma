@@ -1,11 +1,27 @@
 function preparesideaccounts() {
-    var directive = {'tr.siderow': {'account<-accounts': {'td.name':'account.name', 'td.value':'account.strbalance'}}, 'tr.siderowtotal td.value':'total'}
+    var directive = {'tr.siderow': {'account<-accounts': {'td.name':'account.name', 'td.value':'account.strbalance', 'td.value@title':'account.strbalancedefault'}}, 'tr.siderowtotal td.value':'total'}
     accountstemplate = $('div#sideaccounts table').compile(directive);
 }
+function preparesidecurrencies() {
+    var directive = {'tr.siderow': {'currency<-context': {'td.name':'currency.name', 'td.value':'currency.rate'}}}
+    currenciestemplate = $('div#sidecurrencies table').compile(directive);
+}
+
 function updatesideaccounts() {
     $.get('/json/accounts', function(data) {
         $('div#sideaccounts table').html(accountstemplate(data));
     });
+}
+function updatesidecurrencies() {
+    $.get('/json/currencies', function(data) {
+        $('div#sidecurrencies table').html(currenciestemplate(data));
+    });
+}
+
+function updatesideall() {
+    updatesideaccounts();
+    updatesidecurrencies();
+    // TODO Other boxes
 }
 
 $(document).ready(function() {
@@ -27,6 +43,8 @@ $(document).ready(function() {
     preparesideaccounts();
     updatesideaccounts();
     // TODO Other boxes
+    preparesidecurrencies();
+    updatesidecurrencies();
 
     // Toggle sidebox visibility
     $('div.sidecontent span.sideboxopencloseicon > span').click( function (event) {
@@ -43,5 +61,16 @@ $(document).ready(function() {
         $('div#dialogbox').bind('dialogclose', updatesideaccounts);
         event.preventDefault();
     });
+
+    // Display accounts configuration dialog
+    $('#currenciesopener').click(function(event) {
+        opendialog("currencies", gettext("Configure my currencies"));
+        $('div#dialogbox').bind('dialogclose', updatesidecurrencies);
+        event.preventDefault();
+    });
+
+    // XXX Just for the demo, blinking for the community's header
+    // Afterwards, blinking only when pending debts
+    $('#sidecommunity h1').addClass('blink');
 
 });

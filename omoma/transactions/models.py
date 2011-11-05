@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext as _
 
+from gadjo.requestprovider.signals import get_request
 
 from omoma.foundations.models import Currency
 
@@ -25,16 +26,20 @@ class Account(models.Model):
     def __unicode__(self):
         return self.name
 
+    @property
     def balance(self):
         # TODO Calculate the account's balance
         return self.start_balance
 
+    @property
     def balance_as_string(self):
-        return _('%(currency)s%(value).2f') % {'value':self.balance(), 'currency':self.currency.symbol}
+        return _('%(currency)s%(value).2f') % {'value':self.balance, 'currency':self.currency.symbol}
 
-    def balance_in_default_currency(self):
-        # TODO Convert account balance to preferred currency
-        return self.balance()
+    def balance_in_currency(self, currency):
+        return self.balance * self.currency.rate / currency.rate
+
+    def balance_in_currency_as_string(self, currency):
+        return _('%(currency)s%(value).2f') % {'value':self.balance_in_currency(currency), 'currency':currency.symbol}
 
     class Meta:
         verbose_name = _('account')

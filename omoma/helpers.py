@@ -1,8 +1,26 @@
+import json
+
+from django import forms
 from django.db import models
-from django.forms.util import ErrorList
+from django.http import HttpResponse
 from django.utils import simplejson
 
-class OmomaErrorList(ErrorList):
+
+
+class AmountInput(forms.widgets.TextInput):
+
+    def __init__(self, attrs={}):
+        attrs['class'] = 'amount'
+        super(AmountInput, self).__init__(attrs)
+
+    def _format_value(self, value):
+        if type(value) is unicode:
+            value = decimal.Decimal(value)
+        return format(value, '.2f')
+
+
+
+class OmomaErrorList(forms.util.ErrorList):
 
     def __unicode__(self):
         return self.as_divs()
@@ -30,3 +48,6 @@ class JSONDataField(models.TextField):
 
 from south.modelsinspector import add_introspection_rules
 add_introspection_rules([], ["^omoma\.helpers\.JSONDataField"])
+
+def JSONResponse(obj):
+    return HttpResponse(json.dumps(obj), mimetype="application/json")

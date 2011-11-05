@@ -1,18 +1,18 @@
 from django.contrib.auth.decorators import login_required
+#~ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
-from django.shortcuts import redirect, render_to_response
+from django.shortcuts import redirect, render
 from django.template import RequestContext
 
-from omoma.foundations.forms import UserForm, UserProfileForm
-
+from omoma.foundations.forms import CurrencyForm, CurrencyFormSet, UserForm, UserProfileForm
+from omoma.foundations.models import Currency
 
 
 def home(request, login=False):
     if request.user.is_authenticated():
         return redirect(request.user.get_profile().homepage)
-        return ''
     else:
-        return render_to_response('visitor/home.html', {'login':login}, RequestContext(request))
+        return render(request, 'visitor/home.html', {'login':login})
 
 
 
@@ -20,7 +20,7 @@ def home(request, login=False):
 def mainpanelview(request, page, **kwargs):
     pageargs = kwargs
     pageargs['menuentry'] = page
-    return render_to_response('app/%s.html' % page, pageargs, RequestContext(request))
+    return render(request, 'app/%s.html' % page, pageargs)
 
 
 
@@ -46,7 +46,7 @@ def profile(request):
         userform = UserForm(instance=user)
         profileform = UserProfileForm(instance=profile)
 
-    return render_to_response('app/dialog/profile.html', {'userform':userform, 'profileform':profileform, 'saved':saved}, RequestContext(request))
+    return render(request, 'app/dialog/profile.html', {'userform':userform, 'profileform':profileform, 'saved':saved})
 
 
 
@@ -68,3 +68,61 @@ def togglesidebox(request, box):
         profile.sidebardisplay.append(box)
     profile.save()
     return HttpResponse('OK', mimetype="text/plain")
+
+
+
+@login_required
+def configurecurrencies(request, newcreated=False, deleted=False):
+    """
+    Configure currencies
+    """
+
+    queryset = Currency.objects.filter(owner=request.user)
+
+    saved = False
+    if request.method == 'POST' and not newcreated and not deleted:
+        formset = CurrencyFormSet(request.POST, request.FILES, queryset=queryset)
+        if formset.is_valid():
+            formset.save()
+            saved = True
+    else:
+        formset = CurrencyFormSet(queryset=queryset)
+
+    return render(request, 'app/dialog/configurecurrencies.html', {'formset':formset, 'saved':saved, 'newcreated':newcreated, 'deleted':deleted})
+
+
+
+@login_required
+def newcurrency(request):
+    """
+    Create a new currency
+    """
+    if request.method == 'POST':
+        form = CurrencyForm(request.POST, request.FILES)
+        if form.is_valid():
+            currency = form.save(commit=False)
+            currency.owner = request.user
+            currency.save()
+            return configurecurrencies(request, newcreated=True)
+    else:
+        form = CurrencyForm()
+    return render(request, 'app/dialog/newcurrency.html', {'form':form})
+
+
+
+@login_required
+def deletecurrency(request, currencyid):
+    """
+    Confirm deletion of a currency
+    """
+    try:
+        currency = Currency.objects.get(owner=request.user, id=currencyid)
+    except:
+        raise PermissionDenied
+    if request.method == 'POST':
+        if request.POST.get('confirmdelete', None) == str(currencyid):
+            currency.delete()
+            return configurecurrencies(request, deleted=True)
+        else:
+            raise PermissionDenied
+    return render(request, 'app/dialog/confirmdeletecurrency.html', {'currency':currency})

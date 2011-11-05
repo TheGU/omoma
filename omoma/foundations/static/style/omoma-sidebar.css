@@ -16,7 +16,10 @@ div.sidecontent.hidden span.sideboxspecificicons { display: none; }
 
 /* Boxes content */
 div.sideboxcontent { padding: 2px 8px; }
-div.sideboxcontent table { width: 100%; }
 tr.siderow td, tr.siderowtotal td { border-top: 1px solid #4b1c6c; border-bottom: 1px solid #4b1c6c; }
 tr.siderow td.value, tr.siderowtotal td.value { text-align: right; }
 tr.siderowtotal { font-weight: bold; }
+
+div.sidecontent h1.blink {
+    background: #4b1c6c url(images/ui-bg_blink_4b1c6c_1x100.gif) 40% 40% repeat-x;
+}

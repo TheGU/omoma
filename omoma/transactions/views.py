@@ -1,6 +1,6 @@
-
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render_to_response
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import render
 from django.template import RequestContext
 
 from omoma.foundations.views import mainpanelview
@@ -17,7 +17,7 @@ def configureaccounts(request, newcreated=False, deleted=False):
     queryset = Account.objects.filter(owner=request.user)
 
     saved = False
-    if request.method == 'POST' and not newcreated:
+    if request.method == 'POST' and not newcreated and not deleted:
         formset = AccountFormSet(request.POST, request.FILES, queryset=queryset)
         if formset.is_valid():
             formset.save()
@@ -25,7 +25,7 @@ def configureaccounts(request, newcreated=False, deleted=False):
     else:
         formset = AccountFormSet(queryset=queryset)
 
-    return render_to_response('app/dialog/configureaccounts.html', {'formset':formset, 'saved':saved, 'newcreated':newcreated, 'deleted':deleted}, RequestContext(request))
+    return render(request, 'app/dialog/configureaccounts.html', {'formset':formset, 'saved':saved, 'newcreated':newcreated, 'deleted':deleted})
 
 
 
@@ -34,7 +34,6 @@ def newaccount(request):
     """
     Create a new account
     """
-
     if request.method == 'POST':
         form = AccountForm(request.POST, request.FILES)
         if form.is_valid():
@@ -44,36 +43,26 @@ def newaccount(request):
             return configureaccounts(request, newcreated=True)
     else:
         form = AccountForm()
-    return render_to_response('app/dialog/newaccount.html', {'form':form}, RequestContext(request))
-
-
-
-@login_required
-def confirmdeleteaccount(request, accountid):
-    """
-    Confirm deletion of an account
-    """
-    try:
-        account = Account.objects.get(owner=request.user, id=accountid)
-    except:
-        # TODO Raise an exception or do something else because the account is not found (not authorized or something like that)
-        pass
-    return render_to_response('app/dialog/confirmdeleteaccount.html', {'account':account}, RequestContext(request))
+    return render(request, 'app/dialog/newaccount.html', {'form':form})
 
 
 
 @login_required
 def deleteaccount(request, accountid):
     """
-    Delete an account
+    Confirm deletion of an account
     """
     try:
         account = Account.objects.get(owner=request.user, id=accountid)
     except:
-        # TODO Raise an exception or do something else because the account is not found (not authorized or something like that)
-        pass
-    account.delete()
-    return configureaccounts(request, deleted=True)
+        raise PermissionDenied
+    if request.method == 'POST':
+        if request.POST.get('confirmdelete', None) == str(accountid):
+            account.delete()
+            return configureaccounts(request, deleted=True)
+        else:
+            raise PermissionDenied
+    return render(request, 'app/dialog/confirmdeleteaccount.html', {'account':account})
 
 
 
